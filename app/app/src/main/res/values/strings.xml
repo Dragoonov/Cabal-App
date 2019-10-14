@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">HobbyMeetingApp</string>
+    <string name="title">HobbyMeeting</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="repeat_email">Repeat email</string>
+    <string name="password">Password</string>
+    <string name="or">or</string>
 </resources>
