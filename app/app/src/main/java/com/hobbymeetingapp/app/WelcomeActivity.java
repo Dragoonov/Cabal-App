@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -15,6 +16,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.JsonObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WelcomeActivity extends AppCompatActivity implements  View.OnClickListener{
 
@@ -22,6 +28,8 @@ public class WelcomeActivity extends AppCompatActivity implements  View.OnClickL
     private static final String TAG = "WelcomeActivity";
     GoogleSignInClient mGoogleSignInClient;
     GoogleSignInOptions gso;
+    Call<JsonObject> tokenCall;
+    Service service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,8 @@ public class WelcomeActivity extends AppCompatActivity implements  View.OnClickL
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
+
+        service = Client.getClient().create(Service.class);
     }
 
     @Override
@@ -57,11 +67,8 @@ public class WelcomeActivity extends AppCompatActivity implements  View.OnClickL
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.sign_in_button:
-                signIn();
-                break;
-            // ...
+        if (view.getId() == R.id.sign_in_button) {
+            signIn();
         }
     }
 
@@ -85,7 +92,7 @@ public class WelcomeActivity extends AppCompatActivity implements  View.OnClickL
             if(account != null)
             {
                 //USER IS SIGNED IN - launch next activity
-                sendUserDataToBackend(account.getEmail(), account.getId(), account.getIdToken());
+                sendUserDataToBackend(account.getIdToken());
 
                 String personName = account.getDisplayName();
                 String personGivenName = account.getGivenName();
@@ -104,9 +111,21 @@ public class WelcomeActivity extends AppCompatActivity implements  View.OnClickL
         }
     }
 
-    private void sendUserDataToBackend(String email, String id, String idToken)
+    private void sendUserDataToBackend(String idToken)
     {
-        //POWINNISMY WYSYLAC TYLKO IDTOKEN LUB...
-        // https://developers.google.com/identity/sign-in/android/offline-access
+        JsonObject requestBody = new JsonObject();
+        requestBody.addProperty("token",idToken);
+        tokenCall = service.postToken(requestBody);
+        tokenCall.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Toast.makeText(getApplicationContext(),response.code() + ": " + response.message(),Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Porażka!",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
