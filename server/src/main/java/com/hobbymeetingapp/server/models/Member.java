@@ -11,13 +11,13 @@ public class Member {
     private Integer id;
 
     @NotNull
-    @NotEmpty
     private String nickname;
     @NotNull
-    @NotEmpty
     private String password;
     @NotNull
     @NotEmpty
+    private String email;
+    @NotNull
     private String avatar;
 
     public String getNickname() {
@@ -42,5 +42,13 @@ public class Member {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
