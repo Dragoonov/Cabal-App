@@ -82,11 +82,11 @@
                 android:textSize="35dp"
                 android:layout_centerInParent="true"/>
 
-            <com.hobbymeetingapp.app.Utils.NonScrollListView
+            <com.hobbymeetingapp.app.NonScrollListView
                 android:id="@+id/listOfInterests"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            </com.hobbymeetingapp.app.Utils.NonScrollListView>
+            </com.hobbymeetingapp.app.NonScrollListView>
 
 
         </LinearLayout>
