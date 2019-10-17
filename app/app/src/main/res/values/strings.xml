@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">HobbyMeetingApp</string>
+    <string name="title">HobbyMeeting</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="repeat_email">Repeat email</string>
+    <string name="password">Password</string>
+    <string name="or">or</string>
+    <string name="football">Football</string>
+    <string name="description">Description…</string>
+    <string name="creator">Creator</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="date">Date</string>
+    <string name="location">Location</string>
+    <string name="members">Members</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
 </resources>
