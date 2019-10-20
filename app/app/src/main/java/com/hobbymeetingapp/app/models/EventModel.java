@@ -1,36 +1,28 @@
-package com.hobbymeetingapp.app;
+package com.hobbymeetingapp.app.models;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class EventModel {
 
     @SerializedName("image")
-    @Expose
     private String image;
 
     @SerializedName("name")
-    @Expose
     private String name;
 
     @SerializedName("creator")
-    @Expose
     private String creator;
 
     @SerializedName("date")
-    @Expose
     private String date;
 
     @SerializedName("members")
-    @Expose
     private String[] members;
 
     @SerializedName("location")
-    @Expose
     private String location;
 
     @SerializedName("description")
-    @Expose
     private String description;
 
     public String getImage() {

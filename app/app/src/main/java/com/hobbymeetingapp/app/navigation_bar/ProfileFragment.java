@@ -1,4 +1,4 @@
-package com.hobbymeetingapp.app;
+package com.hobbymeetingapp.app.navigation_bar;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.hobbymeetingapp.app.R;
 
 import java.util.ArrayList;
 import java.util.Objects;

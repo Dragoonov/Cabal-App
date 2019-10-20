@@ -1,4 +1,4 @@
-package com.hobbymeetingapp.app;
+package com.hobbymeetingapp.app.Utils;
 
 import android.content.Context;
 import android.util.AttributeSet;

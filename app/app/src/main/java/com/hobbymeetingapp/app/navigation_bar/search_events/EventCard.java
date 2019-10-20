@@ -1,4 +1,4 @@
-package com.hobbymeetingapp.app;
+package com.hobbymeetingapp.app.navigation_bar.search_events;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,9 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.hobbymeetingapp.app.EventModel;
-import com.hobbymeetingapp.app.MyAdapter;
 import com.hobbymeetingapp.app.R;
+import com.hobbymeetingapp.app.models.EventModel;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.mindorks.placeholderview.annotations.Layout;
 import com.mindorks.placeholderview.annotations.NonReusable;
@@ -62,7 +61,7 @@ public class EventCard {
     private void onResolved() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         cardEventMembers.setLayoutManager(layoutManager);
-        RecyclerView.Adapter adapter = new MyAdapter(eventModel.getMembers());
+        RecyclerView.Adapter adapter = new EventCardsAdapter(eventModel.getMembers());
         cardEventMembers.setAdapter(adapter);
         Glide.with(context).load(eventModel.getImage()).into(cardEventImage);
         cardEventName.setText(eventModel.getName());

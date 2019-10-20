@@ -1,4 +1,4 @@
-package com.hobbymeetingapp.app;
+package com.hobbymeetingapp.app.navigation_bar;
 
 import android.os.Bundle;
 
@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.hobbymeetingapp.app.R;
+import com.hobbymeetingapp.app.navigation_bar.search_events.SearchFragment;
 
 
 public class UserActivity extends AppCompatActivity {
@@ -21,7 +23,7 @@ public class UserActivity extends AppCompatActivity {
         //I added this if statement to keep the selected fragment when rotating the device
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new ProfileFragment()).commit();
+                    new SearchFragment()).commit();
         }
     }
 
@@ -41,6 +43,7 @@ public class UserActivity extends AppCompatActivity {
                         break;
                 }
 
+                assert selectedFragment != null;
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         selectedFragment).commit();
 
