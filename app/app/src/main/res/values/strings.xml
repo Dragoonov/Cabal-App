@@ -23,4 +23,7 @@
     <string name="hobby_add">Choose your hobbies</string>
     <string name="rate_user">Rate user %s</string>
     <string name="faces_author">https://www.flaticon.com/authors/dave-gandy</string>
+    <string name="finished">Finished</string>
+    <string name="mine">Mine</string>
+    <string name="rate_users">Rate users</string>
 </resources>

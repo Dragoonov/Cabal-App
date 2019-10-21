@@ -25,7 +25,7 @@ public class JsonLoader {
     private static final String HOBBIES_JSON_FILENAME = "hobbies.json";
     private static final String USERS_JSON_FILENAME = "users.json";
 
-    public static List<EventModel> loadProfiles(Context context){
+    public static List<EventModel> loadEvents(Context context){
         try{
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();

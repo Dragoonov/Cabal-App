@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/myEventName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="TextView"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/myEventPicture"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/myEventDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="TextView"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/myEventPicture"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/myEventName"
+            app:layout_constraintTop_toBottomOf="@+id/myEventName" />
+
+        <TextView
+            android:id="@+id/myEventLocation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="TextView"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/myEventPicture"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/myEventDate"
+            app:layout_constraintTop_toBottomOf="@+id/myEventDate" />
+
+
+        <ImageView
+            android:id="@+id/myEventAdminStar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/star" />
+
+        <ImageView
+            android:id="@+id/myEventPicture"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="@+id/myEventLocation"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/myEventName"
+            app:srcCompat="@drawable/common_google_signin_btn_icon_light_normal" />
+
+        <Button
+            android:id="@+id/myEventRateUsers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/rate_users"
+            app:layout_constraintEnd_toEndOf="@+id/myEventPicture"
+            app:layout_constraintStart_toEndOf="@+id/myEventDate"
+            app:layout_constraintTop_toBottomOf="@+id/myEventPicture" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

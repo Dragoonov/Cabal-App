@@ -25,6 +25,9 @@ public class EventModel {
     @SerializedName("description")
     private String description;
 
+    @SerializedName("finished")
+    private boolean finished;
+
     public String getImage() {
         return image;
     }
@@ -79,5 +82,13 @@ public class EventModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 }

@@ -46,7 +46,7 @@ public class SearchFragment extends Fragment {
                         .setSwipeOutMsgLayoutId(R.layout.tinder_swipe_reject));
 
 
-        for(EventModel eventModel : Objects.requireNonNull(JsonLoader.loadProfiles(getActivity().getApplicationContext()))){
+        for(EventModel eventModel : Objects.requireNonNull(JsonLoader.loadEvents(getActivity().getApplicationContext()))){
             mSwipeView.addView(new EventCard(mContext, eventModel, mSwipeView));
         }
     }
