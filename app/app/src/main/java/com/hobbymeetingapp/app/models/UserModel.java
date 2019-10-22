@@ -13,6 +13,12 @@ public class UserModel {
     @SerializedName("tokenId")
     private String tokenId;
 
+    @SerializedName("avatarUri")
+    private String avatarUri;
+
+    @SerializedName("hobbies")
+    private HobbyModel[] hobbies;
+
     public String getNick() {
         return nick;
     }
@@ -35,5 +41,21 @@ public class UserModel {
 
     public void setTokenId(String tokenId) {
         this.tokenId = tokenId;
+    }
+
+    public String getAvatarUri() {
+        return avatarUri;
+    }
+
+    public void setAvatarUri(String avatarUri) {
+        this.avatarUri = avatarUri;
+    }
+
+    public HobbyModel[] getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(HobbyModel[] hobbies) {
+        this.hobbies = hobbies;
     }
 }

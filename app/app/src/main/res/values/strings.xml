@@ -26,4 +26,5 @@
     <string name="finished">Finished</string>
     <string name="mine">Mine</string>
     <string name="rate_users">Rate users</string>
+    <string name="set_avatar">Set avatar</string>
 </resources>

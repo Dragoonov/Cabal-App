@@ -20,6 +20,7 @@ import com.hobbymeetingapp.app.Utils.User;
 import com.hobbymeetingapp.app.models.EventModel;
 import com.hobbymeetingapp.app.navigation_bar.search_events.SearchFragment;
 import java.util.List;
+import java.util.Objects;
 
 public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHolder> implements Filterable {
 
@@ -35,7 +36,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
     @Override
     public MyEventsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_events_item,parent,false);
-        view.setOnClickListener(v -> ((AppCompatActivity)v.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SearchFragment()).commit());
+        // TODO: view.setOnClickListener(v -> ((AppCompatActivity)v.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new EventDetailsFragment()).commit());
         return new ViewHolder(view);
     }
 
@@ -96,7 +97,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
             myEventName.setText(model.getName());
             myEventDate.setText(model.getDate());
             myEventLocation.setText(model.getLocation());
-            User.saveUser(JsonLoader.loadUsers(myEventDate.getContext()).get(0));
+            User.saveUser(Objects.requireNonNull(JsonLoader.loadUsers(myEventDate.getContext())).get(0));
             adminStar.setVisibility(User.getUserNick().equals(model.getCreator()) ? View.VISIBLE : View.GONE);
             Glide.with(myEventName.getContext()).load(model.getImage()).into(myEventPicture);
         }

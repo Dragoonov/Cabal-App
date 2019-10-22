@@ -2,21 +2,81 @@
   {
     "nick": "Penetrator",
     "email": "lolo@gmail.com",
-    "tokenId": "xxx"
+    "avatarUri": "xxx",
+    "tokenId": "xxx",
+    "hobbies": [
+      {
+        "name": "Poker",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      },
+      {
+        "name": "Brydż",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      },
+      {
+        "name": "Makao",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      }
+    ]
   },
   {
     "nick": "lolek1234",
     "email": "oO@o2.pl",
-    "tokenId": "xxx"
+    "avatarUri": "xxx",
+    "tokenId": "xxx",
+    "hobbies": [
+      {
+        "name": "Poker",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      },
+      {
+        "name": "Brydż",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      },
+      {
+        "name": "Makao",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      }
+    ]
   },
   {
     "nick": "Szmatka rogatka",
     "email": "sieradosera@wp.pl",
-    "tokenId": "xxx"
+    "avatarUri": "xxx",
+    "tokenId": "xxx",
+    "hobbies": [
+      {
+        "name": "Poker",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      },
+      {
+        "name": "Brydż",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      },
+      {
+        "name": "Makao",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      }
+    ]
   },
   {
     "nick": "0",
     "email": "zero@gmail.com",
-    "tokenId": "xxx"
+    "avatarUri": "xxx",
+    "tokenId": "xxx",
+    "hobbies": [
+      {
+        "name": "Poker",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      },
+      {
+        "name": "Brydż",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      },
+      {
+        "name": "Makao",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      }
+    ]
   }
 ]

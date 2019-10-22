@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class EventModel {
 
+    @SerializedName("id")
+    private String id;
+
     @SerializedName("image")
     private String image;
 
@@ -27,6 +30,14 @@ public class EventModel {
 
     @SerializedName("finished")
     private boolean finished;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getImage() {
         return image;
