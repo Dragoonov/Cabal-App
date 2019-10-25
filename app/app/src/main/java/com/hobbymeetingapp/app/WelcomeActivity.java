@@ -48,6 +48,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
         service = Client.getClient().create(Service.class);
+        getSupportActionBar().hide();
     }
 
     @Override

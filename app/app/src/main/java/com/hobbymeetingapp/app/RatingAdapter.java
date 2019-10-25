@@ -23,7 +23,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     @NonNull
     @Override
     public RatingAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_rating,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_rating_item,parent,false);
         return new ViewHolder(view);
     }
 

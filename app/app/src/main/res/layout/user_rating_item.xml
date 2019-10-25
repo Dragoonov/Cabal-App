@@ -30,8 +30,8 @@
 
         <ImageView
             android:id="@+id/rateSmile"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="64dp"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
@@ -43,8 +43,8 @@
 
         <ImageView
             android:id="@+id/rateMeh"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
@@ -58,8 +58,8 @@
 
         <ImageView
             android:id="@+id/rateFrown"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="64dp"
             android:layout_marginBottom="32dp"

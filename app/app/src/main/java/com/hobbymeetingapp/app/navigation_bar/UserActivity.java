@@ -25,6 +25,7 @@ public class UserActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new SearchFragment()).commit();
         }
+        getSupportActionBar().hide();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
