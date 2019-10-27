@@ -27,4 +27,6 @@
     <string name="mine">Mine</string>
     <string name="rate_users">Rate users</string>
     <string name="set_avatar">Set avatar</string>
+    <string name="ensure_quit">Are you sure to quit?</string>
+    <string name="no">No</string>
 </resources>
