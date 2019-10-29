@@ -36,4 +36,11 @@
         tools:context=".MyEventsFragment"
         android:layout_weight="1"/>
 
+    <Button
+        android:id="@+id/btnAddEvent"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/add_event" />
+
 </LinearLayout>
