@@ -1,4 +1,5 @@
 package com.hobbymeetingapp.app.hobbies_edit_list;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,7 +25,7 @@ public class Hobbies {
 
     private static Map<String, Boolean> switchesState = new HashMap<>();
 
-    public static void initializeHobbies(AppCompatActivity activity) {
+    public static void initializeHobbies(Activity activity) {
 
         List<HobbyTypeModel> hobbyTypeModels = JsonLoader.loadHobbies(activity);
         LinearLayout linearView = activity.findViewById(R.id.hobbiesContainer);

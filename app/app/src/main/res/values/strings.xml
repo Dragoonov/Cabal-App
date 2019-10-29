@@ -65,6 +65,10 @@
         <item>30</item>
         <item>45</item>
     </string-array>
-
+    <string name="change_avatar">Change avatar</string>
+    <string name="nickname">Nickname</string>
+    <string name="radius">Radius(km)</string>
+    <string name="save">Save</string>
+    <string name="distance">distance</string>
 </resources>
 
