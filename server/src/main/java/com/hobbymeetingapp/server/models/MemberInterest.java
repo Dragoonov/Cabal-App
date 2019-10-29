@@ -12,12 +12,14 @@ public class MemberInterest extends EntityDel {
     private Integer id;
 
     @NotNull
-    @Column(name = "MemberId")
-    private Integer memberId;
+    @ManyToOne
+    @JoinColumn(name = "MemberId")
+    private Member member;
 
     @NotNull
-    @Column(name = "InterestId")
-    private Integer interestId;
+    @ManyToOne
+    @JoinColumn(name = "InterestId")
+    private Interest interest;
 
     public Integer getId() {
         return id;
@@ -27,19 +29,19 @@ public class MemberInterest extends EntityDel {
         this.id = id;
     }
 
-    public Integer getMemberId() {
-        return memberId;
+    public Member getMember() {
+        return member;
     }
 
-    public void setMemberId(Integer memberId) {
-        this.memberId = memberId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
-    public Integer getInterestId() {
-        return interestId;
+    public Interest getInterest() {
+        return interest;
     }
 
-    public void setInterestId(Integer interestId) {
-        this.interestId = interestId;
+    public void setInterest(Interest interest) {
+        this.interest = interest;
     }
 }

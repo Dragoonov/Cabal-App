@@ -12,12 +12,14 @@ public class MemberEvent extends EntityDel{
     private Integer id;
 
     @NotNull
-    @Column(name = "MemberId")
-    private Integer memberId;
+    @ManyToOne
+    @JoinColumn(name = "MemberId")
+    private Member member;
 
     @NotNull
-    @Column(name = "EventId")
-    private Integer eventId;
+    @ManyToOne
+    @JoinColumn(name = "EventId")
+    private Event event;
 
     //Default value = false
     @NotNull
@@ -32,20 +34,20 @@ public class MemberEvent extends EntityDel{
         this.id = id;
     }
 
-    public Integer getMemberId() {
-        return memberId;
+    public Member getMember() {
+        return member;
     }
 
-    public void setMemberId(Integer memberId) {
-        this.memberId = memberId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
-    public Integer getEventId() {
-        return eventId;
+    public Event getEvent() {
+        return event;
     }
 
-    public void setEventId(Integer eventId) {
-        this.eventId = eventId;
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
     public Boolean getAccepted() {

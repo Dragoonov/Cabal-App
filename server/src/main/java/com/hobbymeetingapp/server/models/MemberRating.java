@@ -13,12 +13,14 @@ public class MemberRating extends EntityDel {
 
     //Użytkownik którego oceniamy
     @NotNull
-    @Column(name = "MemberId")
-    private Integer memberId;
+    @ManyToOne
+    @JoinColumn(name = "MemberId")
+    private Member member;
 
     @NotNull
-    @Column(name = "RatingStatusId")
-    private Integer ratingStatusId;
+    @ManyToOne
+    @JoinColumn(name = "RatingStatusId")
+    private RatingStatus ratingStatus;
 
     public Integer getId() {
         return id;
@@ -28,19 +30,19 @@ public class MemberRating extends EntityDel {
         this.id = id;
     }
 
-    public Integer getMemberId() {
-        return memberId;
+    public Member getMember() {
+        return member;
     }
 
-    public void setMemberId(Integer memberId) {
-        this.memberId = memberId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
-    public Integer getRatingStatusId() {
-        return ratingStatusId;
+    public RatingStatus getRatingStatus() {
+        return ratingStatus;
     }
 
-    public void setRatingStatusId(Integer ratingStatusId) {
-        this.ratingStatusId = ratingStatusId;
+    public void setRatingStatus(RatingStatus ratingStatus) {
+        this.ratingStatus = ratingStatus;
     }
 }
