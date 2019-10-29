@@ -36,7 +36,8 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
     @Override
     public MyEventsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_events_item,parent,false);
-        // TODO: view.setOnClickListener(v -> ((AppCompatActivity)v.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new EventDetailsFragment()).commit());
+        // TODO:
+
         return new ViewHolder(view);
     }
 
@@ -81,6 +82,11 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            itemView.setOnClickListener(v -> (
+                    (AppCompatActivity)v.getContext()).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, EventDetailsFragment.newInstance(filteredModels.get(getAdapterPosition()))).commit()
+            );
 
             myEventName = itemView.findViewById(R.id.myEventName);
             myEventDate = itemView.findViewById(R.id.myEventDate);
