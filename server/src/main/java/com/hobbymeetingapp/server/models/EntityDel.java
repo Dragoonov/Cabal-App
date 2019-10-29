@@ -1,9 +1,11 @@
 package com.hobbymeetingapp.server.models;
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@MappedSuperclass
 public class EntityDel {
     //Pola które się powtarzają w praktycznie każdej encji. Dodałem i zrobiłem,
     //że każda encja to dziedziczy, ale nie mam pojęcia czy Spring tak działa
@@ -24,7 +26,7 @@ public class EntityDel {
     @Column(name = "CreatedAt")
     private Date createdAt;
 
-    public Boolean getDeleted() {
+    public Boolean isDeleted() {
         return isDeleted;
     }
 

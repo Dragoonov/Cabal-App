@@ -13,16 +13,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
 @RestController
+@RequestMapping(value = "/member")
 public class MemberController {
     @Autowired
     MemberRepository members;
 
-    @PostMapping(value = "/member/login")
+    @PostMapping(value = "/login")
     public ResponseEntity<GenericResponse> loginUser(@Valid @RequestBody MemberToken token) {
         GenericResponse r = new GenericResponse();
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new JacksonFactory()).build();
@@ -46,10 +48,10 @@ public class MemberController {
 
         // TODO: fill other details
         Member m = new Member();
-        m.setNickname("");
-        m.setAvatar("");
+        m.setName("");
         m.setEmail(mail);
-        m.setPassword("");
+        m.setSearchRadius("");
+        m.setDeleted(false);
         members.save(m);
 
         r.getMessages().add("User registered");

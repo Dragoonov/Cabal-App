@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class UserRating extends EntityDel {
+public class MemberRating extends EntityDel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,8 +13,8 @@ public class UserRating extends EntityDel {
 
     //Użytkownik którego oceniamy
     @NotNull
-    @Column(name = "UserId")
-    private Integer userId;
+    @Column(name = "MemberId")
+    private Integer memberId;
 
     @NotNull
     @Column(name = "RatingStatusId")
@@ -28,12 +28,12 @@ public class UserRating extends EntityDel {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getMemberId() {
+        return memberId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
     }
 
     public Integer getRatingStatusId() {

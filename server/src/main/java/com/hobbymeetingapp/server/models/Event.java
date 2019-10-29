@@ -17,8 +17,9 @@ public class Event extends EntityDel {
     private String name;
 
     @NotNull
-    @Column(name = "CreatorId")
-    private Integer creatorId;
+    @ManyToOne
+    @JoinColumn(name = "CreatorId")
+    private Member creator;
 
     //Podejrzewam, że lokalizacja z GoogleAPI będzie stringiem.
     @NotNull
@@ -26,8 +27,9 @@ public class Event extends EntityDel {
     private String locationId;
 
     @NotNull
-    @Column(name = "InterestId")
-    private Integer interestId;
+    @ManyToOne
+    @JoinColumn(name = "InterestId")
+    private Interest interest;
 
     @NotNull
     @Column(name = "Date")
@@ -63,12 +65,12 @@ public class Event extends EntityDel {
         this.name = name;
     }
 
-    public Integer getCreatorId() {
-        return creatorId;
+    public Member getCreator() {
+        return creator;
     }
 
-    public void setCreatorId(Integer creatorId) {
-        this.creatorId = creatorId;
+    public void setCreator(Member creator) {
+        this.creator = creator;
     }
 
     public String getLocationId() {
@@ -79,12 +81,12 @@ public class Event extends EntityDel {
         this.locationId = locationId;
     }
 
-    public Integer getInterestId() {
-        return interestId;
+    public Interest getInterest() {
+        return interest;
     }
 
-    public void setInterestId(Integer interestId) {
-        this.interestId = interestId;
+    public void setInterestId(Interest interest) {
+        this.interest = interest;
     }
 
     public java.util.Date getDate() {

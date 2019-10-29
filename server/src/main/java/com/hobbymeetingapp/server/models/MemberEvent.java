@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class UserEvent extends EntityDel{
+public class MemberEvent extends EntityDel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,8 +12,8 @@ public class UserEvent extends EntityDel{
     private Integer id;
 
     @NotNull
-    @Column(name = "UserId")
-    private Integer userId;
+    @Column(name = "MemberId")
+    private Integer memberId;
 
     @NotNull
     @Column(name = "EventId")
@@ -32,12 +32,12 @@ public class UserEvent extends EntityDel{
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getMemberId() {
+        return memberId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
     }
 
     public Integer getEventId() {
