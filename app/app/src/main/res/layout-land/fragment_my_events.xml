@@ -14,19 +14,28 @@
         android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp">
 
-        <Switch
-            android:id="@+id/mineSwitch"
-            android:layout_width="100dp"
+        <CheckBox
+            android:id="@+id/guestSwitch"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="@string/mine" />
+            android:text="@string/guest" />
 
-        <Switch
+        <CheckBox
+            android:id="@+id/authorSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/author" />
+
+        <CheckBox
             android:id="@+id/finishedSwitch"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/finished" />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

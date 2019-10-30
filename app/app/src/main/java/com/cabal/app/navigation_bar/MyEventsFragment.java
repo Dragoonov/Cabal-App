@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Switch;
+import android.widget.CheckBox;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -20,25 +20,28 @@ import com.cabal.app.Utils.JsonLoader;
 
 import java.util.Objects;
 
-public class MyEventsFragment extends Fragment {
+import java.util.Objects;
 
-    private Switch mineFilter;
-    private Switch finishedFilter;
-    private Button btnAddEvent;
+public class MyEventsFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_events, container, false);
-        btnAddEvent = view.findViewById(R.id.btnAddEvent);
-        mineFilter = view.findViewById(R.id.mineSwitch);
-        finishedFilter = view.findViewById(R.id.finishedSwitch);
+        Button btnAddEvent = view.findViewById(R.id.btnAddEvent);
+        CheckBox authorFilter = view.findViewById(R.id.authorSwitch);
+        CheckBox guestFilter = view.findViewById(R.id.guestSwitch);
+        CheckBox finishedFilter = view.findViewById(R.id.finishedSwitch);
         MyEventsAdapter adapter = new MyEventsAdapter(JsonLoader.loadEvents(view.getContext()));
-        mineFilter.setOnCheckedChangeListener((v, checked) -> {
-            Filters.MINE_FILTER = checked;
+        authorFilter.setOnCheckedChangeListener((v, checked) -> {
+            Filters.AUTHOR_FILTER = checked;
             adapter.getFilter().filter("");
         });
-        finishedFilter.setOnCheckedChangeListener((v,checked) -> {
+        guestFilter.setOnCheckedChangeListener((v, checked) -> {
+            Filters.GUEST_FILTER = checked;
+            adapter.getFilter().filter("");
+        });
+        finishedFilter.setOnCheckedChangeListener((v, checked) -> {
             Filters.FINISHED_FILTER = checked;
             adapter.getFilter().filter("");
         });

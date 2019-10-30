@@ -19,12 +19,14 @@
     <string name="profile">Profile</string>
     <string name="my_events">My Events</string>
     <string name="search">Search</string>
+    <string name="browse">Browse</string>
     <string name="nickname_add">Add your nickname</string>
     <string name="hobby_add">Choose your hobbies</string>
     <string name="rate_user">Rate user %s</string>
     <string name="faces_author">https://www.flaticon.com/authors/dave-gandy</string>
     <string name="finished">Finished</string>
-    <string name="mine">Mine</string>
+    <string name="author">Author</string>
+    <string name="guest">Guest</string>
     <string name="rate_users">Rate users</string>
     <string name="set_avatar">Set avatar</string>
     <string name="ensure_quit">Are you sure to quit?</string>
