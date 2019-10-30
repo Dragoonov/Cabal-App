@@ -1,38 +1,46 @@
 [
   {
+    "id": 0,
     "image": "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-soccer.png&w=288&h=288&transparent=true",
     "name": "Piłka nożna",
     "creator": "Jakub Lipowski",
     "date": "21.21.21",
-    "members": ["Marian", "Heniu", "Zdzisiu"],
+    "members": ["Marian", "Heniu", "Zdzisiu", "Stachu", "Wiesiek"],
     "location": "Melina u Mariana",
-    "description": "No granie w gałe, nie"
+    "description": "No granie w gałe, nie trololololololololololooooooooooooooo",
+    "finished": "true"
   },
   {
+    "id": 1,
     "image": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg",
     "name": "Brydż",
-    "creator": "Leszek Celary",
+    "creator": "Penetrator",
     "date": "01.12.22",
     "members": ["Leeroy", "Jenkins"],
     "location": "Elegancka laweczka w Pińczowie",
-    "description": "Elegancka partyjka"
+    "description": "Elegancka partyjka",
+    "finished": "false"
   },
   {
+    "id": 2,
     "image": "https://images-na.ssl-images-amazon.com/images/I/71QiahN3HEL._SY355_.jpg",
     "name": "Scrabble",
     "creator": "Mikołaj Kalinowski",
     "date": "01.01.00",
     "members": ["Seba spod dwójki", "Karyna spod dwójki", "Listonosz"],
     "location": "Tylne siedzenie BMW",
-    "description": "Układanie literek"
+    "description": "Układanie literek",
+    "finished": "true"
   },
   {
+    "id": 3,
     "image": "https://zabawkiniebanalne.pl/environment/cache/images/500_500_productGfx_17122.jpg",
     "name": "Warcaby",
-    "creator": "Mateusz Nowak",
+    "creator": "Penetrator",
     "date": "10.02.10",
     "members": ["Mateusz Nowak", ":("],
     "location": "Piwnica pod blokiem",
-    "description": "Walka pionków"
+    "description": "Walka pionków",
+    "finished": "false"
   }
 ]

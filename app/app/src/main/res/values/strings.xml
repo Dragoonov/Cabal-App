@@ -16,4 +16,59 @@
     <string name="members">Members</string>
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>
+    <string name="profile">Profile</string>
+    <string name="my_events">My Events</string>
+    <string name="search">Search</string>
+    <string name="nickname_add">Add your nickname</string>
+    <string name="hobby_add">Choose your hobbies</string>
+    <string name="rate_user">Rate user %s</string>
+    <string name="faces_author">https://www.flaticon.com/authors/dave-gandy</string>
+    <string name="finished">Finished</string>
+    <string name="mine">Mine</string>
+    <string name="rate_users">Rate users</string>
+    <string name="set_avatar">Set avatar</string>
+    <string name="ensure_quit">Are you sure to quit?</string>
+    <string name="no">No</string>
+    <string name="type_of_event">Type of event</string>
+    <string name="choose_date">Choose a date</string>
+    <string name="choose_location">Choose a location</string>
+    <string name="choose_number">Choose a number</string>
+    <string name="duration">Duration</string>
+    <string name="number_of_members">Number of members</string>
+    <string name="add_event">Add event</string>
+    <string name="hours">h</string>
+    <string name="minutes">min</string>
+    <string-array name="categories_array">
+        <item>Koszykówka</item>
+        <item>Siatkówka</item>
+        <item>Tenis</item>
+        <item>Biegi</item>
+        <item>Chińczyk</item>
+        <item>Monopoly</item>
+        <item>Eurobusiness</item>
+        <item>Poker</item>
+        <item>Brydż</item>
+        <item>Makao</item>
+    </string-array>
+    <string-array name="hours_array">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+    <string-array name="minutes_array">
+        <item>0</item>
+        <item>15</item>
+        <item>30</item>
+        <item>45</item>
+    </string-array>
+    <string name="change_avatar">Change avatar</string>
+    <string name="nickname">Nickname</string>
+    <string name="radius">Radius(km)</string>
+    <string name="save">Save</string>
+    <string name="distance">distance</string>
 </resources>
+

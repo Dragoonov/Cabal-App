@@ -1,39 +1,67 @@
 package com.hobbymeetingapp.server.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Member {
+public class Member extends EntityDel {
+    //Będę potrzebował także pomocy z ustaleniem Constraint - Default value dla uproszczenia.
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
     private Integer id;
 
     @NotNull
-    private String nickname;
+    @Column(name = "Name")
+    private String name;
+
     @NotNull
-    private String password;
-    @NotNull
-    @NotEmpty
+    @Email
+    @Column(name = "Email")
     private String email;
-    @NotNull
+
+    @Column(name = "Token")
+    private String token;
+
+    @Column(name = "Avatar")
     private String avatar;
 
-    public String getNickname() {
-        return nickname;
+    @NotNull
+    @Column(name = "SearchRadius")
+    private String searchRadius;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getPassword() {
-        return password;
+    public String getName() {
+        return name;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getAvatar() {
@@ -44,11 +72,11 @@ public class Member {
         this.avatar = avatar;
     }
 
-    public String getEmail() {
-        return email;
+    public String getSearchRadius() {
+        return searchRadius;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setSearchRadius(String searchRadius) {
+        this.searchRadius = searchRadius;
     }
 }

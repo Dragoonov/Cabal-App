@@ -11,6 +11,6 @@ public interface Service {
     @GET("/health")
     Call<Health> getHealth();
 
-    @POST("/member/login")
+    @POST("member/login")
     Call<JsonObject> postToken(@Body JsonObject jsonObject);
 }

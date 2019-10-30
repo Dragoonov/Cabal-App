@@ -3,7 +3,6 @@ package com.hobbymeetingapp.app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,12 +16,13 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.JsonObject;
+import com.hobbymeetingapp.app.navigation_bar.UserActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class WelcomeActivity extends AppCompatActivity implements  View.OnClickListener{
+public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RC_SIGN_IN = 1;
     private static final String TAG = "WelcomeActivity";
@@ -48,15 +48,15 @@ public class WelcomeActivity extends AppCompatActivity implements  View.OnClickL
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
         service = Client.getClient().create(Service.class);
+        getSupportActionBar().hide();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if(account != null)
-        {
-            //USER IS SIGNED IN - launch next activity
+        if (account != null) {
+            sendUserDataToBackend(account.getIdToken());
         }
     }
 
@@ -76,10 +76,7 @@ public class WelcomeActivity extends AppCompatActivity implements  View.OnClickL
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
@@ -89,42 +86,31 @@ public class WelcomeActivity extends AppCompatActivity implements  View.OnClickL
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-            if(account != null)
-            {
-                //USER IS SIGNED IN - launch next activity
+            if (account != null) {
                 sendUserDataToBackend(account.getIdToken());
-
-                String personName = account.getDisplayName();
-                String personGivenName = account.getGivenName();
-                String personFamilyName = account.getFamilyName();
-                String personEmail = account.getEmail();
-                String personId = account.getId();
-                String idToken = account.getIdToken();
-                Uri photoUrl = account.getPhotoUrl();
-
-                Log.d(TAG,personName + '\n' + personGivenName + '\n' + personFamilyName + '\n' + personEmail + '\n' + personId + '\n' + idToken + '\n' + photoUrl);
             }
         } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
         }
     }
 
-    private void sendUserDataToBackend(String idToken)
-    {
+    private void sendUserDataToBackend(String idToken) {
         JsonObject requestBody = new JsonObject();
-        requestBody.addProperty("token",idToken);
+        requestBody.addProperty("token", idToken);
         tokenCall = service.postToken(requestBody);
         tokenCall.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Toast.makeText(getApplicationContext(),response.code() + ": " + response.message(),Toast.LENGTH_LONG).show();
+                if (response.code() == 200) {
+                    startActivity(new Intent(WelcomeActivity.this, UserActivity.class));
+                } else if (response.code() == 201) {
+                    startActivity(new Intent(WelcomeActivity.this,AfterRegisterActivity.class));
+                }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Porażka!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Porażka!", Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -1,0 +1,60 @@
+[
+  {
+    "type": "Sport",
+    "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg",
+    "hobbies": [
+      {
+        "name": "Koszykówka",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      },
+      {
+        "name": "Siatkówka",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      },
+      {
+        "name": "Tenis",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      },
+      {
+        "name": "Biegi",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      }
+    ]
+  },
+  {
+    "type": "Gry planszowe",
+    "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg",
+    "hobbies": [
+      {
+        "name": "Chińczyk",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      },
+      {
+        "name": "Monopoly",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      },
+      {
+        "name": "Eurobusiness",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      }
+    ]
+  },
+  {
+    "type": "Gry karciane",
+    "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg",
+    "hobbies": [
+      {
+        "name": "Poker",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      },
+      {
+        "name": "Brydż",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      },
+      {
+        "name": "Makao",
+        "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
+      }
+    ]
+  }
+]
