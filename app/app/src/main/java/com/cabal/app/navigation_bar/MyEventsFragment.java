@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 
 import androidx.annotation.Nullable;
@@ -17,9 +16,7 @@ import com.cabal.app.MyEventsAdapter;
 import com.cabal.app.R;
 import com.cabal.app.Utils.Filters;
 import com.cabal.app.Utils.JsonLoader;
-
-import java.util.Objects;
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Objects;
 
 public class MyEventsFragment extends Fragment {
@@ -28,7 +25,7 @@ public class MyEventsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_events, container, false);
-        Button btnAddEvent = view.findViewById(R.id.btnAddEvent);
+        FloatingActionButton btnAddEvent = view.findViewById(R.id.btnAddEvent);
         CheckBox authorFilter = view.findViewById(R.id.authorSwitch);
         CheckBox guestFilter = view.findViewById(R.id.guestSwitch);
         CheckBox finishedFilter = view.findViewById(R.id.finishedSwitch);
