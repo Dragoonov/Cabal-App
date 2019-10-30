@@ -14,7 +14,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     defaultConfig {
-        applicationId "com.hobbymeetingapp.app"
+        applicationId "com.cabal.app"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1

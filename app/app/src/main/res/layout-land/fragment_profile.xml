@@ -75,7 +75,7 @@
             android:text="Zainteresowania"
             android:textSize="35sp" />
 
-        <com.hobbymeetingapp.app.Utils.NonScrollListView
+        <com.cabal.app.Utils.NonScrollListView
             android:id="@+id/listOfInterests"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
