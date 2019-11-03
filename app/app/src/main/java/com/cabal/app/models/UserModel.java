@@ -13,8 +13,8 @@ public class UserModel {
     @SerializedName("tokenId")
     private String tokenId;
 
-    @SerializedName("avatarUri")
-    private String avatarUri;
+    @SerializedName("avatarImage")
+    private String avatarImage;
 
     @SerializedName("hobbies")
     private HobbyModel[] hobbies;
@@ -44,11 +44,11 @@ public class UserModel {
     }
 
     public String getAvatarUri() {
-        return avatarUri;
+        return avatarImage;
     }
 
     public void setAvatarUri(String avatarUri) {
-        this.avatarUri = avatarUri;
+        this.avatarImage = avatarUri;
     }
 
     public HobbyModel[] getHobbies() {
