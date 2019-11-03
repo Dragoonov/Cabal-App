@@ -43,8 +43,12 @@ public class MyEventsFragment extends Fragment {
             adapter.getFilter().filter("");
         });
 
-        btnAddEvent.setOnClickListener(v -> Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new AddEventFragment()).commit());
+        btnAddEvent.setOnClickListener(v -> Objects.requireNonNull(getActivity())
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, new AddEventFragment())
+                .addToBackStack(null)
+                .commit());
 
         RecyclerView recyclerView = view.findViewById(R.id.recycleMyEvents);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));

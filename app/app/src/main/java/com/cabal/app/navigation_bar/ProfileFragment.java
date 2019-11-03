@@ -42,8 +42,12 @@ public class ProfileFragment extends Fragment {
 
 
         btnEditProfile.setOnClickListener(v ->
-                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new EditProfileFragment()).commit());
+                Objects.requireNonNull(getActivity())
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new EditProfileFragment())
+                        .addToBackStack(null)
+                        .commit());
 
         return view;
     }

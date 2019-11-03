@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -84,9 +85,12 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
             super(itemView);
 
             itemView.setOnClickListener(v -> (
-                    (AppCompatActivity)v.getContext()).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, EventDetailsFragment.newInstance(filteredModels.get(getAdapterPosition()))).commit()
-            );
+                    (AppCompatActivity)v.getContext())
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, EventDetailsFragment.newInstance(filteredModels.get(getAdapterPosition())))
+                    .addToBackStack(null)
+                    .commit());
 
             myEventName = itemView.findViewById(R.id.myEventName);
             myEventDate = itemView.findViewById(R.id.myEventDate);
@@ -95,7 +99,14 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
             myEventPicture = itemView.findViewById(R.id.myEventPicture);
             myEventRateButton = itemView.findViewById(R.id.myEventRateUsers);
 
-            myEventRateButton.setOnClickListener(v -> ((AppCompatActivity)v.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new RatingFragment()).commit());
+            myEventRateButton.setOnClickListener(v -> {
+                FragmentManager manager = ((AppCompatActivity)v.getContext())
+                    .getSupportFragmentManager();
+                manager.beginTransaction()
+                    .replace(R.id.fragment_container,new RatingFragment())
+                    .addToBackStack(null)
+                    .commit();
+            });
         }
 
         void bind(int position) {

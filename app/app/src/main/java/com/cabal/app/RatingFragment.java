@@ -3,6 +3,7 @@ package com.cabal.app;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,8 +30,14 @@ public class RatingFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rating, container, false);
         RecyclerView users = view.findViewById(R.id.recycleUsers);
-        view.findViewById(R.id.rateOk).setOnClickListener(view1 -> Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new MyEventsFragment()).commit());
+        view.findViewById(R.id.rateOk).setOnClickListener(view1 -> {
+            FragmentManager manager = Objects.requireNonNull(getActivity())
+                .getSupportFragmentManager();
+            manager.beginTransaction()
+                .remove(this)
+                .commit();
+            manager.popBackStack();
+                });
         users.setLayoutManager(new LinearLayoutManager(getContext()));
         RatingAdapter adapter = new RatingAdapter(JsonLoader.loadUsers(getContext()));
         users.setAdapter(adapter);

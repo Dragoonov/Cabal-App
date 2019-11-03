@@ -3,6 +3,7 @@ package com.cabal.app;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -34,7 +35,10 @@ public class AfterRegisterActivity extends AppCompatActivity {
             Hobbies.initializeHobbies(this);
         }
         afterRegisterAccept = findViewById(R.id.afterRegisterAccept);
-        afterRegisterAccept.setOnClickListener(view -> startActivity(new Intent(AfterRegisterActivity.this, UserActivity.class)));
+        afterRegisterAccept.setOnClickListener(view -> {
+            startActivity(new Intent(AfterRegisterActivity.this, UserActivity.class));
+            finish();
+        });
         avatarImage = findViewById(R.id.avatarImage);
         Uri fileUri = Uri.parse("android.resource://com.cabal.app/" + R.drawable.default_avatar);
         avatarUriString = fileUri.toString();

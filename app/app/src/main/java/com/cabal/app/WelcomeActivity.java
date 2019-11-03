@@ -104,9 +104,13 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.code() == 200) {
-                    startActivity(new Intent(WelcomeActivity.this, UserActivity.class));
+                    Intent intent = new Intent(WelcomeActivity.this, UserActivity.class);
+                    startActivity(intent);
+                    finish();
                 } else if (response.code() == 201) {
-                    startActivity(new Intent(WelcomeActivity.this,AfterRegisterActivity.class));
+                    Intent intent = new Intent(WelcomeActivity.this, AfterRegisterActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
 
