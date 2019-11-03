@@ -13,7 +13,7 @@
   {
     "id": 1,
     "image": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg",
-    "name": "Brydż",
+    "name": "Piłka nożna",
     "creator": "Penetrator",
     "date": "01.12.22",
     "members": ["Leeroy", "Jenkins"],
@@ -24,7 +24,7 @@
   {
     "id": 2,
     "image": "https://images-na.ssl-images-amazon.com/images/I/71QiahN3HEL._SY355_.jpg",
-    "name": "Scrabble",
+    "name": "Piłka nożna",
     "creator": "Mikołaj Kalinowski",
     "date": "01.01.00",
     "members": ["Seba spod dwójki", "Karyna spod dwójki", "Listonosz"],
@@ -35,7 +35,29 @@
   {
     "id": 3,
     "image": "https://zabawkiniebanalne.pl/environment/cache/images/500_500_productGfx_17122.jpg",
-    "name": "Warcaby",
+    "name": "Piłka nożna",
+    "creator": "Penetrator",
+    "date": "10.02.10",
+    "members": ["Mateusz Nowak", ":("],
+    "location": "Piwnica pod blokiem",
+    "description": "Walka pionków",
+    "finished": "false"
+  },
+  {
+    "id": 4,
+    "image": "https://zabawkiniebanalne.pl/environment/cache/images/500_500_productGfx_17122.jpg",
+    "name": "Brydż",
+    "creator": "Penetrator",
+    "date": "10.02.10",
+    "members": ["Mateusz Nowak", ":("],
+    "location": "Piwnica pod blokiem",
+    "description": "Walka pionków",
+    "finished": "false"
+  },
+  {
+    "id": 5,
+    "image": "https://zabawkiniebanalne.pl/environment/cache/images/500_500_productGfx_17122.jpg",
+    "name": "Piłka nożna",
     "creator": "Penetrator",
     "date": "10.02.10",
     "members": ["Mateusz Nowak", ":("],

@@ -26,6 +26,13 @@ import com.mindorks.placeholderview.annotations.swipe.SwipeOutState;
 @Layout(R.layout.fragment_search_item)
 public class EventCard {
 
+    public interface SwipeListener {
+        void receiveSwipedOutCard(EventCard card);
+        void receiveSwipedInCard(EventCard card);
+    }
+
+    private SwipeListener listener;
+
     @View(R.id.cardEventImage)
     private ImageView cardEventImage;
 
@@ -51,10 +58,19 @@ public class EventCard {
     private Context context;
     private SwipePlaceHolderView swipePlaceHolderView;
 
-    public EventCard(Context context, EventModel eventModel, SwipePlaceHolderView swipeView) {
+    public EventCard(Context context, EventModel eventModel, SwipePlaceHolderView swipeView, SwipeListener listener) {
         this.context = context;
         this.eventModel = eventModel;
         swipePlaceHolderView = swipeView;
+        this.listener = listener;
+    }
+
+    public String getCardEventName() {
+        return eventModel.getName();
+    }
+
+    public EventModel getEventModel() {
+        return eventModel;
     }
 
     @Resolve
@@ -72,8 +88,8 @@ public class EventCard {
     }
 
     @SwipeOut
-    private void onSwipedOut() {
-        Log.d("EVENT", "onSwipedOut");
+    private void onSwipedOut(){
+        listener.receiveSwipedOutCard(this);
     }
 
     @SwipeCancelState
@@ -83,7 +99,7 @@ public class EventCard {
 
     @SwipeIn
     private void onSwipeIn() {
-        Log.d("EVENT", "onSwipedIn");
+        listener.receiveSwipedInCard(this);
     }
 
     @SwipeInState

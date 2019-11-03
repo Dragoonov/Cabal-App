@@ -1,8 +1,11 @@
 package com.cabal.app.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class EventModel {
+public class EventModel implements Parcelable {
 
     @SerializedName("id")
     private String id;
@@ -30,6 +33,30 @@ public class EventModel {
 
     @SerializedName("finished")
     private boolean finished;
+
+    private EventModel(Parcel in) {
+        id = in.readString();
+        image = in.readString();
+        name = in.readString();
+        creator = in.readString();
+        date = in.readString();
+        members = in.createStringArray();
+        location = in.readString();
+        description = in.readString();
+        finished = in.readByte() != 0;
+    }
+
+    public static final Creator<EventModel> CREATOR = new Creator<EventModel>() {
+        @Override
+        public EventModel createFromParcel(Parcel in) {
+            return new EventModel(in);
+        }
+
+        @Override
+        public EventModel[] newArray(int size) {
+            return new EventModel[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -101,5 +128,23 @@ public class EventModel {
 
     public void setFinished(boolean finished) {
         this.finished = finished;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(image);
+        dest.writeString(name);
+        dest.writeString(creator);
+        dest.writeString(date);
+        dest.writeStringArray(members);
+        dest.writeString(location);
+        dest.writeString(description);
+        dest.writeByte((byte) (finished ? 1 : 0));
     }
 }
