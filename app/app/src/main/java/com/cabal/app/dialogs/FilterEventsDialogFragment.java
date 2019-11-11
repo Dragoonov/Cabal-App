@@ -1,6 +1,4 @@
 package com.cabal.app.dialogs;
-
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 
@@ -9,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.cabal.app.R;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.Objects;
 
@@ -40,7 +39,7 @@ public class FilterEventsDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
         builder.setMessage(getString(R.string.filterResult, eventName))
                 .setPositiveButton(R.string.accept, (dialog, id) -> listener.onDialogPositiveClick(this))
                 .setNegativeButton(R.string.reject, (dialog, id) -> listener.onDialogNegativeClick(this));

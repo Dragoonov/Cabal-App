@@ -2,18 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/item"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        style="@style/filters"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp">
+        android:orientation="horizontal">
 
         <CheckBox
             android:id="@+id/guestSwitch"
@@ -59,16 +60,16 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnAddEvent"
+            style="@style/FAB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/colorAccent"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/recycleMyEvents"
-            app:srcCompat="@drawable/add" />
+            app:srcCompat="@drawable/add2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

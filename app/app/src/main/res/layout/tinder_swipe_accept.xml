@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="40dp"
         android:text="@string/accept"
-        android:textColor="@android:color/holo_green_light"
         android:textSize="32sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/accent"/>
 </LinearLayout>

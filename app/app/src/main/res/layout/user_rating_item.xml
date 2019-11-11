@@ -26,7 +26,7 @@
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
             android:id="@+id/rateSmile"
@@ -39,7 +39,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rateUserDescription"
-            app:srcCompat="@drawable/smile" />
+            app:srcCompat="@drawable/smile"
+            style="@style/icon"/>
 
         <ImageView
             android:id="@+id/rateMeh"
@@ -54,7 +55,8 @@
             app:layout_constraintEnd_toStartOf="@+id/rateFrown"
             app:layout_constraintStart_toEndOf="@+id/rateSmile"
             app:layout_constraintTop_toBottomOf="@+id/rateUserDescription"
-            app:srcCompat="@drawable/meh_face_emoticon" />
+            app:srcCompat="@drawable/meh_face_emoticon"
+            style="@style/icon"/>
 
         <ImageView
             android:id="@+id/rateFrown"
@@ -67,7 +69,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rateUserDescription"
-            app:srcCompat="@drawable/frown" />
+            app:srcCompat="@drawable/frown"
+            style="@style/icon"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

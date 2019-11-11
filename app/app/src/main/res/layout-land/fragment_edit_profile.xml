@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -33,7 +32,8 @@
                 android:id="@+id/changeAvatarButton"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="@string/change_avatar" />
+                android:text="@string/change_avatar"
+                style="@style/ButtonCabal"/>
         </LinearLayout>
 
         <LinearLayout
@@ -48,7 +48,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/nickname"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:textSize="20sp"
                 android:layout_weight="1" />
 
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1" />
         </LinearLayout>
 
@@ -74,7 +74,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/email"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:textSize="20sp"
                 android:layout_weight="1" />
 
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1" />
         </LinearLayout>
 
@@ -100,7 +100,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/radius"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:textSize="20sp"
                 android:layout_weight="4" />
 
@@ -108,7 +108,7 @@
                 android:id="@+id/seekBarRadius"
                 android:max="10"
                 android:progress="5"
-                android:layout_marginRight="24dp"
+                android:layout_marginEnd="24dp"
                 android:layout_weight="3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
@@ -117,7 +117,7 @@
                 android:id="@+id/distance"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:textSize="20sp"
                 android:layout_weight="1" />
         </LinearLayout>
@@ -132,7 +132,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/save" />
+            android:text="@string/save"
+            style="@style/ButtonCabal"/>
 
     </LinearLayout>
 </ScrollView>

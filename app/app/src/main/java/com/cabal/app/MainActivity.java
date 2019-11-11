@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements AlertDialogFragme
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "channel")
-                .setSmallIcon(R.drawable.expand_arrow)
+                .setSmallIcon(R.drawable.ic_stat_name)
                 .setContentTitle("Tytul notyfikacji")
                 .setContentText("Przejdz do AfterRegister")
                 .setContentIntent(pendingIntent)

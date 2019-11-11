@@ -62,7 +62,8 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Edit profile" />
+                    android:text="Edit profile"
+                    style="@style/ButtonCabal"/>
 
             </LinearLayout>
         </LinearLayout>

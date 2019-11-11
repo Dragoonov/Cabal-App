@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.cabal.app.R;
@@ -50,6 +49,7 @@ public class UserActivity extends AppCompatActivity {
                 }
 
                 assert selectedFragment != null;
+                getSupportFragmentManager().popBackStack();
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, selectedFragment)
