@@ -4,13 +4,14 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.hobbymeetingapp.server.models.GenericResponse;
-import com.hobbymeetingapp.server.models.Member;
-import com.hobbymeetingapp.server.models.MemberToken;
+import com.hobbymeetingapp.server.models.*;
 import com.hobbymeetingapp.server.repositories.MemberRepository;
+import com.hobbymeetingapp.server.services.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,39 +23,44 @@ import javax.validation.Valid;
 @RequestMapping(value = "/member")
 public class MemberController {
     @Autowired
-    MemberRepository members;
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private TokenService tokenService;
+    @Autowired
+    private MemberRepository members;
 
     @PostMapping(value = "/login")
-    public ResponseEntity<GenericResponse> loginUser(@Valid @RequestBody MemberToken token) {
-        GenericResponse r = new GenericResponse();
+    public ResponseEntity<BaseResponse> loginUser(@Valid @RequestBody TokenRequest request) {
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new JacksonFactory()).build();
         String mail;
 
         try {
-            GoogleIdToken idToken = verifier.verify(token.getToken());
+            GoogleIdToken idToken = verifier.verify(request.getToken());
             if (idToken == null)
                 throw new Exception("Token is invalid");
 
             mail = idToken.getPayload().getEmail();
         } catch (Exception e) {
-            r.getErrors().add(e.getMessage());
-            return new ResponseEntity<>(r, HttpStatus.BAD_REQUEST);
+            GenericResponse response = new GenericResponse();
+            response.getErrors().add(e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        if (members.findByEmail(mail).size() != 0) {
-            r.getMessages().add("User logged in");
-            return new ResponseEntity<>(r, HttpStatus.OK);
+        HttpStatus status = HttpStatus.OK;
+        if (!members.findByEmail(mail).isPresent()) {
+            // TODO: fill other details
+            Member m = new Member();
+            m.setName("");
+            m.setEmail(mail);
+            m.setSearchRadius("");
+            m.setDeleted(false);
+            members.save(m);
+            status = HttpStatus.CREATED;
         }
 
-        // TODO: fill other details
-        Member m = new Member();
-        m.setName("");
-        m.setEmail(mail);
-        m.setSearchRadius("");
-        m.setDeleted(false);
-        members.save(m);
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(mail, ""));
+        String token = tokenService.generate(mail);
 
-        r.getMessages().add("User registered");
-        return new ResponseEntity<>(r, HttpStatus.CREATED);
+        return new ResponseEntity<>(new TokenResponse(token), status);
     }
 }

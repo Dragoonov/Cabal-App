@@ -1,6 +1,6 @@
 package com.hobbymeetingapp.server.models;
 
-public class MemberToken
+public class TokenRequest
 {
     private String token;
 

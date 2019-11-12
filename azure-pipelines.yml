@@ -7,6 +7,7 @@ steps:
     sed -i "s/dbserver/$SERVER/g" application.properties
     sed -i "s/dblogin/$LOGIN/g" application.properties
     sed -i "s/dbpassword/$PASSWORD/g" application.properties
+    sed -i "s/jwtsecret/$SECRET/g" application.properties
     cd ../../../
     chmod +x ./mvnw
     ./mvnw clean package

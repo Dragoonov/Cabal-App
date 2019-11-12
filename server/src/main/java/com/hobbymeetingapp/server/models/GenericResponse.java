@@ -3,7 +3,7 @@ package com.hobbymeetingapp.server.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenericResponse {
+public class GenericResponse extends BaseResponse {
     private List<String> errors;
     private List<String> messages;
 
