@@ -1,6 +1,6 @@
 package com.hobbymeetingapp.server.services;
 
-import com.hobbymeetingapp.server.models.Member;
+import com.hobbymeetingapp.server.models.database.Member;
 import com.hobbymeetingapp.server.models.MyUserDetails;
 import com.hobbymeetingapp.server.repositories.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;

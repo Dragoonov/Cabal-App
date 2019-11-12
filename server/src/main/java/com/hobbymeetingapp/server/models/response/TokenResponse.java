@@ -1,4 +1,4 @@
-package com.hobbymeetingapp.server.models;
+package com.hobbymeetingapp.server.models.response;
 
 public class TokenResponse extends BaseResponse
 {

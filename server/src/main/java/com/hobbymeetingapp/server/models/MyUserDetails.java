@@ -1,5 +1,6 @@
 package com.hobbymeetingapp.server.models;
 
+import com.hobbymeetingapp.server.models.database.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

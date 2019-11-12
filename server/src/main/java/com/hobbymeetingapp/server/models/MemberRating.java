@@ -1,5 +1,7 @@
 package com.hobbymeetingapp.server.models;
 
+import com.hobbymeetingapp.server.models.database.Member;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 

@@ -1,6 +1,6 @@
 package com.hobbymeetingapp.server.repositories;
 
-import com.hobbymeetingapp.server.models.Member;
+import com.hobbymeetingapp.server.models.database.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,4 +1,6 @@
-package com.hobbymeetingapp.server.models;
+package com.hobbymeetingapp.server.models.database;
+
+import com.hobbymeetingapp.server.models.EntityDel;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

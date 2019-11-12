@@ -1,4 +1,4 @@
-package com.hobbymeetingapp.server.models;
+package com.hobbymeetingapp.server.models.request;
 
 public class TokenRequest
 {
