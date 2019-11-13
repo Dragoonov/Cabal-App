@@ -12,7 +12,6 @@ import com.cabal.app.R;
 import com.cabal.app.Utils.JsonLoader;
 import com.cabal.app.models.HobbyModel;
 import com.cabal.app.models.HobbyTypeModel;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,7 @@ import static android.view.View.VISIBLE;
 
 public class Hobbies {
 
-    private static Map<String, Boolean> switchesState = new HashMap<>();
+    private static Map<HobbyModel, Boolean> switchesState = new HashMap<>();
 
     public static void initializeHobbies(Activity activity) {
 
@@ -34,6 +33,13 @@ public class Hobbies {
             View hobbyTypeModel = initializeHobbyTypeView(model, linearView);
             linearView.addView(hobbyTypeModel);
         }
+    }
+
+    public static Integer[] getCheckedIds(){
+        return switchesState.keySet().stream()
+                .filter(s -> switchesState.get(s))
+                .map(HobbyModel::getId)
+                .toArray(Integer[]::new);
     }
 
     private static View initializeHobbyTypeView(HobbyTypeModel model, LinearLayout parent) {
@@ -62,9 +68,9 @@ public class Hobbies {
         Switch switchToggle = hobbyView.findViewById(R.id.switchHobby);
         hobbyView.setOnClickListener(hobby -> {
             switchToggle.setChecked(!switchToggle.isChecked());
-            switchesState.put(model.getName(), switchToggle.isChecked());
+            switchesState.put(model, switchToggle.isChecked());
         });
-        Boolean switchState = switchesState.get(model.getName());
+        Boolean switchState = switchesState.get(model);
         switchToggle.setChecked(switchState == null ? false : switchState);
         return hobbyView;
     }

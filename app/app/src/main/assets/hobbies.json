@@ -4,18 +4,22 @@
     "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg",
     "hobbies": [
       {
+        "id": "1",
         "name": "Koszykówka",
         "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
       },
       {
+        "id": "2",
         "name": "Siatkówka",
         "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
       },
       {
+        "id": "3",
         "name": "Tenis",
         "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
       },
       {
+        "id": "4",
         "name": "Biegi",
         "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
       }
@@ -26,14 +30,17 @@
     "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg",
     "hobbies": [
       {
+        "id": "5",
         "name": "Chińczyk",
         "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
       },
       {
+        "id": "6",
         "name": "Monopoly",
         "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
       },
       {
+        "id": "7",
         "name": "Eurobusiness",
         "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
       }
@@ -44,14 +51,17 @@
     "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg",
     "hobbies": [
       {
+        "id": "8",
         "name": "Poker",
         "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
       },
       {
+        "id": "9",
         "name": "Brydż",
         "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
       },
       {
+        "id": "10",
         "name": "Makao",
         "photoUrl": "https://images-na.ssl-images-amazon.com/images/I/31OGCFeO-2L.jpg"
       }

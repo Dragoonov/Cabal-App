@@ -3,7 +3,6 @@ package com.cabal.app;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,12 +10,14 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.cabal.app.Utils.AfterRegisterUserData;
+import com.cabal.app.Utils.BackendCommunicator;
 import com.cabal.app.Utils.ImageManager;
 import com.cabal.app.hobbies_edit_list.Hobbies;
-import com.cabal.app.navigation_bar.UserActivity;
 
 import java.util.Objects;
 
@@ -27,6 +28,7 @@ public class AfterRegisterActivity extends AppCompatActivity {
     Button afterRegisterAccept;
     Button setAvatarButton;
     ImageView avatarImage;
+    EditText nickname;
     private String avatarString;
 
     @Override
@@ -36,10 +38,11 @@ public class AfterRegisterActivity extends AppCompatActivity {
         if(savedInstanceState == null){
             Hobbies.initializeHobbies(this);
         }
+        nickname = findViewById(R.id.nicknameAdd);
         afterRegisterAccept = findViewById(R.id.afterRegisterAccept);
         afterRegisterAccept.setOnClickListener(view -> {
-            startActivity(new Intent(AfterRegisterActivity.this, UserActivity.class));
-            finish();
+            AfterRegisterUserData data = new AfterRegisterUserData(avatarString,nickname.getText().toString(),Hobbies.getCheckedIds());
+            BackendCommunicator.postAfterRegisterData(data,this);
         });
         avatarImage = findViewById(R.id.avatarImage);
         loadDefaultImage();
@@ -51,7 +54,7 @@ public class AfterRegisterActivity extends AppCompatActivity {
 
     private void loadDefaultImage(){
         Uri fileUri = Uri.parse("android.resource://com.cabal.app/" + R.drawable.default_avatar);
-        Bitmap defaultImage = ImageManager.scaleImage(fileUri,getContentResolver());
+        Bitmap defaultImage = ImageManager.scaleImage(fileUri,getContentResolver(), getApplicationContext());
         avatarString = ImageManager.convertBitmapToString(defaultImage);
         Glide.with(getApplicationContext())
                 .asBitmap()
@@ -60,7 +63,7 @@ public class AfterRegisterActivity extends AppCompatActivity {
     }
 
     private void loadSelectedImage(Uri selectedImage){
-        Bitmap resizedImage = ImageManager.scaleImage(selectedImage,getContentResolver());
+        Bitmap resizedImage = ImageManager.scaleImage(selectedImage,getContentResolver(), getApplicationContext());
         avatarString = ImageManager.convertBitmapToString(resizedImage);
         Glide.with(getApplicationContext())
                 .asBitmap()
