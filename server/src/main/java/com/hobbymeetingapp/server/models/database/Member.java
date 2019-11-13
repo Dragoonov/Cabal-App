@@ -27,7 +27,8 @@ public class Member extends EntityDel {
     @Column(name = "Token")
     private String token;
 
-    @Column(name = "Avatar")
+    // String with size larger than 8000 chars will be created as varchar(max)
+    @Column(name = "Avatar", length = 8192)
     private String avatar;
 
     @NotNull
