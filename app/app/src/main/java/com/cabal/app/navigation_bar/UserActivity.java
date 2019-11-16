@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.cabal.app.hobbies_edit_list.Hobbies;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.cabal.app.R;
 import com.cabal.app.navigation_bar.search_events.SearchFragment;
@@ -57,4 +58,16 @@ public class UserActivity extends AppCompatActivity {
 
                 return true;
             };
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        Hobbies.initializeHobbies(this);
+    }
 }
