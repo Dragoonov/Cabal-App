@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.cabal.app.AfterRegisterActivity;
 import com.cabal.app.Client;
+import com.cabal.app.Configuration;
 import com.cabal.app.Service;
 import com.cabal.app.navigation_bar.UserActivity;
 import com.google.gson.Gson;
@@ -22,7 +23,6 @@ public class BackendCommunicator {
 
     static private Service service = Client.getClient().create(Service.class);
     private static final String TAG = "BackendCommunicator";
-    private static final String AUTH_TOKEN = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyQHRlc3QuY29tIiwiaWF0IjoxNTczNTczMjg3LCJleHAiOjE2MDUxMDkyODd9.HYLZg3M8IUN2hUh9GWxC6htIzYMdS8BsdsUT_22AapgVJv280wFEoRHE7cuiQS9eJ9BEXdn0KmlCtUwzMu3Pxw";
 
     public static void postUserDataToBackend(String idToken, AppCompatActivity activity) {
         JsonObject requestBody = new JsonObject();
@@ -54,7 +54,7 @@ public class BackendCommunicator {
         String requestBodyString = new Gson().toJson(userData);
         JsonObject requestBody = new JsonParser().parse(requestBodyString).getAsJsonObject();
         Log.d(TAG, "postAfterRegisterData: " + requestBody);
-        Call<JsonObject> tokenCall = service.postRegisterData(AUTH_TOKEN,requestBody);
+        Call<JsonObject> tokenCall = service.postRegisterData(Configuration.AUTH_TOKEN_PROD,requestBody);
         tokenCall.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

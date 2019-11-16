@@ -9,7 +9,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface Service {
-    @GET("/health")
+    @GET("health")
     Call<Health> getHealth();
 
     @POST("member/login")
