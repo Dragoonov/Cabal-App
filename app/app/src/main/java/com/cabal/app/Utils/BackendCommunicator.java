@@ -32,6 +32,7 @@ public class BackendCommunicator {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.code() == 200) {
+                    //TODO: Initialize User with data
                     Intent intent = new Intent(activity, UserActivity.class);
                     activity.startActivity(intent);
                     activity.finish();
@@ -69,6 +70,5 @@ public class BackendCommunicator {
             }
         });
     }
-
 
 }

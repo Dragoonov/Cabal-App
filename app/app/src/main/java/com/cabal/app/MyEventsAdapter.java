@@ -114,7 +114,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
             myEventName.setText(model.getName());
             myEventDate.setText(model.getDate());
             myEventLocation.setText(model.getLocation());
-            User.saveUser(Objects.requireNonNull(JsonLoader.loadUsers(myEventDate.getContext())).get(0));
+            User.setLoggedUser(Objects.requireNonNull(JsonLoader.loadUsers(myEventDate.getContext())).get(0));
             adminStar.setVisibility(User.getUserNick().equals(model.getCreator()) ? View.VISIBLE : View.GONE);
             Glide.with(myEventName.getContext()).load(model.getImage()).into(myEventPicture);
         }

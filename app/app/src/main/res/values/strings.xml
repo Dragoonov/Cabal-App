@@ -73,5 +73,6 @@
     <string name="radius">Radius(km)</string>
     <string name="save">Save</string>
     <string name="distance">distance</string>
+    <string name="explanation">App needs location permission to run properly. Please exit app and try again</string>
 </resources>
 

@@ -1,7 +1,11 @@
 package com.cabal.app.navigation_bar;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -14,24 +18,6 @@ import java.util.Objects;
 
 
 public class UserActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user);
-
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
-
-        //I added this if statement to keep the selected fragment when rotating the device
-        if (savedInstanceState == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, new SearchFragment())
-                    .commit();
-        }
-        Objects.requireNonNull(getSupportActionBar()).hide();
-    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             item -> {
@@ -59,15 +45,47 @@ public class UserActivity extends AppCompatActivity {
                 return true;
             };
 
+    private ProgressBar progressBar;
+    private FrameLayout viewsContainer;
+
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_user);
+        progressBar = findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
+        viewsContainer = findViewById(R.id.fragment_container);
+        viewsContainer.setVisibility(View.INVISIBLE);
+        //TODO: GET USER HOBBIES
+        getUserHobbies();
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+
+        //I added this if statement to keep the selected fragment when rotating the device
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new SearchFragment())
+                    .commit();
+        }
+        Objects.requireNonNull(getSupportActionBar()).hide();
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
         Hobbies.initializeHobbies(this);
+    }
+
+    private void getUserHobbies(){
+        progressBar.setVisibility(View.GONE);
+        viewsContainer.setVisibility(View.VISIBLE);
     }
 }
