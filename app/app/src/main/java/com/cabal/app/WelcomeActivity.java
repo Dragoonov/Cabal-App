@@ -45,7 +45,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     private static final int RC_SIGN_IN = 1;
     private static final String TAG = "WelcomeActivity";
     private static final int REQUEST_CODE = 123;
-    int AUTOCOMPLETE_REQUEST_CODE = 1;
     GoogleSignInClient mGoogleSignInClient;
     GoogleSignInOptions gso;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -115,13 +114,14 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
-        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+        if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 Log.i(TAG, "Place name: " + place.getName() + ", address:" + place.getAddress() + ", latlng:" + place.getLatLng());
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 Status status = Autocomplete.getStatusFromIntent(data);
+                assert status.getStatusMessage() != null;
                 Log.i(TAG, status.getStatusMessage());
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
@@ -139,7 +139,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                         new LatLng(User.getCurrentCoordinates().first-calculateLatDistance(),User.getCurrentCoordinates().second-calculateLngDistance()),
                         new LatLng(User.getCurrentCoordinates().first+calculateLatDistance(),User.getCurrentCoordinates().second+calculateLngDistance())))
                 .build(this);
-        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+        startActivityForResult(intent, REQUEST_CODE);
     }
 
     private double calculateLatDistance(){
