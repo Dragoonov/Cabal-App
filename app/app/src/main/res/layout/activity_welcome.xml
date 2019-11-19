@@ -17,6 +17,12 @@
         android:layout_marginBottom="32dp"
         app:srcCompat="@drawable/cabal_logo" />
 
+    <Button
+        android:id="@+id/places_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Launch places" />
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"

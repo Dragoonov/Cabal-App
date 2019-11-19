@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/WelcomeScreen"
     android:layout_width="match_parent"
-    android:gravity="center"
-    style="@style/WelcomeScreen">
+    android:layout_height="match_parent"
+    android:gravity="center|top"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -14,17 +14,23 @@
         android:layout_height="250dp"
         app:srcCompat="@drawable/cabal_logo" />
 
+    <Button
+        android:id="@+id/places_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/explanation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="64dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="64dp"
         android:text="@string/explanation" />
 

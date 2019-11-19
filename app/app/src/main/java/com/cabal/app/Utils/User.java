@@ -16,6 +16,16 @@ public class User {
 
     private static String token;
 
+    private static int radiusKm = 5;
+
+    public static int getRadiusKm() {
+        return radiusKm;
+    }
+
+    public static void setRadiusKm(int radiusKm) {
+        User.radiusKm = radiusKm;
+    }
+
     public static String getToken() {
         return token;
     }
