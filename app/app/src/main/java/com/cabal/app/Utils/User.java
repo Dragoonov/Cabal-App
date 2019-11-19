@@ -14,6 +14,16 @@ public class User {
 
     private static List<HobbyModel> hobbies;
 
+    private static String token;
+
+    public static String getToken() {
+        return token;
+    }
+
+    public static void setToken(String token) {
+        User.token = token;
+    }
+
     public static UserModel getLoggedUser() {
         return loggedUser;
     }
