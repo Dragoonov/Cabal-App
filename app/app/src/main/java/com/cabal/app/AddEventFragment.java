@@ -1,45 +1,114 @@
 package com.cabal.app;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.cabal.app.Utils.JsonLoader;
+import com.cabal.app.models.HobbyModel;
+import com.cabal.app.models.HobbyTypeModel;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 public class AddEventFragment extends Fragment {
 
-    EditText editTextDate;
-    final Calendar myCalendar = Calendar.getInstance();
+    private EditText editTextDate;
+    private EditText editTextStartEvent;
+    private EditText editTextDuration;
+    private EditText editTextPlace;
+    private EditText editTextNumberOfMembers;
+    private EditText editTextDescreption;
+    private Button btnAddEvent;
+    private Spinner spinnerSubCategories;
+    ArrayAdapter<String> staticSubCategoriesAdapter;
+
+    private final Calendar myCalendar = Calendar.getInstance();
+    private boolean isDataCorrect = true;
+    private int numberOfMembers;
+    private String location = "";
+    private String description = "";
+    private int startHour;
+    private int startMinute;
+    private int duration;
+    private String selectedHourRightFormat = "";
+    private String selectedMinuteRightFormat = "";
+    private String[] hobbiesNamesFirstType;
+    private String[] hobbiesNamesSecondType;
+    private String[] hobbiesNamesThirdType;
+    private String[] hobbiesNamesToShow;
+    private String chosenDate;
+
+    String myFormat = "dd/MM/yy";
+    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_event, container, false);
 
-        Spinner spinnerCategories = view.findViewById(R.id.spinner_categories);
-        ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()), R.array.categories_array,
-                        android.R.layout.simple_spinner_item);
+        btnAddEvent = view.findViewById(R.id.btnAdd);
 
-        staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategories.setAdapter(staticAdapter);
+        List<HobbyTypeModel> hobbyTypes = JsonLoader.loadHobbies(getContext());
+        HobbyModel[] hobbiesFirstType = hobbyTypes.get(0).getHobbies();
+        HobbyModel[] hobbiesSecondType = hobbyTypes.get(1).getHobbies();
+        HobbyModel[] hobbiesThirdType = hobbyTypes.get(2).getHobbies();
+
+        String[] types = new String[hobbyTypes.size()];
+        hobbiesNamesFirstType = new String[hobbiesFirstType.length];
+        hobbiesNamesSecondType = new String[hobbiesSecondType.length];
+        hobbiesNamesThirdType = new String[hobbiesThirdType.length];
+
+        for(int i = 0; i< hobbyTypes.size(); i++) {
+            types[i] = hobbyTypes.get(i).getType();
+        }
+
+        for(int j = 0; j< hobbiesFirstType.length; j++) {
+            hobbiesNamesFirstType[j] = hobbiesFirstType[j].getName();
+        }
+
+        for(int j = 0; j< hobbiesSecondType.length; j++) {
+            hobbiesNamesSecondType[j] = hobbiesSecondType[j].getName();
+        }
+
+        for(int j = 0; j< hobbiesThirdType.length; j++) {
+            hobbiesNamesThirdType[j] = hobbiesThirdType[j].getName();
+        }
+
+        hobbiesNamesToShow = hobbiesNamesFirstType;
+
+        spinnerSubCategories = view.findViewById(R.id.spinner_sub_categories);
+
+        Spinner spinnerCategories = view.findViewById(R.id.spinner_categories);
+        ArrayAdapter<String> staticCategoriesAdapter = new ArrayAdapter<String>(Objects.requireNonNull(getContext()),
+                        android.R.layout.simple_spinner_item, types);
+
+        staticCategoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategories.setAdapter(staticCategoriesAdapter);
 
         spinnerCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                System.out.println("item " + parent.getItemAtPosition(position));
+//                System.out.println("item " + parent.getItemAtPosition(position));
+                setHobbiesNamesToShow(position);
             }
 
             @Override
@@ -48,7 +117,29 @@ public class AddEventFragment extends Fragment {
             }
         });
 
+
+        staticSubCategoriesAdapter = new ArrayAdapter<String>(Objects.requireNonNull(getContext()),
+                 android.R.layout.simple_spinner_item, hobbiesNamesToShow);
+
+        staticSubCategoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSubCategories.setAdapter(staticSubCategoriesAdapter);
+
+        spinnerSubCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+    });
+
         editTextDate = view.findViewById(R.id.date);
+        chosenDate = sdf.format(new Date());
+        editTextDate.setText(chosenDate);
+
         DatePickerDialog.OnDateSetListener date = (view1, year, monthOfYear, dayOfMonth) -> {
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
@@ -56,68 +147,162 @@ public class AddEventFragment extends Fragment {
             updateLabel();
         };
 
-        editTextDate.setOnClickListener(v -> new DatePickerDialog(getContext(), date, myCalendar
-                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show());
-
-
-        Spinner spinnerHours = view.findViewById(R.id.spinner_hours);
-        ArrayAdapter<CharSequence> staticAdapterHours = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()), R.array.hours_array,
-                        android.R.layout.simple_spinner_item);
-
-        staticAdapterHours.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerHours.setAdapter(staticAdapterHours);
-
-        spinnerHours.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                System.out.println("item " + parent.getItemAtPosition(position));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
-            }
+        editTextDate.setOnClickListener(v -> {
+            DatePickerDialog dialog = new DatePickerDialog(getContext(), date, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH));
+            dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1);
+            dialog.show();
         });
 
-        Spinner spinnerMinutes = view.findViewById(R.id.spinner_minutes);
-        ArrayAdapter<CharSequence> staticAdapterMinutes = ArrayAdapter
-                .createFromResource(getContext(), R.array.minutes_array,
-                        android.R.layout.simple_spinner_item);
+        editTextStartEvent = view.findViewById(R.id.start_event);
 
-        staticAdapterMinutes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerMinutes.setAdapter(staticAdapterMinutes);
+        editTextStartEvent.setOnClickListener(v -> {
+            // TODO Auto-generated method stub
+            Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(getContext(), (timePicker, selectedHour, selectedMinute) -> showTimeAndSave(editTextStartEvent, selectedHour, selectedMinute), hour, minute, true);//Yes 24 hour time
+            mTimePicker.setTitle("Select Time");
+            mTimePicker.show();
 
-        spinnerMinutes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                System.out.println("item " + parent.getItemAtPosition(position));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
-            }
         });
 
+        editTextDuration = view.findViewById(R.id.end_event);
+        editTextPlace = view.findViewById(R.id.place);
+        editTextDescreption = view.findViewById(R.id.description);
+        editTextNumberOfMembers = view.findViewById(R.id.NumberOfMembers);
 
-        EditText editTextPlace = view.findViewById(R.id.place);
-
-
-        EditText editTextNumberOfMembers = view.findViewById(R.id.NumberOfMembers);
-
-
-        EditText editTextDescreption = view.findViewById(R.id.description);
+        btnAddEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveEvent();
+            }
+        });
 
         return view;
     }
 
-    private void updateLabel() {
-        String myFormat = "MM/dd/yy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+    private void setHobbiesNamesToShow(int position) {
+        if(position == 0) {
+            hobbiesNamesToShow = hobbiesNamesFirstType;
+        }
+        else if(position == 1) {
+            hobbiesNamesToShow = hobbiesNamesSecondType;
+        }
+        else if(position == 2) {
+            hobbiesNamesToShow = hobbiesNamesThirdType;
+        }
 
-        editTextDate.setText(sdf.format(myCalendar.getTime()));
+        staticSubCategoriesAdapter = new ArrayAdapter<String>(Objects.requireNonNull(getContext()),
+                android.R.layout.simple_spinner_item, hobbiesNamesToShow);
+
+        staticSubCategoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSubCategories.setAdapter(staticSubCategoriesAdapter);
+    }
+
+    private void saveEvent() {
+
+            location = editTextPlace.getText().toString();
+            description = editTextDescreption.getText().toString();
+
+            checkingIfLocationIsCorrect();
+            checkingIfDescriptionIsCorrect();
+            checkingIfStartTimeEventIsCorrect(startHour, startMinute);
+            checkingIfChosenDateIsCorrect();
+            checkingIfNumberOfMembersIsCorrect();
+            checkingIfDurationIsCorrect();
+
+            if(isDataCorrect) {
+                //save event
+            }
+            else {
+                Toast.makeText(getActivity(), "Incorrect data! Try again", Toast.LENGTH_LONG).show();
+            }
+    }
+
+    private void updateLabel() {
+        chosenDate = sdf.format(myCalendar.getTime());
+        editTextDate.setText(chosenDate);
+    }
+
+    private void showTimeAndSave(EditText editText, int selectedHour, int selectedMinute) {
+        selectedHourRightFormat = String.valueOf(selectedHour);
+        selectedMinuteRightFormat = String.valueOf(selectedMinute);
+
+        if(selectedHour < 9) {
+            selectedHourRightFormat = "0" + selectedHour;
+        }
+
+        if(selectedMinute < 9) {
+            selectedMinuteRightFormat = "0" + selectedMinute;
+        }
+        editText.setText( selectedHourRightFormat + ":" + selectedMinuteRightFormat);
+
+        startHour = selectedHour;
+        startMinute = selectedMinute;
+
+    }
+
+    private void checkingIfStartTimeEventIsCorrect(int startH, int startM) {
+        Date today = new Date();
+        int todayHour = myCalendar.get(Calendar.HOUR_OF_DAY);
+        int todayMinute = myCalendar.get(Calendar.MINUTE);
+        if(chosenDate.compareTo(sdf.format(today)) == 0) {
+            if ((todayHour * 60 + todayMinute) >= (startH * 60 + startM)) {
+                isDataCorrect = false;
+            }
+        }
+
+        if(selectedHourRightFormat.equals("") && selectedMinuteRightFormat.equals("")) {
+            isDataCorrect = false;
+        }
+    }
+
+    private void checkingIfChosenDateIsCorrect() {
+        String today = sdf.format(new Date());
+
+        if(today.compareTo(chosenDate) > 0) {
+            isDataCorrect = false;
+        }
+    }
+
+    private void checkingIfNumberOfMembersIsCorrect() {
+        try {
+            numberOfMembers = Integer.parseInt(editTextNumberOfMembers.getText().toString());
+            if(numberOfMembers <= 0) {
+                isDataCorrect = false;
+            }
+        }
+        catch (NumberFormatException ex) {
+            ex.printStackTrace();
+            isDataCorrect = false;
+        }
+    }
+
+    private void checkingIfDurationIsCorrect() {
+        try {
+            duration = Integer.parseInt(editTextDuration.getText().toString());
+            if(duration <= 0) {
+                isDataCorrect = false;
+            }
+        }
+        catch (NumberFormatException ex) {
+            ex.printStackTrace();
+            isDataCorrect = false;
+        }
+    }
+
+    private void checkingIfDescriptionIsCorrect() {
+        if(description.equals("")) {
+            isDataCorrect = false;
+        }
+    }
+
+    private void checkingIfLocationIsCorrect() {
+        if(location.equals("")) {
+            isDataCorrect = false;
+        }
     }
 }

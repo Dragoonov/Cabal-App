@@ -41,6 +41,11 @@
     <string name="add_event">Add event</string>
     <string name="hours">h</string>
     <string name="minutes">min</string>
+    <string name="subtype_of_event">Subtype of event</string>
+    <string name="start_event">Start</string>
+    <string name="end_event">End</string>
+    <string name="choose_start_event">Choose when it starts</string>
+    <string name="choose_end_event">Choose when it ends</string>
     <string-array name="categories_array">
         <item>Koszykówka</item>
         <item>Siatkówka</item>
@@ -74,5 +79,6 @@
     <string name="save">Save</string>
     <string name="distance">distance</string>
     <string name="explanation">App needs location permission to run properly. Please exit app and try again</string>
+    <string name="choose_duration_event">Choose duration</string>
 </resources>
 

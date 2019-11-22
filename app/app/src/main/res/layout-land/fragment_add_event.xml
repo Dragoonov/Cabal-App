@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:focusableInTouchMode="true">
+    android:fillViewport="true">
 
     <LinearLayout
         android:orientation="vertical"
@@ -46,6 +47,31 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="@string/subtype_of_event"
+                android:layout_marginStart="5dp"
+                android:textSize="20sp"
+                android:layout_weight="1" />
+
+            <Spinner
+                android:id="@+id/spinner_sub_categories"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:text="@string/date"
                 android:layout_marginStart="5dp"
                 android:textSize="20sp"
@@ -58,16 +84,44 @@
                 android:clickable="true"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                android:focusable="true"
+                android:focusable="false"
                 android:hint="@string/choose_date"/>
 
         </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:gravity="center"
+        android:layout_marginTop="24dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/start_event"
+            android:layout_marginStart="5dp"
+            android:textSize="20sp"
+            android:layout_weight="1" />
+
+        <EditText
+            android:id="@+id/start_event"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:hint="@string/choose_start_event"/>
+
+    </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="8"
+            android:weightSum="2"
             android:gravity="center"
             android:layout_marginTop="24dp">
 
@@ -77,35 +131,19 @@
                 android:text="@string/duration"
                 android:layout_marginStart="5dp"
                 android:textSize="20sp"
-                android:layout_weight="4" />
-
-            <Spinner
-                android:id="@+id/spinner_hours"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <TextView
+            <EditText
+                android:id="@+id/end_event"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/hours"
-                android:textSize="20sp"
-                android:layout_weight="1" />
-
-            <Spinner
-                android:id="@+id/spinner_minutes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/minutes"
-                android:textSize="20sp"
-                android:layout_weight="1" />
+                android:clickable="true"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:hint="@string/choose_duration_event"/>
 
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -158,8 +196,7 @@
                 android:clickable="true"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                android:hint="@string/choose_number"
-                android:focusable="true" />
+                android:hint="@string/choose_number"/>
 
         </LinearLayout>
 
@@ -184,7 +221,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"
-                android:minLines="3"
                 android:scrollbarAlwaysDrawVerticalTrack="true"
                 android:scrollbars="vertical"
                 android:gravity="top"/>

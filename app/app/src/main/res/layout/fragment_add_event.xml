@@ -1,196 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:gravity="center"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
         android:gravity="center"
-        android:layout_marginTop="24dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/type_of_event"
-            android:layout_marginStart="5dp"
-            android:textSize="20sp"
-            android:layout_weight="1" />
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
 
-        <Spinner
-            android:id="@+id/spinner_categories"
-            android:layout_width="0dp"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/type_of_event"
+                android:layout_marginStart="5dp"
+                android:textSize="20sp"
+                android:layout_weight="1" />
+
+            <Spinner
+                android:id="@+id/spinner_categories"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1" />
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/subtype_of_event"
+                android:layout_marginStart="5dp"
+                android:textSize="20sp"
+                android:layout_weight="1" />
+
+            <Spinner
+                android:id="@+id/spinner_sub_categories"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/date"
+                android:layout_marginStart="5dp"
+                android:textSize="20sp"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:hint="@string/choose_date"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/start_event"
+                android:layout_marginStart="5dp"
+                android:textSize="20sp"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/start_event"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:hint="@string/choose_start_event"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/duration"
+                android:layout_marginStart="5dp"
+                android:textSize="20sp"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/end_event"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:hint="@string/choose_duration_event"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/location"
+                android:layout_marginStart="5dp"
+                android:textSize="20sp"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/place"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:hint="@string/choose_location"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/number_of_members"
+                android:layout_marginStart="5dp"
+                android:textSize="20sp"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/NumberOfMembers"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:hint="@string/choose_number"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/description"
+                android:layout_marginStart="5dp"
+                android:textSize="20sp"
+                android:layout_weight="1.5" />
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.5"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:scrollbars="vertical"
+                android:gravity="top"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/add_event" />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:gravity="center"
-        android:layout_marginTop="24dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/date"
-            android:layout_marginStart="5dp"
-            android:textSize="20sp"
-            android:layout_weight="1" />
-
-        <EditText
-            android:id="@+id/date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:focusable="true"
-            android:hint="@string/choose_date"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="8"
-        android:gravity="center"
-        android:layout_marginTop="24dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/duration"
-            android:layout_marginStart="5dp"
-            android:textSize="20sp"
-            android:layout_weight="4" />
-
-        <Spinner
-            android:id="@+id/spinner_hours"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.25" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/hours"
-            android:textSize="20sp"
-            android:layout_weight="0.75" />
-
-        <Spinner
-            android:id="@+id/spinner_minutes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.25" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/minutes"
-            android:textSize="20sp"
-            android:layout_weight="0.75" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:gravity="center"
-        android:layout_marginTop="24dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/location"
-            android:layout_marginStart="5dp"
-            android:textSize="20sp"
-            android:layout_weight="1" />
-
-        <EditText
-            android:id="@+id/place"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:hint="@string/choose_location"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:gravity="center"
-        android:layout_marginTop="24dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/number_of_members"
-            android:layout_marginStart="5dp"
-            android:textSize="20sp"
-            android:layout_weight="1" />
-
-        <EditText
-            android:id="@+id/NumberOfMembers"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:hint="@string/choose_number"
-            android:focusable="true" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="4"
-        android:gravity="center"
-        android:layout_marginTop="24dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/description"
-            android:layout_marginStart="5dp"
-            android:textSize="20sp"
-            android:layout_weight="1.5" />
-
-        <EditText
-            android:id="@+id/description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2.5"
-            android:minLines="3"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:scrollbars="vertical"
-            android:gravity="top"/>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/add_event"
-        style="@style/ButtonCabal"/>
-
-</LinearLayout>
+</ScrollView>
