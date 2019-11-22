@@ -48,7 +48,7 @@ public class EditProfileFragment extends Fragment {
 
         int progress = seekBar.getProgress();
         seekBarDistance = view.findViewById(R.id.distance);
-        seekBarDistance.setText(String.valueOf("" + progress));
+        seekBarDistance.setText(String.valueOf(progress));
 
         return view;
     }

@@ -24,16 +24,17 @@ public class Hobbies {
     private static List<HobbyTypeModel> hobbyTypeModels;
 
     public static void initializeHobbies(Activity activity) {
+        LinearLayout linearView = activity.findViewById(R.id.hobbiesContainer);
+        if(linearView == null){
+            return;
+        }
         if(hobbyTypeModels==null){
             hobbyTypeModels = JsonLoader.loadHobbies(activity);
         }
-        LinearLayout linearView = activity.findViewById(R.id.hobbiesContainer);
         assert hobbyTypeModels != null;
         for (HobbyTypeModel model : hobbyTypeModels) {
-            if(linearView != null) {
-                View hobbyTypeModel = initializeHobbyTypeView(model, linearView);
-                linearView.addView(hobbyTypeModel);
-            }
+            View hobbyTypeModel = initializeHobbyTypeView(model, linearView);
+            linearView.addView(hobbyTypeModel);
         }
     }
 
