@@ -6,13 +6,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.cabal.app.R;
 import com.cabal.app.Utils.JsonLoader;
 import com.cabal.app.models.HobbyModel;
 import com.cabal.app.models.HobbyTypeModel;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,13 +20,14 @@ import static android.view.View.VISIBLE;
 
 public class Hobbies {
 
-    private static Map<HobbyModel, Boolean> switchesState = new HashMap<>();
+    private static Map<HobbyModel, Boolean> switchesState = new LinkedHashMap<>();
+    private static List<HobbyTypeModel> hobbyTypeModels;
 
     public static void initializeHobbies(Activity activity) {
-
-        List<HobbyTypeModel> hobbyTypeModels = JsonLoader.loadHobbies(activity);
+        if(hobbyTypeModels==null){
+            hobbyTypeModels = JsonLoader.loadHobbies(activity);
+        }
         LinearLayout linearView = activity.findViewById(R.id.hobbiesContainer);
-
         assert hobbyTypeModels != null;
         for (HobbyTypeModel model : hobbyTypeModels) {
             View hobbyTypeModel = initializeHobbyTypeView(model, linearView);
@@ -72,6 +72,9 @@ public class Hobbies {
         });
         Boolean switchState = switchesState.get(model);
         switchToggle.setChecked(switchState == null ? false : switchState);
+        if(switchState == null){
+            switchesState.put(model,false);
+        }
         return hobbyView;
     }
 
