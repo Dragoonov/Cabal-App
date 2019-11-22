@@ -30,8 +30,10 @@ public class Hobbies {
         LinearLayout linearView = activity.findViewById(R.id.hobbiesContainer);
         assert hobbyTypeModels != null;
         for (HobbyTypeModel model : hobbyTypeModels) {
-            View hobbyTypeModel = initializeHobbyTypeView(model, linearView);
-            linearView.addView(hobbyTypeModel);
+            if(linearView != null) {
+                View hobbyTypeModel = initializeHobbyTypeView(model, linearView);
+                linearView.addView(hobbyTypeModel);
+            }
         }
     }
 
