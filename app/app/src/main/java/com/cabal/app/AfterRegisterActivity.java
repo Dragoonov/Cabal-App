@@ -41,13 +41,15 @@ public class AfterRegisterActivity extends AppCompatActivity {
             Hobbies.initializeHobbies(this);
         }
         nickname = findViewById(R.id.nicknameAdd);
+        User.instantiate();
+        //TODO: DELETE THAT
+        User.setCoordinates(new double[]{50,30});
         afterRegisterAccept = findViewById(R.id.afterRegisterAccept);
         afterRegisterAccept.setOnClickListener(view -> {
             AfterRegisterUserData data = new AfterRegisterUserData(
                     avatarString,
                     nickname.getText().toString(),
                     Hobbies.getCheckedIds());
-            User.instantiate();
             User.setAvatarImage(avatarString);
             User.setRadius(5);
             User.setNick(nickname.getText().toString());

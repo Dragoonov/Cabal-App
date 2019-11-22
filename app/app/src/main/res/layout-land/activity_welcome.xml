@@ -14,12 +14,6 @@
         android:layout_height="250dp"
         app:srcCompat="@drawable/cabal_logo" />
 
-    <Button
-        android:id="@+id/places_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"

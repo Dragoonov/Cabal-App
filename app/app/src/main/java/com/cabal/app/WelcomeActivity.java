@@ -10,9 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Pair;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.cabal.app.Utils.BackendCommunicator;
@@ -23,21 +21,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.RectangularBounds;
-import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
-
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
@@ -50,16 +36,14 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     FusedLocationProviderClient fusedLocationProviderClient;
     SignInButton signInButton;
     TextView explanation;
-    Button placesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        User.instantiate();
         explanation = findViewById(R.id.explanation);
         explanation.setVisibility(View.INVISIBLE);
-        placesButton = findViewById(R.id.places_button);
-        placesButton.setOnClickListener(this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         checkPermission();
 
@@ -75,10 +59,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         signInButton.setOnClickListener(this);
         signInButton.setVisibility(View.INVISIBLE);
         Objects.requireNonNull(getSupportActionBar()).hide();
-
-
-        Places.initialize(getApplicationContext(), Configuration.PLACES_KEY);
-        PlacesClient placesClient = Places.createClient(this);
 
     }
 
@@ -101,9 +81,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         if (view.getId() == R.id.sign_in_button) {
             signIn();
         }
-        if (view.getId() == R.id.places_button) {
-            launchPlacesSearch();
-        }
     }
 
     @Override
@@ -114,44 +91,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                Place place = Autocomplete.getPlaceFromIntent(data);
-                Log.i(TAG, "Place name: " + place.getName() +
-                        ", address:" + place.getAddress() +
-                        ", latlng:" + place.getLatLng());
-            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                // TODO: Handle the error.
-                Status status = Autocomplete.getStatusFromIntent(data);
-                assert status.getStatusMessage() != null;
-                Log.i(TAG, status.getStatusMessage());
-            } else if (resultCode == RESULT_CANCELED) {
-                // The user canceled the operation.
-            }
-        }
-    }
-
-    private void launchPlacesSearch() {
-        List<Place.Field> fields = Arrays.asList(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
-
-// Start the autocomplete intent.
-        Intent intent = new Autocomplete.IntentBuilder(
-                AutocompleteActivityMode.OVERLAY, fields)
-                .setLocationRestriction(RectangularBounds.newInstance(
-                        new LatLng(User.getCoordinates()[0] - calculateLatDistance(),
-                                User.getCoordinates()[1] - calculateLngDistance()),
-                        new LatLng(User.getCoordinates()[0] + calculateLatDistance(),
-                                User.getCoordinates()[1] + calculateLngDistance())))
-                .build(this);
-        startActivityForResult(intent, REQUEST_CODE);
-    }
-
-    private double calculateLatDistance() {
-        return User.getRadius() / 110.574;
-    }
-
-    private double calculateLngDistance() {
-        return User.getRadius() / (111.320 * Math.cos(Math.toRadians(User.getCoordinates()[0])));
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {

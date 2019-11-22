@@ -16,12 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.cabal.app.Utils.Filters;
-import com.cabal.app.Utils.JsonLoader;
 import com.cabal.app.Utils.User;
 import com.cabal.app.models.EventModel;
 
 import java.util.List;
-import java.util.Objects;
 
 public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHolder> implements Filterable {
 
@@ -115,7 +113,6 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
             myEventName.setText(model.getName());
             myEventDate.setText(model.getDate());
             myEventLocation.setText(model.getLocation());
-            User.setLoggedUser(Objects.requireNonNull(JsonLoader.loadUsers(myEventDate.getContext())).get(0));
             adminStar.setVisibility(User.getNick().equals(model.getCreator()) ? View.VISIBLE : View.GONE);
             Glide.with(myEventName.getContext()).load(model.getImage()).into(myEventPicture);
         }

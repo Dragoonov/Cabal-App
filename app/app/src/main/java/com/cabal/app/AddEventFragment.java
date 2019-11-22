@@ -2,7 +2,9 @@ package com.cabal.app;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +19,34 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.cabal.app.Utils.JsonLoader;
+import com.cabal.app.Utils.User;
 import com.cabal.app.models.HobbyModel;
 import com.cabal.app.models.HobbyTypeModel;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+
 public class AddEventFragment extends Fragment {
+
+    private static final String TAG = "AddEventFragment";
+    private static final int REQUEST_CODE = 123;
 
     private EditText editTextDate;
     private EditText editTextStartEvent;
@@ -65,6 +84,10 @@ public class AddEventFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add_event, container, false);
 
         btnAddEvent = view.findViewById(R.id.btnAdd);
+
+        Places.initialize(Objects.requireNonNull(getContext()), Configuration.PLACES_KEY);
+        PlacesClient placesClient = Places.createClient(getContext());
+
 
         List<HobbyTypeModel> hobbyTypes = JsonLoader.loadHobbies(getContext());
         HobbyModel[] hobbiesFirstType = hobbyTypes.get(0).getHobbies();
@@ -171,17 +194,57 @@ public class AddEventFragment extends Fragment {
 
         editTextDuration = view.findViewById(R.id.end_event);
         editTextPlace = view.findViewById(R.id.place);
+        editTextPlace.setOnClickListener(v -> launchPlacesSearch());
         editTextDescreption = view.findViewById(R.id.description);
         editTextNumberOfMembers = view.findViewById(R.id.NumberOfMembers);
 
-        btnAddEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveEvent();
-            }
-        });
+        btnAddEvent.setOnClickListener(v -> saveEvent());
 
         return view;
+    }
+
+    private void launchPlacesSearch() {
+        List<Place.Field> fields = Arrays.asList(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
+
+// Start the autocomplete intent.
+        Log.d(TAG, "launchPlacesSearch: ");
+        Intent intent = new Autocomplete.IntentBuilder(
+                AutocompleteActivityMode.OVERLAY, fields)
+                .setLocationRestriction(RectangularBounds.newInstance(
+                        new LatLng(User.getCoordinates()[0] - calculateLatDistance(),
+                                User.getCoordinates()[1] - calculateLngDistance()),
+                        new LatLng(User.getCoordinates()[0] + calculateLatDistance(),
+                                User.getCoordinates()[1] + calculateLngDistance())))
+                .build(Objects.requireNonNull(getContext()));
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    private double calculateLatDistance() {
+        return User.getRadius() / 110.574;
+    }
+
+    private double calculateLngDistance() {
+        return User.getRadius() / (111.320 * Math.cos(Math.toRadians(User.getCoordinates()[0])));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                Log.i(TAG, "Place name: " + place.getName() +
+                        ", address:" + place.getAddress() +
+                        ", latlng:" + place.getLatLng());
+                editTextPlace.setText(place.getName() + ", " + place.getAddress());
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(data);
+                assert status.getStatusMessage() != null;
+                Log.i(TAG, status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
     }
 
     private void setHobbiesNamesToShow(int position) {
