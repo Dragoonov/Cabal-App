@@ -88,7 +88,8 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
                     (AppCompatActivity)v.getContext())
                     .getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, EventDetailsFragment.newInstance(filteredModels.get(getAdapterPosition())))
+                    .replace(R.id.fragment_container,
+                            EventDetailsFragment.newInstance(filteredModels.get(getAdapterPosition())))
                     .addToBackStack(null)
                     .commit());
 
@@ -115,7 +116,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
             myEventDate.setText(model.getDate());
             myEventLocation.setText(model.getLocation());
             User.setLoggedUser(Objects.requireNonNull(JsonLoader.loadUsers(myEventDate.getContext())).get(0));
-            adminStar.setVisibility(User.getUserNick().equals(model.getCreator()) ? View.VISIBLE : View.GONE);
+            adminStar.setVisibility(User.getNick().equals(model.getCreator()) ? View.VISIBLE : View.GONE);
             Glide.with(myEventName.getContext()).load(model.getImage()).into(myEventPicture);
         }
     }

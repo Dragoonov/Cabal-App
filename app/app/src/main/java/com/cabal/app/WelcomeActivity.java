@@ -87,7 +87,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         super.onStart();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
-            BackendCommunicator.postUserDataToBackend(account.getIdToken(),this);
+            BackendCommunicator.postUserDataToBackend(account.getIdToken(), this);
         }
     }
 
@@ -117,7 +117,9 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);
-                Log.i(TAG, "Place name: " + place.getName() + ", address:" + place.getAddress() + ", latlng:" + place.getLatLng());
+                Log.i(TAG, "Place name: " + place.getName() +
+                        ", address:" + place.getAddress() +
+                        ", latlng:" + place.getLatLng());
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 Status status = Autocomplete.getStatusFromIntent(data);
@@ -129,25 +131,27 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void launchPlacesSearch(){
+    private void launchPlacesSearch() {
         List<Place.Field> fields = Arrays.asList(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
 
 // Start the autocomplete intent.
         Intent intent = new Autocomplete.IntentBuilder(
                 AutocompleteActivityMode.OVERLAY, fields)
                 .setLocationRestriction(RectangularBounds.newInstance(
-                        new LatLng(User.getCurrentCoordinates().first-calculateLatDistance(),User.getCurrentCoordinates().second-calculateLngDistance()),
-                        new LatLng(User.getCurrentCoordinates().first+calculateLatDistance(),User.getCurrentCoordinates().second+calculateLngDistance())))
+                        new LatLng(User.getCoordinates()[0] - calculateLatDistance(),
+                                User.getCoordinates()[1] - calculateLngDistance()),
+                        new LatLng(User.getCoordinates()[0] + calculateLatDistance(),
+                                User.getCoordinates()[1] + calculateLngDistance())))
                 .build(this);
         startActivityForResult(intent, REQUEST_CODE);
     }
 
-    private double calculateLatDistance(){
-        return User.getRadiusKm()/110.574;
+    private double calculateLatDistance() {
+        return User.getRadius() / 110.574;
     }
 
-    private double calculateLngDistance(){
-        return User.getRadiusKm()/(111.320*Math.cos(Math.toRadians(User.getCurrentCoordinates().first)));
+    private double calculateLngDistance() {
+        return User.getRadius() / (111.320 * Math.cos(Math.toRadians(User.getCoordinates()[0])));
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
@@ -155,18 +159,22 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             if (account != null) {
-                BackendCommunicator.postUserDataToBackend(account.getIdToken(),this);
+                BackendCommunicator.postUserDataToBackend(account.getIdToken(), this);
             }
         } catch (ApiException e) {
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
         }
     }
 
-    public void checkPermission(){
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) ||
-            (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)){
+    public void checkPermission() {
+        if ((ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) ||
+                (ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE);
+                    new String[] {
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE);
         } else {
             getLocation();
         }
@@ -190,7 +198,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         fusedLocationProviderClient.getLastLocation()
                 .addOnSuccessListener(this, location -> {
                     if (location != null) {
-                        User.setCurrentCoordinates(new Pair<>(location.getLatitude(),location.getLongitude()));
+                        User.setCoordinates(new double[] {location.getLatitude(), location.getLongitude()});
                         signInButton.setVisibility(View.VISIBLE);
                     }
                 }).addOnFailureListener(this, e -> Log.d(TAG, "onCreate: fail" + e.getMessage()));

@@ -63,8 +63,9 @@
             android:hint="@string/nickname_add"
             android:inputType="textPersonName" />
 
+
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"

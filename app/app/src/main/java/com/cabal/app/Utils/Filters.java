@@ -19,7 +19,7 @@ public class Filters {
         if (AUTHOR_FILTER) {
             List<EventModel> modelsToRemove = new ArrayList<>();
             for (EventModel model : list) {
-                if (!model.getCreator().equals(User.getUserNick())) {
+                if (!model.getCreator().equals(User.getNick())) {
                     modelsToRemove.add(model);
                 }
             }
@@ -28,7 +28,7 @@ public class Filters {
         if (GUEST_FILTER) {
             List<EventModel> modelsToRemove = new ArrayList<>();
             for (EventModel model : list) {
-                if (model.getCreator().equals(User.getUserNick())) {
+                if (model.getCreator().equals(User.getNick())) {
                     modelsToRemove.add(model);
                 }
             }

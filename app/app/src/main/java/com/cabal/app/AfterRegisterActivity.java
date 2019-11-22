@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.cabal.app.Utils.AfterRegisterUserData;
 import com.cabal.app.Utils.BackendCommunicator;
 import com.cabal.app.Utils.ImageManager;
+import com.cabal.app.Utils.User;
 import com.cabal.app.hobbies_edit_list.Hobbies;
 
 import java.util.Objects;
@@ -29,6 +30,7 @@ public class AfterRegisterActivity extends AppCompatActivity {
     Button setAvatarButton;
     ImageView avatarImage;
     EditText nickname;
+
     private String avatarString;
 
     @Override
@@ -41,7 +43,14 @@ public class AfterRegisterActivity extends AppCompatActivity {
         nickname = findViewById(R.id.nicknameAdd);
         afterRegisterAccept = findViewById(R.id.afterRegisterAccept);
         afterRegisterAccept.setOnClickListener(view -> {
-            AfterRegisterUserData data = new AfterRegisterUserData(avatarString,nickname.getText().toString(),Hobbies.getCheckedIds());
+            AfterRegisterUserData data = new AfterRegisterUserData(
+                    avatarString,
+                    nickname.getText().toString(),
+                    Hobbies.getCheckedIds());
+            User.instantiate();
+            User.setAvatarImage(avatarString);
+            User.setRadius(5);
+            User.setNick(nickname.getText().toString());
             BackendCommunicator.postAfterRegisterData(data,this);
         });
         avatarImage = findViewById(R.id.avatarImage);
@@ -62,7 +71,7 @@ public class AfterRegisterActivity extends AppCompatActivity {
                 .into(avatarImage);
     }
 
-    private void loadSelectedImage(Uri selectedImage){
+    private void loadSelectedImage(Uri selectedImage) {
         Bitmap resizedImage = ImageManager.scaleImage(selectedImage,getContentResolver(), getApplicationContext());
         avatarString = ImageManager.convertBitmapToString(resizedImage);
         Glide.with(getApplicationContext())
@@ -81,7 +90,9 @@ public class AfterRegisterActivity extends AppCompatActivity {
     }
 
     private void fireAvatarPick(){
-        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+        startActivityForResult(new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI),
+                        GET_FROM_GALLERY);
     }
 
     @Override

@@ -33,7 +33,7 @@ public class BackendCommunicator {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.code() == 200) {
                     //TODO: Initialize User with data
-                    User.setToken(response.body().get("token").toString());
+                    User.setTokenId(response.body().get("token").toString());
                     Intent intent = new Intent(activity, UserActivity.class);
                     activity.startActivity(intent);
                     activity.finish();

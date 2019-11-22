@@ -19,6 +19,36 @@ public class UserModel {
     @SerializedName("hobbies")
     private HobbyModel[] hobbies;
 
+    @SerializedName("coordinates")
+    private double[] coordinates;
+
+    @SerializedName("radius")
+    private int radius;
+
+    public String getAvatarImage() {
+        return avatarImage;
+    }
+
+    public void setAvatarImage(String avatarImage) {
+        this.avatarImage = avatarImage;
+    }
+
+    public double[] getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(double[] coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
+
     public String getNick() {
         return nick;
     }

@@ -6,13 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.cabal.app.EditProfileFragment;
 import com.cabal.app.R;
+import com.cabal.app.Utils.ImageManager;
+import com.cabal.app.Utils.User;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -25,8 +30,12 @@ public class ProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ListView listOfInterests = view.findViewById(R.id.listOfInterests);
+        ImageView avatar = view.findViewById(R.id.avatar);
+        TextView nick = view.findViewById(R.id.nick);
 
         Button btnEditProfile = view.findViewById(R.id.btnEditProfile);
+        nick.setText(User.getNick());
+        Glide.with(getContext()).load(ImageManager.convertStringToBitmap(User.getAvatarUri())).into(avatar);
 
         ArrayList<String> interests = new ArrayList<>();
         interests.add("Siatkowka");
