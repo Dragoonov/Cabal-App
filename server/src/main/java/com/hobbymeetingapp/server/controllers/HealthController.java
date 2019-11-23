@@ -10,9 +10,8 @@ import java.util.Map;
 
 @RestController
 public class HealthController {
-    @GetMapping(value="/health")
-    public ResponseEntity<Map<String, String>> getHealth()
-    {
+    @GetMapping(value = "/health")
+    public ResponseEntity<Map<String, String>> getHealth() {
         return new ResponseEntity<>(Collections.singletonMap("health", "OK"), HttpStatus.OK);
     }
 }

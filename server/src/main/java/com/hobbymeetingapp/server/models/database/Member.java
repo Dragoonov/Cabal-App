@@ -1,10 +1,13 @@
 package com.hobbymeetingapp.server.models.database;
 
-import com.hobbymeetingapp.server.models.EntityDel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Member extends EntityDel {
@@ -12,7 +15,7 @@ public class Member extends EntityDel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "MemberId")
     private Integer id;
 
     @NotNull
@@ -21,19 +24,35 @@ public class Member extends EntityDel {
 
     @NotNull
     @Email
+    @JsonIgnore
     @Column(name = "Email")
     private String email;
 
+    @JsonIgnore
     @Column(name = "Token")
     private String token;
 
     // String with size larger than 8000 chars will be created as varchar(max)
+    @JsonIgnore
     @Column(name = "Avatar", length = 8192)
     private String avatar;
 
     @NotNull
+    @JsonIgnore
     @Column(name = "SearchRadius")
-    private String searchRadius;
+    private int searchRadius;
+
+    @OneToMany(mappedBy = "member")
+    private Set<MemberEvent> memberEvents = new HashSet<MemberEvent>();
+
+    @ManyToMany
+    @JsonIgnore
+    @JoinTable(
+            name = "MemberInterest",
+            joinColumns = @JoinColumn(name = "MemberId"),
+            inverseJoinColumns = @JoinColumn(name = "InterestId")
+    )
+    public List<Interest> interests;
 
     public Integer getId() {
         return id;
@@ -75,11 +94,11 @@ public class Member extends EntityDel {
         this.avatar = avatar;
     }
 
-    public String getSearchRadius() {
+    public int getSearchRadius() {
         return searchRadius;
     }
 
-    public void setSearchRadius(String searchRadius) {
+    public void setSearchRadius(int searchRadius) {
         this.searchRadius = searchRadius;
     }
 }

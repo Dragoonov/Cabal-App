@@ -1,17 +1,17 @@
-package com.hobbymeetingapp.server.models;
-
-import com.hobbymeetingapp.server.models.database.Member;
+package com.hobbymeetingapp.server.models.database;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Event extends EntityDel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "EventId")
     private Integer id;
 
     @NotNull
@@ -41,7 +41,7 @@ public class Event extends EntityDel {
     private Integer durationMinutes;
 
     @NotNull
-    @Column(name = "IsFinished")
+    @Column(name = "IsFinished", columnDefinition = "bit default 0")
     private Boolean isFinished;
 
     //Nie not null - brak wartości oznacza nieskończoność użytkowników
@@ -50,6 +50,9 @@ public class Event extends EntityDel {
 
     @Column(name = "Description")
     private String description;
+
+    @OneToMany(mappedBy = "event")
+    private Set<MemberEvent> memberEvents = new HashSet<MemberEvent>();
 
     public Integer getId() {
         return id;
@@ -87,7 +90,7 @@ public class Event extends EntityDel {
         return interest;
     }
 
-    public void setInterestId(Interest interest) {
+    public void setInterest(Interest interest) {
         this.interest = interest;
     }
 
@@ -107,7 +110,7 @@ public class Event extends EntityDel {
         this.durationMinutes = durationMinutes;
     }
 
-    public Boolean getFinished() {
+    public Boolean isFinished() {
         return isFinished;
     }
 

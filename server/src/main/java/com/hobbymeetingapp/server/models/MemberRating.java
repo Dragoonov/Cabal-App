@@ -1,5 +1,6 @@
 package com.hobbymeetingapp.server.models;
 
+import com.hobbymeetingapp.server.models.database.EntityDel;
 import com.hobbymeetingapp.server.models.database.Member;
 
 import javax.persistence.*;

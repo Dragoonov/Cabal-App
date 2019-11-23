@@ -1,32 +1,25 @@
-package com.hobbymeetingapp.server.models;
-
-import com.hobbymeetingapp.server.models.database.Member;
+package com.hobbymeetingapp.server.models.database;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
-public class MemberEvent extends EntityDel{
+public class MemberEvent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private Integer id;
 
-    @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "MemberId")
     private Member member;
 
-    @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "EventId")
     private Event event;
 
-    //Default value = false
-    @NotNull
     @Column(name = "IsAccepted")
-    private Boolean isAccepted;
+    private boolean isAccepted;
 
     public Integer getId() {
         return id;
@@ -52,11 +45,11 @@ public class MemberEvent extends EntityDel{
         this.event = event;
     }
 
-    public Boolean getAccepted() {
+    public boolean getIsAccepted() {
         return isAccepted;
     }
 
-    public void setAccepted(Boolean accepted) {
-        isAccepted = accepted;
+    public void setIsAccepted(boolean isAccepted) {
+        this.isAccepted = isAccepted;
     }
 }

@@ -1,12 +1,13 @@
-package com.hobbymeetingapp.server.models;
+package com.hobbymeetingapp.server.models.database;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 public class Interest extends EntityDel {
-    //Aktualnie przyjmuję wersję która nie ma podkategorii. Jeszcze to przegadamy.
-
     //Mimo tego, że uznajemy że kategorie są predefiniowane Encję dodaję,
     //gdybysmy chcieli dodawać je z poziomu aplikacji
 
@@ -19,8 +20,17 @@ public class Interest extends EntityDel {
     @Column(name = "Name")
     private String name;
 
+    @JsonIgnore
     @Column(name = "Picture")
     private String picture;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Parent")
+    private Interest parent;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "interests")
+    public List<Member> members;
 
     public Integer getId() {
         return id;
@@ -44,5 +54,13 @@ public class Interest extends EntityDel {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public Interest getParent() {
+        return parent;
+    }
+
+    public void setParent(Interest parent) {
+        this.parent = parent;
     }
 }

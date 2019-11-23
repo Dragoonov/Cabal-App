@@ -1,4 +1,6 @@
-package com.hobbymeetingapp.server.models;
+package com.hobbymeetingapp.server.models.database;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -11,27 +13,32 @@ public class EntityDel {
     //że każda encja to dziedziczy, ale nie mam pojęcia czy Spring tak działa
 
     @NotNull
-    @Column(name = "IsDeleted")
-    private Boolean isDeleted;
+    @JsonIgnore
+    @Column(name = "IsDeleted", columnDefinition = "bit default 0")
+    private Boolean deleted;
 
+    @JsonIgnore
     @Column(name = "DeletedBy")
     private Integer deletedBy;
 
+    @JsonIgnore
     @Column(name = "DeletedAt")
     private Date deletedAt;
 
+    @JsonIgnore
     @Column(name = "CreatedBy")
     private Integer createdBy;
 
+    @JsonIgnore
     @Column(name = "CreatedAt")
     private Date createdAt;
 
     public Boolean isDeleted() {
-        return isDeleted;
+        return deleted;
     }
 
     public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
+        this.deleted = deleted;
     }
 
     public Integer getDeletedBy() {
