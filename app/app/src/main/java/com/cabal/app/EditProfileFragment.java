@@ -72,7 +72,7 @@ public class EditProfileFragment extends Fragment {
 
         int progress = seekBar.getProgress();
         seekBarDistance = view.findViewById(R.id.distance);
-        seekBarDistance.setText(progress);
+        seekBarDistance.setText(Integer.toString(progress));
 
         return view;
     }
@@ -83,7 +83,7 @@ public class EditProfileFragment extends Fragment {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             // updated continuously as the user slides the thumb
-            seekBarDistance.setText(progress);
+            seekBarDistance.setText(Integer.toString(progress));
         }
 
         @Override

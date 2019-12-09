@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.cabal.app.Utils.JsonLoader;
 import com.cabal.app.Utils.User;
+import com.cabal.app.models.EventModel;
 import com.cabal.app.models.HobbyModel;
 import com.cabal.app.models.HobbyTypeModel;
 import com.google.android.gms.common.api.Status;
@@ -284,6 +285,9 @@ public class AddEventFragment extends Fragment {
 
         if(isDataCorrect) {
             //save event
+//            EventModel eventToAdd = new EventModel(
+
+//            );
         }
         else {
             Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
