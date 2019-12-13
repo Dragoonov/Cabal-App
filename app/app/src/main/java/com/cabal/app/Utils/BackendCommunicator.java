@@ -24,6 +24,7 @@ public class BackendCommunicator {
     static private Service service = Client.getClient().create(Service.class);
     private static final String TAG = "BackendCommunicator";
 
+/*
     public static void postUserDataToBackend(String idToken, AppCompatActivity activity) {
         JsonObject requestBody = new JsonObject();
         requestBody.addProperty("token", idToken);
@@ -50,8 +51,9 @@ public class BackendCommunicator {
             }
         });
     }
+*/
 
-    public static void postAfterRegisterData(AfterRegisterUserData userData, AppCompatActivity activity) {
+    /*public static void postAfterRegisterData(AfterRegisterUserData userData, AppCompatActivity activity) {
         Log.d(TAG, "postAfterRegisterData: DATA: " + userData);
         String requestBodyString = new Gson().toJson(userData);
         JsonObject requestBody = new JsonParser().parse(requestBodyString).getAsJsonObject();
@@ -70,6 +72,6 @@ public class BackendCommunicator {
                 Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });
-    }
+    }*/
 
 }

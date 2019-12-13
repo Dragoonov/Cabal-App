@@ -13,8 +13,8 @@ public interface Service {
     Call<Health> getHealth();
 
     @POST("member/login")
-    Call<JsonObject> postToken(@Body JsonObject jsonObject);
+    Call<JsonObject> postLoginData(@Body JsonObject jsonObject);
 
-    @POST("member/update")
-    Call<JsonObject> postRegisterData(@Header("Authorization") String auth, @Body JsonObject jsonObject);
+    @POST("member/register")
+    Call<JsonObject> postRegisterData(@Body JsonObject jsonObject);
 }

@@ -42,8 +42,8 @@ public class AfterRegisterActivity extends AppCompatActivity {
         }
         nickname = findViewById(R.id.nicknameAdd);
         User.instantiate();
-        //TODO: DELETE THAT
-        User.setCoordinates(new double[]{50,30});
+/*        //TODO: DELETE THAT
+        User.setCoordinates(new double[]{50,30});*/
         afterRegisterAccept = findViewById(R.id.afterRegisterAccept);
         afterRegisterAccept.setOnClickListener(view -> {
             AfterRegisterUserData data = new AfterRegisterUserData(
@@ -53,7 +53,7 @@ public class AfterRegisterActivity extends AppCompatActivity {
             User.setAvatarImage(avatarString);
             User.setRadius(5);
             User.setNick(nickname.getText().toString());
-            BackendCommunicator.postAfterRegisterData(data,this);
+           // BackendCommunicator.postAfterRegisterData(data,this);
         });
         avatarImage = findViewById(R.id.avatarImage);
         loadDefaultImage();

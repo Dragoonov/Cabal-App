@@ -11,10 +11,14 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cabal.app.Utils.BackendCommunicator;
 import com.cabal.app.Utils.User;
+import com.cabal.app.navigation_bar.UserActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -24,17 +28,22 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.JsonObject;
+
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final int RC_SIGN_IN = 1;
     private static final String TAG = "WelcomeActivity";
+    static private Service service = Client.getClient().create(Service.class);
     private static final int REQUEST_CODE = 123;
-    GoogleSignInClient mGoogleSignInClient;
-    GoogleSignInOptions gso;
+    EditText email;
+    EditText password;
     FusedLocationProviderClient fusedLocationProviderClient;
-    SignInButton signInButton;
     TextView explanation;
 
     @Override
@@ -42,38 +51,34 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         User.instantiate();
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
         explanation = findViewById(R.id.explanation);
         explanation.setVisibility(View.INVISIBLE);
+        findViewById(R.id.sign_up_button).setOnClickListener(this);
+        findViewById(R.id.sign_in_button).setOnClickListener(this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         checkPermission();
-
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(Configuration.SERVER_CLIENT_ID)
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        signInButton = findViewById(R.id.sign_in_button);
-        signInButton.setSize(SignInButton.SIZE_WIDE);
-        signInButton.setOnClickListener(this);
-        signInButton.setVisibility(View.INVISIBLE);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if (account != null) {
-            BackendCommunicator.postUserDataToBackend(account.getIdToken(), this);
+    private void signIn() {
+        String emailString = email.getText().toString();
+        String passwordString = password.getText().toString();
+        postLoginData(emailString, passwordString);
+    }
+
+    private void signUp() {
+        String emailString = email.getText().toString();
+        String passwordString = password.getText().toString();
+        if (validate(emailString, passwordString)) {
+            postRegisterData(emailString, passwordString);
         }
     }
 
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+    private boolean validate(String email, String password) {
+        return true;
     }
 
     @Override
@@ -81,19 +86,56 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         if (view.getId() == R.id.sign_in_button) {
             signIn();
         }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
+        if (view.getId() == R.id.sign_up_button) {
+            signUp();
         }
     }
 
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+    private void postLoginData(String username, String password) {
+        JsonObject requestBody = new JsonObject();
+        requestBody.addProperty("username", username);
+        requestBody.addProperty("password", password);
+        Call<JsonObject> tokenCall = service.postLoginData(requestBody);
+        tokenCall.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.code() == 200) {
+                    User.setTokenId(response.body().get("token").toString());
+                    startActivity(new Intent(WelcomeActivity.this, UserActivity.class));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void postRegisterData(String username, String password) {
+        JsonObject requestBody = new JsonObject();
+        requestBody.addProperty("username", username);
+        requestBody.addProperty("password", password);
+        Call<JsonObject> tokenCall = service.postRegisterData(requestBody);
+        tokenCall.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.code() == 201) {
+                    Toast.makeText(getApplicationContext(), "Zarejestrowano!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.i(TAG, response.code() + " " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                Log.d(TAG, "onFailure: " + t.getMessage());
+            }
+        });
+    }
+
+    /*private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
@@ -103,7 +145,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         } catch (ApiException e) {
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
         }
-    }
+    }*/
 
     public void checkPermission() {
         if ((ContextCompat.checkSelfPermission(this,
@@ -111,7 +153,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 (ContextCompat.checkSelfPermission(this,
                         Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(this,
-                    new String[] {
+                    new String[]{
                             Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE);
         } else {
@@ -137,8 +179,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         fusedLocationProviderClient.getLastLocation()
                 .addOnSuccessListener(this, location -> {
                     if (location != null) {
-                        User.setCoordinates(new double[] {location.getLatitude(), location.getLongitude()});
-                        signInButton.setVisibility(View.VISIBLE);
+                        User.setCoordinates(new double[]{location.getLatitude(), location.getLongitude()});
                     }
                 }).addOnFailureListener(this, e -> Log.d(TAG, "onCreate: fail" + e.getMessage()));
     }

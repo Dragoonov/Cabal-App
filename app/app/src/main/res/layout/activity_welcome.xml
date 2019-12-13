@@ -17,11 +17,39 @@
         android:layout_marginBottom="32dp"
         app:srcCompat="@drawable/cabal_logo" />
 
-    <com.google.android.gms.common.SignInButton
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword" />
+
+    <Button
+        style="@style/ButtonCabal"
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"/>
+        android:text="@string/login" />
+
+    <Button
+        style="@style/ButtonCabal"
+        android:id="@+id/sign_up_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register" />
 
     <TextView
         android:id="@+id/explanation"
