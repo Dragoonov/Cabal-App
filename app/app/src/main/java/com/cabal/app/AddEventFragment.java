@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.cabal.app.Utils.JsonLoader;
 import com.cabal.app.Utils.User;
+import com.cabal.app.models.EventModel;
 import com.cabal.app.models.HobbyModel;
 import com.cabal.app.models.HobbyTypeModel;
 import com.google.android.gms.common.api.Status;
@@ -47,6 +48,12 @@ public class AddEventFragment extends Fragment {
 
     private static final String TAG = "AddEventFragment";
     private static final int REQUEST_CODE = 123;
+    private static final String ERROR_MESSAGE_DURATION = "Incorrect duration! ";
+    private static final String ERROR_MESSAGE_MEMBERS = "Incorrect number of members! ";
+    private static final String ERROR_MESSAGE_START_EVENT = "Incorrect start of event! ";
+    private static final String ERROR_MESSAGE_DESCRIPTION = "Incorrect description! ";
+    private static final String ERROR_MESSAGE_LOCATION = "Incorrect location";
+    String errorMessage = "";
 
     private EditText editTextDate;
     private EditText editTextStartEvent;
@@ -267,22 +274,26 @@ public class AddEventFragment extends Fragment {
 
     private void saveEvent() {
 
-            location = editTextPlace.getText().toString();
-            description = editTextDescreption.getText().toString();
+        location = editTextPlace.getText().toString();
+        description = editTextDescreption.getText().toString();
 
-            checkingIfLocationIsCorrect();
-            checkingIfDescriptionIsCorrect();
-            checkingIfStartTimeEventIsCorrect(startHour, startMinute);
-            checkingIfChosenDateIsCorrect();
-            checkingIfNumberOfMembersIsCorrect();
-            checkingIfDurationIsCorrect();
+        checkingIfDescriptionIsCorrect();
+        checkingIfNumberOfMembersIsCorrect();
+        checkingIfLocationIsCorrect();
+        checkingIfDurationIsCorrect();
+        checkingIfStartTimeEventIsCorrect(startHour, startMinute);
 
-            if(isDataCorrect) {
-                //save event
-            }
-            else {
-                Toast.makeText(getActivity(), "Incorrect data! Try again", Toast.LENGTH_LONG).show();
-            }
+        if(isDataCorrect) {
+            //save event
+//            EventModel eventToAdd = new EventModel(
+
+//            );
+        }
+        else {
+            Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+            errorMessage = "";
+            isDataCorrect = true;
+        }
     }
 
     private void updateLabel() {
@@ -312,60 +323,73 @@ public class AddEventFragment extends Fragment {
         Date today = new Date();
         int todayHour = myCalendar.get(Calendar.HOUR_OF_DAY);
         int todayMinute = myCalendar.get(Calendar.MINUTE);
-        if(chosenDate.compareTo(sdf.format(today)) == 0) {
-            if ((todayHour * 60 + todayMinute) >= (startH * 60 + startM)) {
-                isDataCorrect = false;
+
+        if(selectedHourRightFormat.equals("") && selectedMinuteRightFormat.equals("") && editTextStartEvent.getText().equals("")) {
+            isDataCorrect = false;
+            errorMessage = ERROR_MESSAGE_START_EVENT;
+        }
+        else {
+            if (chosenDate.compareTo(sdf.format(today)) == 0) {
+                if ((todayHour * 60 + todayMinute) >= (startH * 60 + startM)) {
+                    isDataCorrect = false;
+                    errorMessage = ERROR_MESSAGE_START_EVENT;
+                }
             }
-        }
-
-        if(selectedHourRightFormat.equals("") && selectedMinuteRightFormat.equals("")) {
-            isDataCorrect = false;
-        }
-    }
-
-    private void checkingIfChosenDateIsCorrect() {
-        String today = sdf.format(new Date());
-
-        if(today.compareTo(chosenDate) > 0) {
-            isDataCorrect = false;
         }
     }
 
     private void checkingIfNumberOfMembersIsCorrect() {
         try {
             numberOfMembers = Integer.parseInt(editTextNumberOfMembers.getText().toString());
-            if(numberOfMembers <= 0) {
-                isDataCorrect = false;
-            }
+            System.out.println("members " + numberOfMembers);
         }
         catch (NumberFormatException ex) {
             ex.printStackTrace();
             isDataCorrect = false;
+            errorMessage = ERROR_MESSAGE_MEMBERS;
         }
     }
 
     private void checkingIfDurationIsCorrect() {
         try {
             duration = Integer.parseInt(editTextDuration.getText().toString());
-            if(duration <= 0) {
-                isDataCorrect = false;
-            }
+            System.out.println("Duration " + duration);
         }
         catch (NumberFormatException ex) {
             ex.printStackTrace();
             isDataCorrect = false;
+            errorMessage = ERROR_MESSAGE_DURATION;
         }
     }
 
     private void checkingIfDescriptionIsCorrect() {
         if(description.equals("")) {
             isDataCorrect = false;
+            errorMessage = ERROR_MESSAGE_DESCRIPTION;
         }
     }
 
     private void checkingIfLocationIsCorrect() {
         if(location.equals("")) {
             isDataCorrect = false;
+            errorMessage = ERROR_MESSAGE_LOCATION;
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("startH", startHour);
+        savedInstanceState.putInt("startM", startMinute);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if(savedInstanceState != null) {
+            startHour = savedInstanceState.getInt("startH");
+            startMinute = savedInstanceState.getInt("startM");
         }
     }
 }
