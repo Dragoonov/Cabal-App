@@ -68,7 +68,7 @@ public class Hobbies {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
             //TODO Delete below
-            User.setTokenId("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkcmFnb0BkcmEucGwiLCJpYXQiOjE1NzYzMTA0NTcsImV4cCI6MTYwNzg0NjQ1N30.Fhpk2iw9rFc1QTWX6QDRClAbumDpwPlMhN-R9M-YB7wQsfHp5Ef-ve1DR1quGcippRHEJKXti-71y7tESx-Wbg");
+            //User.setTokenId("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkcmFnb0BkcmEucGwiLCJpYXQiOjE1NzYzMTA0NTcsImV4cCI6MTYwNzg0NjQ1N30.Fhpk2iw9rFc1QTWX6QDRClAbumDpwPlMhN-R9M-YB7wQsfHp5Ef-ve1DR1quGcippRHEJKXti-71y7tESx-Wbg");
             Call<JsonArray> tokenCall = service.getInterestsData("Bearer " + User.getTokenId());
             tokenCall.enqueue(new Callback<JsonArray>() {
                 @Override

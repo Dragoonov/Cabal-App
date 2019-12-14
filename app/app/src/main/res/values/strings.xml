@@ -21,7 +21,7 @@
     <string name="search">Search</string>
     <string name="browse">Browse</string>
     <string name="nickname_add">Add your nickname</string>
-    <string name="hobby_add">Choose your interestIds</string>
+    <string name="hobby_add">Choose your hobbies</string>
     <string name="rate_user">Rate user %s</string>
     <string name="filterResult">Do you want to filter %s?</string>
     <string name="faces_author">https://www.flaticon.com/authors/dave-gandy</string>
