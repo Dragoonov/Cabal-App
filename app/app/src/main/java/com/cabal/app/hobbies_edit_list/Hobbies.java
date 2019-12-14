@@ -15,19 +15,16 @@ import com.bumptech.glide.Glide;
 import com.cabal.app.Client;
 import com.cabal.app.R;
 import com.cabal.app.Service;
-import com.cabal.app.Utils.JsonLoader;
 import com.cabal.app.Utils.User;
 import com.cabal.app.models.HobbyModel;
 import com.cabal.app.models.HobbyTypeModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -56,6 +53,12 @@ public class Hobbies {
             hobbyTypeModels = new ArrayList<>();
             loadHobbies(activity, hobbyTypeModels, linearView);
         }
+        else {
+            for (HobbyTypeModel model : hobbyTypeModels) {
+                View hobbyTypeModel = initializeHobbyTypeView(model, linearView);
+                linearView.addView(hobbyTypeModel);
+            }
+        }
 
     }
 
@@ -78,7 +81,10 @@ public class Hobbies {
                             for (int i = 0; i < array.length(); i++) {
                                 HobbyTypeModel hobbyTypeModel = gson.fromJson(array.getString(i), HobbyTypeModel.class);
                                 hobbyTypeModels.add(hobbyTypeModel);
-                                loadHobbyTypeChildren(i, hobbyTypeModel, linearView);
+                            }
+
+                            for (HobbyTypeModel model : hobbyTypeModels) {
+                                loadHobbyTypeChildren(model.getId(), model, linearView);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -106,14 +112,14 @@ public class Hobbies {
         try {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
-            Call<JsonObject> tokenCall = service.getInterestsChildrenData("Bearer " + User.getTokenId(), id);
-            tokenCall.enqueue(new Callback<JsonObject>() {
+            Call<JsonArray> tokenCall = service.getInterestsChildrenData("Bearer " + User.getTokenId(), id);
+            tokenCall.enqueue(new Callback<JsonArray>() {
                 @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                     if (response.code() == 200) {
                         Log.d(TAG, "onResponse loadChildren: " + response.code() + ", " + response.message());
                         try {
-                            JSONArray array = new JSONArray(response.body());
+                            JSONArray array = new JSONArray(response.body().toString());
                             HobbyModel[] hobbies = new HobbyModel[array.length()];
                             for (int i = 0; i < array.length(); i++) {
                                 HobbyModel hobbyModel = gson.fromJson(array.getString(i), HobbyModel.class);
@@ -131,7 +137,7 @@ public class Hobbies {
                 }
 
                 @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
+                public void onFailure(Call<JsonArray> call, Throwable t) {
                     Log.d(TAG, "onFailure: " + t.getMessage());
                 }
             });
@@ -141,16 +147,17 @@ public class Hobbies {
         }
     }
 
-    public static Integer[] getCheckedIds() {
+    public static int[] getCheckedIds() {
         return switchesState.keySet().stream()
                 .filter(s -> switchesState.get(s))
                 .map(HobbyModel::getId)
-                .toArray(Integer[]::new);
+                .mapToInt(Integer::intValue)
+                .toArray();
     }
 
     private static View initializeHobbyTypeView(HobbyTypeModel model, LinearLayout parent) {
         View hobbyTypeView = LayoutInflater.from(parent.getContext()).inflate(R.layout.hobby_type_item, parent, false);
-        ((TextView) hobbyTypeView.findViewById(R.id.hobbyTypeTitle)).setText(model.getType());
+        ((TextView) hobbyTypeView.findViewById(R.id.hobbyTypeTitle)).setText(model.getName());
         LinearLayout hobbies = hobbyTypeView.findViewById(R.id.subItem);
         for (HobbyModel hobbyModel : model.getHobbies()) {
             View hobby = initializeHobbyView(hobbyModel, hobbies);
@@ -170,7 +177,7 @@ public class Hobbies {
     private static View initializeHobbyView(HobbyModel model, LinearLayout parent) {
         View hobbyView = LayoutInflater.from(parent.getContext()).inflate(R.layout.hobby_item, parent, false);
         ((TextView) hobbyView.findViewById(R.id.nameHobby)).setText(model.getName());
-        Glide.with(hobbyView.getContext()).load(model.getPhotoUrl()).into((ImageView) hobbyView.findViewById(R.id.photoHobby));
+        Glide.with(hobbyView.getContext()).load(model.getDescription()).into((ImageView) hobbyView.findViewById(R.id.photoHobby));
         Switch switchToggle = hobbyView.findViewById(R.id.switchHobby);
         hobbyView.setOnClickListener(hobby -> {
             switchToggle.setChecked(!switchToggle.isChecked());

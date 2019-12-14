@@ -27,7 +27,7 @@ public interface Service {
     Call<JsonArray> getInterestsData(@Header("Authorization") String auth);
 
     @GET("interests/{interestId}/children")
-    Call<JsonObject> getInterestsChildrenData(@Header("Authorization") String auth, @Path("interestId") int id);
+    Call<JsonArray> getInterestsChildrenData(@Header("Authorization") String auth, @Path("interestId") int id);
 
     @GET("member/me")
     Call<JsonObject> getMeData(@Header("Authorization") String auth);

@@ -10,8 +10,8 @@ public class HobbyModel {
     @SerializedName("name")
     private String name;
 
-    @SerializedName("photoUrl")
-    private String photoUrl;
+    @SerializedName("description")
+    private String description;
 
     public int getId() {
         return id;
@@ -29,12 +29,12 @@ public class HobbyModel {
         this.name = name;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

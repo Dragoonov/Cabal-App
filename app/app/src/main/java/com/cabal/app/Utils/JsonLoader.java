@@ -103,10 +103,10 @@ public class JsonLoader {
         try {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
-            Call<JsonObject> tokenCall = service.getInterestsChildrenData(User.getTokenId(), id);
-            tokenCall.enqueue(new Callback<JsonObject>() {
+            Call<JsonArray> tokenCall = service.getInterestsChildrenData(User.getTokenId(), id);
+            tokenCall.enqueue(new Callback<JsonArray>() {
                 @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                     if (response.code() == 200) {
                         try {
                             JSONArray array = new JSONArray(response.body());
@@ -125,7 +125,7 @@ public class JsonLoader {
                 }
 
                 @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
+                public void onFailure(Call<JsonArray> call, Throwable t) {
                     Log.d(TAG, "onFailure: " + t.getMessage());
                 }
             });

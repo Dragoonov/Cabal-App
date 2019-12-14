@@ -18,9 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.cabal.app.Utils.JsonLoader;
 import com.cabal.app.Utils.User;
-import com.cabal.app.models.EventModel;
 import com.cabal.app.models.HobbyModel;
 import com.cabal.app.models.HobbyTypeModel;
 import com.google.android.gms.common.api.Status;
@@ -33,7 +31,6 @@ import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,7 +106,7 @@ public class AddEventFragment extends Fragment {
         hobbiesNamesThirdType = new String[hobbiesThirdType.length];
 
         for(int i = 0; i< hobbyTypes.size(); i++) {
-            types[i] = hobbyTypes.get(i).getType();
+            types[i] = hobbyTypes.get(i).getName();
         }
 
         for(int j = 0; j< hobbiesFirstType.length; j++) {

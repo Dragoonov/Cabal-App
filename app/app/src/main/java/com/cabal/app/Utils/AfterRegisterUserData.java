@@ -7,15 +7,15 @@ import java.util.Arrays;
 public class AfterRegisterUserData {
     private String avatar;
     private String nickname;
-    private int radius;
-    private Integer[] hobbies;
+    private int searchRadius;
+    private int[] interestIds;
 
-    public int getRadius() {
-        return radius;
+    public int getSearchRadius() {
+        return searchRadius;
     }
 
-    public void setRadius(int radius) {
-        this.radius = radius;
+    public void setSearchRadius(int searchRadius) {
+        this.searchRadius = searchRadius;
     }
 
     public String getAvatar() {
@@ -34,19 +34,19 @@ public class AfterRegisterUserData {
         this.nickname = nickname;
     }
 
-    public Integer[] getHobbies() {
-        return hobbies;
+    public int[] getInterestIds() {
+        return interestIds;
     }
 
-    public void setHobbies(Integer[] hobbies) {
-        this.hobbies = hobbies;
+    public void setInterestIds(int[] interestIds) {
+        this.interestIds = interestIds;
     }
 
-    public AfterRegisterUserData(String avatar, String nickname, Integer[] hobbies, int radius) {
+    public AfterRegisterUserData(String avatar, String nickname, int[] interestIds, int searchRadius) {
         this.avatar = avatar;
         this.nickname = nickname;
-        this.hobbies = hobbies;
-        this.radius = radius;
+        this.interestIds = interestIds;
+        this.searchRadius = searchRadius;
     }
 
     @NonNull
@@ -55,7 +55,7 @@ public class AfterRegisterUserData {
         return "AfterRegisterUserData{" +
                 "avatar length='" + avatar.length() + '\'' +
                 ", nickname='" + nickname + '\'' +
-                ", hobbies=" + Arrays.toString(hobbies) +
+                ", interestIds=" + Arrays.toString(interestIds) +
                 '}';
     }
 }

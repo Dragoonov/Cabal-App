@@ -114,6 +114,7 @@ public class UserActivity extends AppCompatActivity {
                     Log.d(TAG, "onResponse: " + response.code() + ", " + response.message());
                     User.setId(response.body().get("id").getAsInt());
                     User.setNick(response.body().get("name").getAsString());
+                    User.setRadius(response.body().get("searchRadius").getAsInt());
                     getUserAvatar(User.getId());
                 }
                 else {

@@ -4,8 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class HobbyTypeModel {
 
-    @SerializedName("type")
-    private String type;
+
+    @SerializedName("id")
+    private int id;
+
+    @SerializedName("name")
+    private String name;
 
     @SerializedName("photoUrl")
     private String photoUrl;
@@ -13,14 +17,33 @@ public class HobbyTypeModel {
     @SerializedName("hobbies")
     private HobbyModel[] hobbies;
 
-    private boolean expanded = false;
+    @SerializedName("description")
+    private String description;
 
-    public String getType() {
-        return type;
+    public int getId() {
+        return id;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    private boolean expanded = false;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPhotoUrl() {

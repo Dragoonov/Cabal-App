@@ -52,8 +52,7 @@ public class AfterRegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_register);
-        User.instantiate();
-        if(savedInstanceState == null){
+        if(savedInstanceState == null) {
             Hobbies.initializeHobbies(this);
         }
         nickname = findViewById(R.id.nicknameAdd);
@@ -80,17 +79,19 @@ public class AfterRegisterActivity extends AppCompatActivity {
     private void postAfterRegisterData(AfterRegisterUserData data) {
         String requestBodyString = new Gson().toJson(data);
         JsonObject requestBody = new JsonParser().parse(requestBodyString).getAsJsonObject();
-        Log.d(TAG, "postAfterRegisterData DATA: " + requestBody);
         //TODO: usunac nizej
-        User.setTokenId("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkcmFnb0BkcmEucGwiLCJpYXQiOjE1NzYzMTA0NTcsImV4cCI6MTYwNzg0NjQ1N30.Fhpk2iw9rFc1QTWX6QDRClAbumDpwPlMhN-R9M-YB7wQsfHp5Ef-ve1DR1quGcippRHEJKXti-71y7tESx-Wbg");
-        Call<JsonObject> tokenCall = service.postAfterRegisterData("Bearer " + User.getTokenId(),requestBody);
+        //User.setTokenId("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkcmFnb0BkcmEucGwiLCJpYXQiOjE1NzYzMTA0NTcsImV4cCI6MTYwNzg0NjQ1N30.Fhpk2iw9rFc1QTWX6QDRClAbumDpwPlMhN-R9M-YB7wQsfHp5Ef-ve1DR1quGcippRHEJKXti-71y7tESx-Wbg");
+
+        Call<JsonObject> tokenCall = service.postAfterRegisterData("Bearer " + User.getTokenId(), requestBody);
         tokenCall.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.code() == 200) {
+                    Log.d(TAG, "onResponseIDS: " + Arrays.toString(Hobbies.getCheckedIds()));
                     startActivity(new Intent(AfterRegisterActivity.this, UserActivity.class));
                 }
                 else {
+                    Log.d(TAG, "onResponseIDS: " +Arrays.toString(Hobbies.getCheckedIds()));
                     Log.d(TAG, "onResponse: " + response.code() + ", " + response.message());
                 }
             }
@@ -98,7 +99,7 @@ public class AfterRegisterActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                Log.d(TAG, "onFailure: " + t.getMessage());
+                Log.d(TAG, "onResponseIDS: " + Arrays.toString(Hobbies.getCheckedIds()));
             }
         });
     }
