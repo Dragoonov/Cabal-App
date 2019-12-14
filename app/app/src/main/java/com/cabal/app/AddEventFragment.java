@@ -33,7 +33,9 @@ import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -95,8 +97,8 @@ public class AddEventFragment extends Fragment {
         Places.initialize(Objects.requireNonNull(getContext()), Configuration.PLACES_KEY);
         PlacesClient placesClient = Places.createClient(getContext());
 
-
-        List<HobbyTypeModel> hobbyTypes = JsonLoader.loadHobbies(getContext());
+        List<HobbyTypeModel> hobbyTypes = new ArrayList<>();
+        //hobbyTypes = JsonLoader.loadHobbies(getContext(), hobbyTypes);
         HobbyModel[] hobbiesFirstType = hobbyTypes.get(0).getHobbies();
         HobbyModel[] hobbiesSecondType = hobbyTypes.get(1).getHobbies();
         HobbyModel[] hobbiesThirdType = hobbyTypes.get(2).getHobbies();

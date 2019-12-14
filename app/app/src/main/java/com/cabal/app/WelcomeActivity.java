@@ -101,7 +101,13 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.code() == 200) {
                     User.setTokenId(response.body().get("token").toString());
-                    startActivity(new Intent(WelcomeActivity.this, UserActivity.class));
+                    boolean firstTime = response.body().get("firstTime").getAsBoolean();
+                    if(firstTime){
+                        startActivity(new Intent(WelcomeActivity.this,AfterRegisterActivity.class));
+                    }
+                    else {
+                        startActivity(new Intent(WelcomeActivity.this, UserActivity.class));
+                    }
                 }
             }
 

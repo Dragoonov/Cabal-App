@@ -7,7 +7,16 @@ import java.util.Arrays;
 public class AfterRegisterUserData {
     private String avatar;
     private String nickname;
+    private int radius;
     private Integer[] hobbies;
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
 
     public String getAvatar() {
         return avatar;
@@ -33,10 +42,11 @@ public class AfterRegisterUserData {
         this.hobbies = hobbies;
     }
 
-    public AfterRegisterUserData(String avatar, String nickname, Integer[] hobbies) {
+    public AfterRegisterUserData(String avatar, String nickname, Integer[] hobbies, int radius) {
         this.avatar = avatar;
         this.nickname = nickname;
         this.hobbies = hobbies;
+        this.radius = radius;
     }
 
     @NonNull
