@@ -100,6 +100,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.code() == 200) {
+                    Log.d(TAG, "onResponse: " + response.code() + ", " + response.message());
                     User.setTokenId(response.body().get("token").toString());
                     boolean firstTime = response.body().get("firstTime").getAsBoolean();
                     if(firstTime){
@@ -109,11 +110,15 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                         startActivity(new Intent(WelcomeActivity.this, UserActivity.class));
                     }
                 }
+                else {
+                    Log.d(TAG, "onResponse: " + response.code() + ", " + response.message());
+                }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                Log.d(TAG, "onResponse: " + t.getMessage());
             }
         });
     }

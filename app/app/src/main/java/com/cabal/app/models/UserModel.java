@@ -25,6 +25,18 @@ public class UserModel {
     @SerializedName("radius")
     private int radius;
 
+    @SerializedName("id")
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
     public String getAvatarImage() {
         return avatarImage;
     }

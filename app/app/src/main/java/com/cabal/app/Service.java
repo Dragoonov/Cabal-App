@@ -28,4 +28,10 @@ public interface Service {
 
     @GET("interests/{interestId}/children")
     Call<JsonObject> getInterestsChildrenData(@Header("Authorization") String auth, @Path("interestId") int id);
+
+    @GET("member/me")
+    Call<JsonObject> getMeData(@Header("Authorization") String auth);
+
+    @GET("member/{memberId}/avatar")
+    Call<JsonObject> getMeAvatarData(@Header("Authorization") String auth, @Path("memberId") int id);
 }
