@@ -105,9 +105,11 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                     boolean firstTime = response.body().get("firstTime").getAsBoolean();
                     if(firstTime){
                         startActivity(new Intent(WelcomeActivity.this,AfterRegisterActivity.class));
+                        finish();
                     }
                     else {
                         startActivity(new Intent(WelcomeActivity.this, UserActivity.class));
+                        finish();
                     }
                 }
                 else {
