@@ -5,6 +5,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout textInputPassword;
     private TextInputLayout textInputConfirmPassword;
     private Button buttonRegister;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,9 @@ public class RegisterActivity extends AppCompatActivity {
         textInputPassword = findViewById(R.id.text_input_password);
         textInputConfirmPassword = findViewById(R.id.text_input_confirm_password);
         buttonRegister = findViewById(R.id.button_register);
+
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
 
         buttonRegister.setOnClickListener(v -> {
             confirmInput(v);
@@ -111,6 +116,8 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        progressBar.setVisibility(View.VISIBLE);
+
         String emailString = textInputEmail.getEditText().getText().toString();
         String passwordString = textInputPassword.getEditText().getText().toString();
 
@@ -130,12 +137,15 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     Log.i(TAG, response.code() + " " + response.message());
                 }
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 Log.d(TAG, "onFailure: " + t.getMessage());
+                progressBar.setVisibility(View.GONE);
+
             }
         });
     }
