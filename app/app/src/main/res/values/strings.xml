@@ -80,5 +80,6 @@
     <string name="distance">distance</string>
     <string name="explanation">App needs location permission to run properly. Please exit app and try again</string>
     <string name="choose_duration_event">Choose duration</string>
+    <string name="confirm_pass">Confirm password</string>
 </resources>
 

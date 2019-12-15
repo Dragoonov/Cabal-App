@@ -11,23 +11,14 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cabal.app.Utils.BackendCommunicator;
 import com.cabal.app.Utils.User;
 import com.cabal.app.navigation_bar.UserActivity;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.Task;
 import com.google.gson.JsonObject;
 
 import java.util.Objects;
@@ -70,15 +61,8 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void signUp() {
-        String emailString = email.getText().toString();
-        String passwordString = password.getText().toString();
-        if (validate(emailString, passwordString)) {
-            postRegisterData(emailString, passwordString);
-        }
-    }
-
-    private boolean validate(String email, String password) {
-        return true;
+        Intent intent = new Intent(getBaseContext(), RegisterActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -125,28 +109,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         });
     }
 
-    private void postRegisterData(String username, String password) {
-        JsonObject requestBody = new JsonObject();
-        requestBody.addProperty("username", username);
-        requestBody.addProperty("password", password);
-        Call<JsonObject> tokenCall = service.postRegisterData(requestBody);
-        tokenCall.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.code() == 201) {
-                    Toast.makeText(getApplicationContext(), "Zarejestrowano!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.i(TAG, response.code() + " " + response.message());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                Log.d(TAG, "onFailure: " + t.getMessage());
-            }
-        });
-    }
 
     /*private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
