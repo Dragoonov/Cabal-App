@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     EditText password;
     FusedLocationProviderClient fusedLocationProviderClient;
     TextView explanation;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,8 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         password = findViewById(R.id.password);
         explanation = findViewById(R.id.explanation);
         explanation.setVisibility(View.INVISIBLE);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
         findViewById(R.id.sign_up_button).setOnClickListener(this);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -64,6 +68,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void signIn() {
+        progressBar.setVisibility(View.VISIBLE);
         String emailString = email.getText().toString();
         String passwordString = password.getText().toString();
         postLoginData(emailString, passwordString);
@@ -72,6 +77,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     private void signUp() {
         String emailString = email.getText().toString();
         String passwordString = password.getText().toString();
+        progressBar.setVisibility(View.VISIBLE);
         if (validate(emailString, passwordString)) {
             postRegisterData(emailString, passwordString);
         }
@@ -115,12 +121,14 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 else {
                     Log.d(TAG, "onResponse: " + response.code() + ", " + response.message());
                 }
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 Log.d(TAG, "onResponse: " + t.getMessage());
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -138,12 +146,14 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 } else {
                     Log.i(TAG, response.code() + " " + response.message());
                 }
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 Log.d(TAG, "onFailure: " + t.getMessage());
+                progressBar.setVisibility(View.GONE);
             }
         });
     }

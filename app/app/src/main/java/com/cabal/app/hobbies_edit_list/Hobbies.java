@@ -26,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +60,12 @@ public class Hobbies {
                 linearView.addView(hobbyTypeModel);
             }
         }
+    }
 
+    public static void tickLikedHobbies() {
+        for(HobbyModel model : User.getHobbies()) {
+            switchesState.put(model,true);
+        }
     }
 
     public static List<HobbyTypeModel> loadHobbies(Context context, List<HobbyTypeModel> hobbyTypeModels, LinearLayout linearView) {
@@ -67,8 +73,6 @@ public class Hobbies {
         try {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
-            //TODO Delete below
-            //User.setTokenId("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkcmFnb0BkcmEucGwiLCJpYXQiOjE1NzYzMTA0NTcsImV4cCI6MTYwNzg0NjQ1N30.Fhpk2iw9rFc1QTWX6QDRClAbumDpwPlMhN-R9M-YB7wQsfHp5Ef-ve1DR1quGcippRHEJKXti-71y7tESx-Wbg");
             Call<JsonArray> tokenCall = service.getInterestsData("Bearer " + User.getTokenId());
             tokenCall.enqueue(new Callback<JsonArray>() {
                 @Override
@@ -183,7 +187,7 @@ public class Hobbies {
             switchToggle.setChecked(!switchToggle.isChecked());
             switchesState.put(model, switchToggle.isChecked());
         });
-        Boolean switchState = switchesState.get(model);
+        Boolean switchState = switchesState.keySet().stream().anyMatch(mod -> mod.getId() == model.getId());
         switchToggle.setChecked(switchState == null ? false : switchState);
         if (switchState == null) {
             switchesState.put(model, false);

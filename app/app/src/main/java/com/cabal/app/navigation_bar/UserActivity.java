@@ -1,6 +1,5 @@
 package com.cabal.app.navigation_bar;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,17 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.cabal.app.AfterRegisterActivity;
 import com.cabal.app.Client;
 import com.cabal.app.Service;
 import com.cabal.app.Utils.User;
-import com.cabal.app.WelcomeActivity;
 import com.cabal.app.hobbies_edit_list.Hobbies;
+import com.cabal.app.models.HobbyModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.cabal.app.R;
 import com.cabal.app.navigation_bar.search_events.SearchFragment;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -115,6 +115,9 @@ public class UserActivity extends AppCompatActivity {
                     User.setId(response.body().get("id").getAsInt());
                     User.setNick(response.body().get("name").getAsString());
                     User.setRadius(response.body().get("searchRadius").getAsInt());
+                    User.setHobbies(new Gson().fromJson(response.body().getAsJsonArray("interests"), HobbyModel[].class));
+                    Hobbies.tickLikedHobbies();
+                    Log.d(TAG, "onResponse: Hobbiesy" + Arrays.toString(User.getHobbies()));
                     getUserAvatar(User.getId());
                 }
                 else {
