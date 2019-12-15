@@ -11,14 +11,24 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cabal.app.Utils.BackendCommunicator;
 import com.cabal.app.Utils.User;
 import com.cabal.app.navigation_bar.UserActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.Task;
 import com.google.gson.JsonObject;
 
 import java.util.Objects;
@@ -36,6 +46,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     EditText password;
     FusedLocationProviderClient fusedLocationProviderClient;
     TextView explanation;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +57,8 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         password = findViewById(R.id.password);
         explanation = findViewById(R.id.explanation);
         explanation.setVisibility(View.INVISIBLE);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
         findViewById(R.id.sign_up_button).setOnClickListener(this);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -55,6 +68,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void signIn() {
+        progressBar.setVisibility(View.VISIBLE);
         String emailString = email.getText().toString();
         String passwordString = password.getText().toString();
         postLoginData(emailString, passwordString);
@@ -64,6 +78,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         Intent intent = new Intent(getBaseContext(), RegisterActivity.class);
         startActivity(intent);
     }
+
 
     @Override
     public void onClick(View view) {
@@ -99,12 +114,14 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 else {
                     Log.d(TAG, "onResponse: " + response.code() + ", " + response.message());
                 }
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 Log.d(TAG, "onResponse: " + t.getMessage());
+                progressBar.setVisibility(View.GONE);
             }
         });
     }

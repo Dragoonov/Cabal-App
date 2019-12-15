@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,74 +10,96 @@
     tools:context=".WelcomeActivity"
     style="@style/WelcomeScreen">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginBottom="32dp"
-        app:srcCompat="@drawable/cabal_logo" />
-
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:hint="@string/password"
-        android:inputType="textPassword" />
-
-    <Button
-        style="@style/ButtonCabal"
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login" />
-
     <LinearLayout
+        android:id="@+id/linearLayout"
+        style="@style/WelcomeScreen"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:layout_height="match_parent"
+        android:gravity="center|top"
+        android:orientation="vertical"
+        tools:context=".WelcomeActivity"
+        tools:layout_editor_absoluteX="-132dp"
+        tools:layout_editor_absoluteY="-70dp">
 
-        <TextView
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginBottom="32dp"
+            app:srcCompat="@drawable/cabal_logo" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/sign_in_button"
+            style="@style/ButtonCabal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_vertical|right"
-            android:text="No account yet? "
-            android:textSize="20sp" />
+            android:text="@string/login" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
+                android:text="No account yet? "
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/sign_up_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textColor="@color/quantum_white_text"
+                android:text="Create one"
+                android:textSize="20sp" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/sign_up_button"
+            android:id="@+id/explanation"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:textColor="@color/quantum_white_text"
-            android:text="Create one"
-            android:textSize="20sp" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="64dp"
+            android:text="@string/explanation" />
+
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout" />
 
-    <TextView
-        android:id="@+id/explanation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp"
-        android:text="@string/explanation" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
