@@ -75,10 +75,11 @@
     </string-array>
     <string name="change_avatar">Change avatar</string>
     <string name="nickname">Nickname</string>
-    <string name="radius">Radius(km)</string>
+    <string name="searchRadius">Radius(km)</string>
     <string name="save">Save</string>
     <string name="distance">distance</string>
     <string name="explanation">App needs location permission to run properly. Please exit app and try again</string>
     <string name="choose_duration_event">Choose duration</string>
+    <string name="confirm_pass">Confirm password</string>
 </resources>
 

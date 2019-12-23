@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     EditText password;
     FusedLocationProviderClient fusedLocationProviderClient;
     TextView explanation;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,8 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         password = findViewById(R.id.password);
         explanation = findViewById(R.id.explanation);
         explanation.setVisibility(View.INVISIBLE);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
         findViewById(R.id.sign_up_button).setOnClickListener(this);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -64,22 +68,17 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void signIn() {
+        progressBar.setVisibility(View.VISIBLE);
         String emailString = email.getText().toString();
         String passwordString = password.getText().toString();
         postLoginData(emailString, passwordString);
     }
 
     private void signUp() {
-        String emailString = email.getText().toString();
-        String passwordString = password.getText().toString();
-        if (validate(emailString, passwordString)) {
-            postRegisterData(emailString, passwordString);
-        }
+        Intent intent = new Intent(getBaseContext(), RegisterActivity.class);
+        startActivity(intent);
     }
 
-    private boolean validate(String email, String password) {
-        return true;
-    }
 
     @Override
     public void onClick(View view) {
@@ -100,40 +99,34 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.code() == 200) {
-                    User.setTokenId(response.body().get("token").toString());
-                    startActivity(new Intent(WelcomeActivity.this, UserActivity.class));
+                    Log.d(TAG, "onResponse: " + response.code() + ", " + response.message());
+                    User.setTokenId(response.body().get("token").getAsString());
+                    boolean firstTime = response.body().get("firstTime").getAsBoolean();
+                    if(firstTime){
+                        startActivity(new Intent(WelcomeActivity.this,AfterRegisterActivity.class));
+                        finish();
+                    }
+                    else {
+                        startActivity(new Intent(WelcomeActivity.this, UserActivity.class));
+                        finish();
+                    }
                 }
+                else {
+                    Log.d(TAG, "onResponse: " + response.code() + ", " + response.message());
+                }
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                Log.d(TAG, "onResponse: " + t.getMessage());
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
 
-    private void postRegisterData(String username, String password) {
-        JsonObject requestBody = new JsonObject();
-        requestBody.addProperty("username", username);
-        requestBody.addProperty("password", password);
-        Call<JsonObject> tokenCall = service.postRegisterData(requestBody);
-        tokenCall.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.code() == 201) {
-                    Toast.makeText(getApplicationContext(), "Zarejestrowano!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.i(TAG, response.code() + " " + response.message());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                Log.d(TAG, "onFailure: " + t.getMessage());
-            }
-        });
-    }
 
     /*private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {

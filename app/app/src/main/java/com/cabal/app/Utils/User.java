@@ -8,6 +8,14 @@ public class User {
 
     private static UserModel loggedUser;
 
+    public static int getId() {
+        return loggedUser.getId();
+    }
+
+    public static void setId(int id) {
+        loggedUser.setId(id);
+    }
+
     public static String getAvatarImage() {
         return loggedUser.getAvatarImage();
     }

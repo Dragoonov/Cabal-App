@@ -18,9 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.cabal.app.Utils.JsonLoader;
 import com.cabal.app.Utils.User;
-import com.cabal.app.models.EventModel;
 import com.cabal.app.models.HobbyModel;
 import com.cabal.app.models.HobbyTypeModel;
 import com.google.android.gms.common.api.Status;
@@ -34,6 +32,7 @@ import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -95,8 +94,8 @@ public class AddEventFragment extends Fragment {
         Places.initialize(Objects.requireNonNull(getContext()), Configuration.PLACES_KEY);
         PlacesClient placesClient = Places.createClient(getContext());
 
-
-        List<HobbyTypeModel> hobbyTypes = JsonLoader.loadHobbies(getContext());
+        List<HobbyTypeModel> hobbyTypes = new ArrayList<>();
+        //hobbyTypes = JsonLoader.loadHobbies(getContext(), hobbyTypes);
         HobbyModel[] hobbiesFirstType = hobbyTypes.get(0).getHobbies();
         HobbyModel[] hobbiesSecondType = hobbyTypes.get(1).getHobbies();
         HobbyModel[] hobbiesThirdType = hobbyTypes.get(2).getHobbies();
@@ -107,7 +106,7 @@ public class AddEventFragment extends Fragment {
         hobbiesNamesThirdType = new String[hobbiesThirdType.length];
 
         for(int i = 0; i< hobbyTypes.size(); i++) {
-            types[i] = hobbyTypes.get(i).getType();
+            types[i] = hobbyTypes.get(i).getName();
         }
 
         for(int j = 0; j< hobbiesFirstType.length; j++) {

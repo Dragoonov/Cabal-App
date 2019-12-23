@@ -43,13 +43,13 @@ public class HobbiesAdapter extends RecyclerView.Adapter<HobbiesAdapter.RecViewH
         HobbyTypeModel hobbyTypeModel = hobbies.get(position);
 
         holder.subItem.setVisibility(hobbyTypeModel.isExpanded() ? View.VISIBLE : View.GONE);
-        holder.hobbyTitle.setText(hobbyTypeModel.getType());
+        holder.hobbyTitle.setText(hobbyTypeModel.getName());
 
         if (holder.subItem.getChildCount() == 0) {
             for (HobbyModel hobbyModel : hobbyTypeModel.getHobbies()) {
                 switchedElement.put(hobbyModel.getName(),false);
                 View view = LayoutInflater.from(holder.subItem.getContext()).inflate(R.layout.hobby_item, holder.subItem, false);
-                Glide.with(holder.subItem.getContext()).load(hobbyModel.getPhotoUrl()).into((ImageView) view.findViewById(R.id.photoHobby));
+                Glide.with(holder.subItem.getContext()).load(hobbyModel.getDescription()).into((ImageView) view.findViewById(R.id.photoHobby));
                 ((TextView) view.findViewById(R.id.nameHobby)).setText(hobbyModel.getName());
                 view.setOnClickListener(view1 -> {
                     Switch switchToggle = view.findViewById(R.id.switchHobby);
