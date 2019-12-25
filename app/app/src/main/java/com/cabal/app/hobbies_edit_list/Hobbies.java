@@ -2,38 +2,23 @@ package com.cabal.app.hobbies_edit_list;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.cabal.app.Client;
 import com.cabal.app.R;
-import com.cabal.app.Service;
 import com.cabal.app.Utils.User;
 import com.cabal.app.models.HobbyModel;
 import com.cabal.app.models.HobbyTypeModel;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -42,7 +27,6 @@ public class Hobbies {
 
     private static Map<HobbyModel, Boolean> switchesState = new LinkedHashMap<>();
     private static List<HobbyTypeModel> hobbyTypeModels;
-    static private Service service = Client.getClient().create(Service.class);
     private static final String TAG = "Hobbies";
 
     public static void initializeHobbies(Activity activity) {
@@ -53,8 +37,7 @@ public class Hobbies {
         if (hobbyTypeModels == null) {
             hobbyTypeModels = new ArrayList<>();
             loadHobbies(activity, hobbyTypeModels, linearView);
-        }
-        else {
+        } else {
             for (HobbyTypeModel model : hobbyTypeModels) {
                 View hobbyTypeModel = initializeHobbyTypeView(model, linearView);
                 linearView.addView(hobbyTypeModel);
@@ -63,93 +46,16 @@ public class Hobbies {
     }
 
     public static void tickLikedHobbies() {
-        for(HobbyModel model : User.getHobbies()) {
-            switchesState.put(model,true);
+        for (HobbyModel model : User.getHobbies()) {
+            switchesState.put(model, true);
         }
     }
 
     public static List<HobbyTypeModel> loadHobbies(Context context, List<HobbyTypeModel> hobbyTypeModels, LinearLayout linearView) {
 
-        try {
-            GsonBuilder builder = new GsonBuilder();
-            Gson gson = builder.create();
-            Call<JsonArray> tokenCall = service.getInterestsData("Bearer " + User.getTokenId());
-            tokenCall.enqueue(new Callback<JsonArray>() {
-                @Override
-                public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
-                    if (response.code() == 200) {
-                        try {
-                            Log.d(TAG, "onResponse loadHobbies: " + response.code() + ", " + response.message());
-                            JSONArray array = new JSONArray(response.body().toString());
-
-                            for (int i = 0; i < array.length(); i++) {
-                                HobbyTypeModel hobbyTypeModel = gson.fromJson(array.getString(i), HobbyTypeModel.class);
-                                hobbyTypeModels.add(hobbyTypeModel);
-                            }
-
-                            for (HobbyTypeModel model : hobbyTypeModels) {
-                                loadHobbyTypeChildren(model.getId(), model, linearView);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        Log.d(TAG, "onResponse loadHobbies: " + response.code() + ", " + response.message());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<JsonArray> call, Throwable t) {
-                    Toast.makeText(context, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                    Log.d(TAG, "onFailure loadHobbies: " + t.getMessage());
-                }
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
         return hobbyTypeModels;
     }
 
-    private static void loadHobbyTypeChildren(int id, HobbyTypeModel model, LinearLayout linearView) {
-        try {
-            GsonBuilder builder = new GsonBuilder();
-            Gson gson = builder.create();
-            Call<JsonArray> tokenCall = service.getInterestsChildrenData("Bearer " + User.getTokenId(), id);
-            tokenCall.enqueue(new Callback<JsonArray>() {
-                @Override
-                public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
-                    if (response.code() == 200) {
-                        Log.d(TAG, "onResponse loadChildren: " + response.code() + ", " + response.message());
-                        try {
-                            JSONArray array = new JSONArray(response.body().toString());
-                            HobbyModel[] hobbies = new HobbyModel[array.length()];
-                            for (int i = 0; i < array.length(); i++) {
-                                HobbyModel hobbyModel = gson.fromJson(array.getString(i), HobbyModel.class);
-                                hobbies[i] = hobbyModel;
-                            }
-                            model.setHobbies(hobbies);
-                            View hobbyTypeModel = initializeHobbyTypeView(model, linearView);
-                            linearView.addView(hobbyTypeModel);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        Log.d(TAG, "onResponse: " + response.code() + ", " + response.message());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<JsonArray> call, Throwable t) {
-                    Log.d(TAG, "onFailure: " + t.getMessage());
-                }
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public static int[] getCheckedIds() {
         return switchesState.keySet().stream()

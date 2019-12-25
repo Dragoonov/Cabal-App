@@ -11,11 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.cabal.app.R;
+import com.cabal.app.Utils.JsonLoader;
+import com.cabal.app.Utils.SwipeType;
 import com.cabal.app.dialogs.FilterEventsDialogFragment;
 import com.cabal.app.models.EventModel;
-import com.cabal.app.R;
-import com.cabal.app.Utils.SwipeType;
-import com.cabal.app.Utils.JsonLoader;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 

@@ -63,13 +63,13 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnAddEvent"
             style="@style/FAB"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/btnAddEvent"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -79,5 +79,4 @@
             app:srcCompat="@drawable/add2"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </LinearLayout>
