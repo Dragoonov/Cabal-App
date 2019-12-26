@@ -34,7 +34,8 @@
                 android:id="@+id/setAvatarButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/set_avatar" />
+                android:text="@string/set_avatar"
+                style="@style/ButtonCabal"/>
         </LinearLayout>
 
         <TextView
@@ -47,7 +48,7 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/nicknameAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="128dp"
@@ -78,7 +79,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@android:string/ok" />
+            android:text="@android:string/ok"
+            style="@style/ButtonCabal"/>
 
     </LinearLayout>
 </ScrollView>

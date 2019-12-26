@@ -1,8 +1,8 @@
 [
   {
-    "nick": "Penetrator",
+    "nick": "Mateuszek",
     "email": "lolo@gmail.com",
-    "avatarUri": "xxx",
+    "avatarImage": "xxx",
     "tokenId": "xxx",
     "hobbies": [
       {
@@ -20,9 +20,9 @@
     ]
   },
   {
-    "nick": "lolek1234",
+    "nick": "Kubik",
     "email": "oO@o2.pl",
-    "avatarUri": "xxx",
+    "avatarImage": "xxx",
     "tokenId": "xxx",
     "hobbies": [
       {
@@ -40,9 +40,9 @@
     ]
   },
   {
-    "nick": "Szmatka rogatka",
+    "nick": "Alak",
     "email": "sieradosera@wp.pl",
-    "avatarUri": "xxx",
+    "avatarImage": "xxx",
     "tokenId": "xxx",
     "hobbies": [
       {
@@ -60,9 +60,9 @@
     ]
   },
   {
-    "nick": "0",
+    "nick": "Piotr",
     "email": "zero@gmail.com",
-    "avatarUri": "xxx",
+    "avatarImage": "xxx",
     "tokenId": "xxx",
     "hobbies": [
       {
