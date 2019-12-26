@@ -1,34 +1,25 @@
 package com.cabal.app;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cabal.app.Utils.BackendCommunicator;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.cabal.app.Utils.User;
 import com.cabal.app.navigation_bar.UserActivity;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.Task;
 import com.google.gson.JsonObject;
 
 import java.util.Objects;
@@ -40,7 +31,6 @@ import retrofit2.Response;
 public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "WelcomeActivity";
-    static private Service service = Client.getClient().create(Service.class);
     private static final int REQUEST_CODE = 123;
     EditText email;
     EditText password;
@@ -59,7 +49,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         explanation.setVisibility(View.INVISIBLE);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
-        findViewById(R.id.sign_up_button).setOnClickListener(this);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         checkPermission();
@@ -74,10 +63,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         postLoginData(emailString, passwordString);
     }
 
-    private void signUp() {
-        Intent intent = new Intent(getBaseContext(), RegisterActivity.class);
-        startActivity(intent);
-    }
 
 
     @Override
@@ -85,45 +70,13 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         if (view.getId() == R.id.sign_in_button) {
             signIn();
         }
-        if (view.getId() == R.id.sign_up_button) {
-            signUp();
-        }
     }
 
     private void postLoginData(String username, String password) {
         JsonObject requestBody = new JsonObject();
         requestBody.addProperty("username", username);
         requestBody.addProperty("password", password);
-        Call<JsonObject> tokenCall = service.postLoginData(requestBody);
-        tokenCall.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.code() == 200) {
-                    Log.d(TAG, "onResponse: " + response.code() + ", " + response.message());
-                    User.setTokenId(response.body().get("token").getAsString());
-                    boolean firstTime = response.body().get("firstTime").getAsBoolean();
-                    if(firstTime){
-                        startActivity(new Intent(WelcomeActivity.this,AfterRegisterActivity.class));
-                        finish();
-                    }
-                    else {
-                        startActivity(new Intent(WelcomeActivity.this, UserActivity.class));
-                        finish();
-                    }
-                }
-                else {
-                    Log.d(TAG, "onResponse: " + response.code() + ", " + response.message());
-                }
-                progressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                Log.d(TAG, "onResponse: " + t.getMessage());
-                progressBar.setVisibility(View.GONE);
-            }
-        });
+        startActivity(new Intent(this, AfterRegisterActivity.class));
     }
 
 

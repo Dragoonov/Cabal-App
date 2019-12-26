@@ -2,6 +2,7 @@ package com.cabal.app.Utils;
 
 import android.content.Context;
 import android.util.AttributeSet;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 public class NonScrollRecyclerView extends RecyclerView {

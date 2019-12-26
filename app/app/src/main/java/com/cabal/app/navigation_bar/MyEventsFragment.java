@@ -17,6 +17,7 @@ import com.cabal.app.R;
 import com.cabal.app.Utils.Filters;
 import com.cabal.app.Utils.JsonLoader;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.Objects;
 
 public class MyEventsFragment extends Fragment {
@@ -42,14 +43,12 @@ public class MyEventsFragment extends Fragment {
             Filters.FINISHED_FILTER = checked;
             adapter.getFilter().filter("");
         });
-
-        btnAddEvent.setOnClickListener(v -> Objects.requireNonNull(getActivity())
+        btnAddEvent.setOnClickListener(view1 -> Objects.requireNonNull(getActivity())
                 .getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, new AddEventFragment())
                 .addToBackStack(null)
                 .commit());
-
         RecyclerView recyclerView = view.findViewById(R.id.recycleMyEvents);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
@@ -59,9 +58,5 @@ public class MyEventsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
     }
 }

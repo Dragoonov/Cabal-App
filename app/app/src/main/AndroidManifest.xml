@@ -29,8 +29,6 @@
         <activity android:name=".navigation_bar.UserActivity"
             android:windowSoftInputMode="adjustPan">
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".RegisterActivity" />
 
     </application>
 

@@ -1,9 +1,5 @@
 package com.cabal.app;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,15 +11,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.cabal.app.Utils.AfterRegisterUserData;
-import com.cabal.app.Utils.BackendCommunicator;
 import com.cabal.app.Utils.ImageManager;
 import com.cabal.app.Utils.User;
 import com.cabal.app.hobbies_edit_list.Hobbies;
 import com.cabal.app.navigation_bar.UserActivity;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -38,7 +36,6 @@ public class AfterRegisterActivity extends AppCompatActivity {
 
     public static final int GET_FROM_GALLERY = 1;
     private final int INITIAL_RADIUS = 5;
-    static private Service service = Client.getClient().create(Service.class);
     private static final String TAG = "AfterRegisterActivity";
 
     Button afterRegisterAccept;
@@ -79,29 +76,7 @@ public class AfterRegisterActivity extends AppCompatActivity {
     private void postAfterRegisterData(AfterRegisterUserData data) {
         String requestBodyString = new Gson().toJson(data);
         JsonObject requestBody = new JsonParser().parse(requestBodyString).getAsJsonObject();
-        //TODO: usunac nizej
-        //User.setTokenId("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkcmFnb0BkcmEucGwiLCJpYXQiOjE1NzYzMTA0NTcsImV4cCI6MTYwNzg0NjQ1N30.Fhpk2iw9rFc1QTWX6QDRClAbumDpwPlMhN-R9M-YB7wQsfHp5Ef-ve1DR1quGcippRHEJKXti-71y7tESx-Wbg");
-
-        Call<JsonObject> tokenCall = service.postAfterRegisterData("Bearer " + User.getTokenId(), requestBody);
-        tokenCall.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.code() == 200) {
-                    Log.d(TAG, "onResponseIDS: " + Arrays.toString(Hobbies.getCheckedIds()));
-                    startActivity(new Intent(AfterRegisterActivity.this, UserActivity.class));
-                }
-                else {
-                    Log.d(TAG, "onResponseIDS: " +Arrays.toString(Hobbies.getCheckedIds()));
-                    Log.d(TAG, "onResponse: " + response.code() + ", " + response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                Log.d(TAG, "onResponseIDS: " + Arrays.toString(Hobbies.getCheckedIds()));
-            }
-        });
+        startActivity(new Intent(this, UserActivity.class));
     }
 
     private void loadDefaultImage(){
