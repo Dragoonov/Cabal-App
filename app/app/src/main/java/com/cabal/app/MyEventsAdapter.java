@@ -54,7 +54,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults results = new FilterResults();
-                List<EventModel> filteredList = Filters.performFiltering(models);
+                List<EventModel> filteredList = Filters.INSTANCE.performFiltering(models);
                 results.count = filteredList.size();
                 results.values = filteredList;
                 return results;

@@ -30,17 +30,17 @@ public class MyEventsFragment extends Fragment {
         CheckBox authorFilter = view.findViewById(R.id.authorSwitch);
         CheckBox guestFilter = view.findViewById(R.id.guestSwitch);
         CheckBox finishedFilter = view.findViewById(R.id.finishedSwitch);
-        MyEventsAdapter adapter = new MyEventsAdapter(JsonLoader.loadEvents(view.getContext()));
+        MyEventsAdapter adapter = new MyEventsAdapter(JsonLoader.INSTANCE.loadEvents(view.getContext()));
         authorFilter.setOnCheckedChangeListener((v, checked) -> {
-            Filters.AUTHOR_FILTER = checked;
+            Filters.INSTANCE.setAUTHOR_FILTER(checked);
             adapter.getFilter().filter("");
         });
         guestFilter.setOnCheckedChangeListener((v, checked) -> {
-            Filters.GUEST_FILTER = checked;
+            Filters.INSTANCE.setGUEST_FILTER(checked);
             adapter.getFilter().filter("");
         });
         finishedFilter.setOnCheckedChangeListener((v, checked) -> {
-            Filters.FINISHED_FILTER = checked;
+            Filters.INSTANCE.setFINISHED_FILTER(checked);
             adapter.getFilter().filter("");
         });
         btnAddEvent.setOnClickListener(view1 -> Objects.requireNonNull(getActivity())

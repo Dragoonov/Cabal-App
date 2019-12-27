@@ -40,7 +40,7 @@ public class RatingFragment extends Fragment {
             manager.popBackStack();
                 });
         users.setLayoutManager(new LinearLayoutManager(getContext()));
-        RatingAdapter adapter = new RatingAdapter(JsonLoader.loadUsers(getContext()));
+        RatingAdapter adapter = new RatingAdapter(JsonLoader.INSTANCE.loadUsers(getContext()));
         users.setAdapter(adapter);
 
         return view;

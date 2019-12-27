@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,12 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.util.Arrays;
 import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AfterRegisterActivity extends AppCompatActivity {
 
@@ -81,8 +74,8 @@ public class AfterRegisterActivity extends AppCompatActivity {
 
     private void loadDefaultImage(){
         Uri fileUri = Uri.parse("android.resource://com.cabal.app/" + R.drawable.default_avatar);
-        Bitmap defaultImage = ImageManager.scaleImage(fileUri,getContentResolver(), getApplicationContext());
-        avatarString = ImageManager.convertBitmapToString(defaultImage);
+        Bitmap defaultImage = ImageManager.INSTANCE.scaleImage(fileUri,getContentResolver(), getApplicationContext());
+        avatarString = ImageManager.INSTANCE.convertBitmapToString(defaultImage);
         Glide.with(getApplicationContext())
                 .asBitmap()
                 .load(defaultImage)
@@ -90,8 +83,8 @@ public class AfterRegisterActivity extends AppCompatActivity {
     }
 
     private void loadSelectedImage(Uri selectedImage) {
-        Bitmap resizedImage = ImageManager.scaleImage(selectedImage,getContentResolver(), getApplicationContext());
-        avatarString = ImageManager.convertBitmapToString(resizedImage);
+        Bitmap resizedImage = ImageManager.INSTANCE.scaleImage(selectedImage,getContentResolver(), getApplicationContext());
+        avatarString = ImageManager.INSTANCE.convertBitmapToString(resizedImage);
         Glide.with(getApplicationContext())
                 .asBitmap()
                 .load(resizedImage)
@@ -125,7 +118,7 @@ public class AfterRegisterActivity extends AppCompatActivity {
         avatarString = savedInstanceState.getString("avatarString");
         Glide.with(getApplicationContext())
                 .asBitmap()
-                .load(ImageManager.convertStringToBitmap(avatarString))
+                .load(ImageManager.INSTANCE.convertStringToBitmap(avatarString))
                 .into(avatarImage);
         Hobbies.initializeHobbies(this);
     }

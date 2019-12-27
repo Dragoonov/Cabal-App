@@ -65,7 +65,7 @@ public class SearchFragment extends Fragment implements EventCard.SwipeListener,
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
-            events = Objects.requireNonNull(JsonLoader.loadEvents(getContext()));
+            events = Objects.requireNonNull(JsonLoader.INSTANCE.loadEvents(getContext()));
             filteredEvents = new ArrayList<>(events);
         } else {
             events = savedInstanceState.getParcelableArrayList("events");

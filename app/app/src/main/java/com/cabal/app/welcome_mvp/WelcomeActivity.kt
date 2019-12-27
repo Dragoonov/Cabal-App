@@ -7,6 +7,7 @@ import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -54,6 +55,8 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener, WelcomeContra
                 .requestEmail()
                 .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        findViewById<Button>(R.id.shortcut)?.setOnClickListener { presenter?.onLoginFinished(true) }
     }
 
     override fun onStart() {
