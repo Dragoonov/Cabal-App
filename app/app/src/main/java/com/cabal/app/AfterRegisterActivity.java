@@ -53,10 +53,11 @@ public class AfterRegisterActivity extends AppCompatActivity {
                     nickname.getText().toString(),
                     Hobbies.getCheckedIds(),
                     INITIAL_RADIUS);
-            User.setAvatarImage(avatarString);
-            User.setRadius(INITIAL_RADIUS);
-            User.setNick(nickname.getText().toString());
+            User.INSTANCE.getLoggedUser().setAvatarImage(avatarString);
+            User.INSTANCE.getLoggedUser().setRadius(INITIAL_RADIUS);
+            User.INSTANCE.getLoggedUser().setNick(nickname.getText().toString());
             postAfterRegisterData(data);
+            finish();
         });
         avatarImage = findViewById(R.id.avatarImage);
         loadDefaultImage();

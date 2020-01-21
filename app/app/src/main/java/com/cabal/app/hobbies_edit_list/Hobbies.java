@@ -46,7 +46,7 @@ public class Hobbies {
     }
 
     public static void tickLikedHobbies() {
-        for (HobbyModel model : User.getHobbies()) {
+        for (HobbyModel model : User.INSTANCE.getLoggedUser().getHobbies()) {
             switchesState.put(model, true);
         }
     }

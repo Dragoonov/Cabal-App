@@ -1,31 +1,19 @@
 package com.cabal.app.navigation_bar;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.cabal.app.ProfileFragment;
 import com.cabal.app.R;
-import com.cabal.app.Utils.User;
-import com.cabal.app.hobbies_edit_list.Hobbies;
-import com.cabal.app.models.HobbyModel;
 import com.cabal.app.navigation_bar.search_events.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
-import java.util.Arrays;
 import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class UserActivity extends AppCompatActivity {

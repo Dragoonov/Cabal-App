@@ -13,6 +13,6 @@ class WelcomeModel : WelcomeContract.Model {
     }
 
     override fun saveCoordinates(pair: Pair<Double, Double>) {
-        User.setCoordinates(doubleArrayOf(pair.first, pair.second))
+        User.loggedUser?.coordinates = doubleArrayOf(pair.first, pair.second)
     }
 }
