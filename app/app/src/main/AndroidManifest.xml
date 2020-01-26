@@ -19,7 +19,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".AfterRegisterActivity">
         </activity>
-        <activity android:name=".welcome_mvp.WelcomeActivity">
+        <activity android:name=".welcome_mvvm.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

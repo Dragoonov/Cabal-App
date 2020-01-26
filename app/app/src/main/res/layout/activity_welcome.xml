@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center|top"
     android:orientation="vertical"
-    tools:context=".welcome_mvp.WelcomeActivity"
+    tools:context=".welcome_mvvm.WelcomeActivity"
     style="@style/WelcomeScreen">
 
     <LinearLayout
@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:gravity="center|top"
         android:orientation="vertical"
-        tools:context=".welcome_mvp.WelcomeActivity"
+        tools:context=".welcome_mvvm.WelcomeActivity"
         tools:layout_editor_absoluteX="-132dp"
         tools:layout_editor_absoluteY="-70dp">
 

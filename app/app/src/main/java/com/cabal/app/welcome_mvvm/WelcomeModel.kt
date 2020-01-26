@@ -1,4 +1,4 @@
-package com.cabal.app.welcome_mvp
+package com.cabal.app.welcome_mvvm
 
 import com.cabal.app.Utils.User
 
