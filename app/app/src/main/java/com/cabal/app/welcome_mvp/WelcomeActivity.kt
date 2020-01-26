@@ -13,9 +13,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProviders
 import com.cabal.app.AfterRegisterActivity
 import com.cabal.app.R
-import com.cabal.app.welcome_mvp.WelcomeContract.Presenter
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -26,12 +26,12 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.Task
 
-class WelcomeActivity : AppCompatActivity(), View.OnClickListener, WelcomeContract.View {
+class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
     var fusedLocationProviderClient: FusedLocationProviderClient? = null
     var explanation: TextView? = null
     var signInButton: SignInButton? = null
     var mGoogleSignInClient: GoogleSignInClient? = null
-    var presenter: Presenter? = null
+    var viewModel: WelcomeViewModel? = null
 
     companion object {
         private const val TAG = "WelcomeActivity"
@@ -42,7 +42,7 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener, WelcomeContra
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
-        presenter = WelcomePresenter(this)
+        viewModel = ViewModelProviders.of(this).get(WelcomeViewModel::class.java)
         explanation = findViewById(R.id.explanation)
         showCoordinatesExplanation(false)
         signInButton =  findViewById(R.id.sign_in_button)
@@ -56,33 +56,42 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener, WelcomeContra
                 .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        findViewById<Button>(R.id.shortcut)?.setOnClickListener { presenter?.onLoginFinished(true) }
+        findViewById<Button>(R.id.shortcut)?.setOnClickListener {
+            viewModel?.onLoginFinished()
+            goToAfterRegister()
+        }
     }
 
     override fun onStart() {
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(this)
-        account?.let { presenter?.onLoginFinished(true) }
+        account?.let {
+            viewModel?.onLoginFinished()
+            goToAfterRegister()
+        }
     }
 
-    override fun signIn() {
+    fun signIn() {
         val signInIntent = mGoogleSignInClient?.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
     override fun onClick(view: View) {
         if (view.id == R.id.sign_in_button) {
-            presenter?.onGoogleButtonClicked()
+            signIn()
         }
     }
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            presenter!!.onLoginFinished(account != null)
+            account?.let {
+                viewModel?.onLoginFinished()
+                goToAfterRegister()
+            }
         } catch (e: ApiException) {
             Log.w(TAG, "signInResult:failed code=" + e.statusCode)
-            presenter!!.onLoginFinished(false)
+            showLoginError()
         }
     }
 
@@ -116,7 +125,7 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener, WelcomeContra
         get() {
             fusedLocationProviderClient!!.lastLocation
                     .addOnSuccessListener(this) { location: Location ->
-                            presenter?.saveCoordinates(Pair(location.latitude, location.longitude))
+                            viewModel?.saveCoordinates(Pair(location.latitude, location.longitude))
                     }.addOnFailureListener(this) { e: Exception -> Log.d(TAG, "onCreate: fail" + e.message) }
         }
 
@@ -128,16 +137,15 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener, WelcomeContra
         }
     }
 
-    override fun showLoginError() {
+    fun showLoginError() {
         Toast.makeText(applicationContext, R.string.login_failed, Toast.LENGTH_SHORT).show()
     }
 
-    override fun goToAfterRegister() {
+    fun goToAfterRegister() {
         startActivity(Intent(this, AfterRegisterActivity::class.java))
         finish()
     }
-
-    override fun showCoordinatesExplanation(show: Boolean) {
+    fun showCoordinatesExplanation(show: Boolean) {
         explanation!!.visibility = if (show) View.VISIBLE else View.INVISIBLE
     }
 

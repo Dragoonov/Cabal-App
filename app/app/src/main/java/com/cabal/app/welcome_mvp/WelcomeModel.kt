@@ -2,17 +2,17 @@ package com.cabal.app.welcome_mvp
 
 import com.cabal.app.Utils.User
 
-class WelcomeModel : WelcomeContract.Model {
+class WelcomeModel {
 
     init {
         User.instantiate()
     }
 
-    override fun saveUser() {
+    fun saveUser() {
 
     }
 
-    override fun saveCoordinates(pair: Pair<Double, Double>) {
+    fun saveCoordinates(pair: Pair<Double, Double>) {
         User.loggedUser?.coordinates = doubleArrayOf(pair.first, pair.second)
     }
 }
