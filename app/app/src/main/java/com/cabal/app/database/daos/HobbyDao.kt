@@ -7,7 +7,7 @@ import com.cabal.app.database.entities.Hobby
 interface HobbyDao {
 
     @Query("select * from hobby where name = :name")
-    fun getHobbyByName(name: String)
+    fun getHobbyByName(name: String): Hobby
 
     @Update
     fun updateHobby(hobby: Hobby)

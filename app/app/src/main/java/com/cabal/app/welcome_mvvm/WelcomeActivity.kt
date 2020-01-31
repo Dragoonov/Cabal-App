@@ -13,9 +13,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.cabal.app.AfterRegisterActivity
 import com.cabal.app.R
+import com.cabal.app.database.entities.User
+import com.cabal.app.navigation_bar.UserActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -27,7 +30,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.Task
 
 class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
-    var fusedLocationProviderClient: FusedLocationProviderClient? = null
+    private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     var explanation: TextView? = null
     var signInButton: SignInButton? = null
     var mGoogleSignInClient: GoogleSignInClient? = null
@@ -42,10 +45,10 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
-        viewModel = ViewModelProviders.of(this).get(WelcomeViewModel::class.java)
+        viewModel = WelcomeViewModel(application)
         explanation = findViewById(R.id.explanation)
         showCoordinatesExplanation(false)
-        signInButton =  findViewById(R.id.sign_in_button)
+        signInButton = findViewById(R.id.sign_in_button)
         signInButton?.setSize(SignInButton.SIZE_STANDARD)
         signInButton?.setOnClickListener(this)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -66,8 +69,9 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(this)
         account?.let {
-            viewModel?.onLoginFinished()
-            goToAfterRegister()
+            if (viewModel!!.checkIfUserLoggedIn(application, account.id!!)) {
+                goToUserActivity()
+            }
         }
     }
 
@@ -85,9 +89,23 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            account?.let {
-                viewModel?.onLoginFinished()
-                goToAfterRegister()
+            if (viewModel?.getUserById(applicationContext, account?.id!!) != null)
+                goToUserActivity()
+            else {
+                account?.let {
+                    viewModel?.createUser(User(
+                            account.id!!,
+                            account.displayName,
+                            account.email,
+                            account.photoUrl.toString(),
+                            null,
+                            null,
+                            null,
+                            true
+
+                    ))
+                    goToAfterRegister()
+                }
             }
         } catch (e: ApiException) {
             Log.w(TAG, "signInResult:failed code=" + e.statusCode)
@@ -125,7 +143,7 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
         get() {
             fusedLocationProviderClient!!.lastLocation
                     .addOnSuccessListener(this) { location: Location ->
-                            viewModel?.saveCoordinates(Pair(location.latitude, location.longitude))
+                        viewModel?.saveCoordinates(Pair(location.latitude, location.longitude))
                     }.addOnFailureListener(this) { e: Exception -> Log.d(TAG, "onCreate: fail" + e.message) }
         }
 
@@ -137,14 +155,19 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    fun showLoginError() {
-        Toast.makeText(applicationContext, R.string.login_failed, Toast.LENGTH_SHORT).show()
-    }
+    fun showLoginError() = Toast.makeText(applicationContext, R.string.login_failed, Toast.LENGTH_SHORT).show()
+
 
     fun goToAfterRegister() {
         startActivity(Intent(this, AfterRegisterActivity::class.java))
         finish()
     }
+
+    fun goToUserActivity() {
+        startActivity(Intent(this, UserActivity::class.java))
+        finish()
+    }
+
     fun showCoordinatesExplanation(show: Boolean) {
         explanation!!.visibility = if (show) View.VISIBLE else View.INVISIBLE
     }

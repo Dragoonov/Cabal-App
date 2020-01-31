@@ -7,7 +7,10 @@ import com.cabal.app.database.entities.User
 interface UserDao {
 
     @Query("select * from user where id = :id")
-    fun getUserById(id: Int): User
+    fun getUserById(id: String): User
+
+    @Query("select loggedIn from user where id = :id")
+    fun checkIfUserLoggedIn(id: String): Boolean
 
     @Update
     fun updateUser(user: User)
