@@ -1,11 +1,10 @@
 package com.cabal.app.welcome_mvvm
 
 import android.app.Application
-import android.content.Context
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import com.cabal.app.database.entities.User
 
-class WelcomeViewModel(app: Application): ViewModel() {
+class WelcomeViewModel(app: Application): AndroidViewModel(app) {
 
     private val model = WelcomeModel(app)
 
@@ -13,9 +12,9 @@ class WelcomeViewModel(app: Application): ViewModel() {
       // model.saveUser()
     }
 
-    fun checkIfUserLoggedIn(app: Application, id: String) = model.checkIfUserLoggedIn(app, id)
+    fun checkIfUserLoggedIn(id: String) = model.checkIfUserLoggedIn(getApplication(), id)
 
-    fun getUserById(context: Context, id: String): User = model.getUserById(context, id)
+    fun getUserById(id: String) = model.getUserById(getApplication(), id)
 
     fun createUser(user: User) = model.createUser(user)
 

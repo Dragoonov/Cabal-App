@@ -4,17 +4,19 @@ import android.content.Context
 import com.cabal.app.database.entities.User
 import com.cabal.app.database.repository.LocalRepository
 import com.cabal.app.database.repository.Repository
+import io.reactivex.Observable
+import io.reactivex.Single
 
 class WelcomeModel(context: Context) {
 
     private var repository: Repository = LocalRepository(context)
 
-    fun checkIfUserLoggedIn(context: Context, id: String): Boolean {
+    fun checkIfUserLoggedIn(context: Context, id: String): Single<Boolean> {
         val repo = LocalRepository(context)
         return repo.checkIfUserLoggedIn(id)
     }
 
-    fun getUserById(context: Context, id: String): User {
+    fun getUserById(context: Context, id: String): Single<User> {
         val repo = LocalRepository(context)
         return repo.getUserById(id)
     }

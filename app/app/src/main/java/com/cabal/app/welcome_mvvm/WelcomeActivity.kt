@@ -28,6 +28,10 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.Task
+import io.reactivex.Completable
+import io.reactivex.CompletableObserver
+import io.reactivex.SingleObserver
+import io.reactivex.disposables.Disposable
 
 class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
@@ -69,8 +73,8 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(this)
         account?.let {
-            if (viewModel!!.checkIfUserLoggedIn(application, account.id!!)) {
-                goToUserActivity()
+            viewModel!!.checkIfUserLoggedIn(account.id!!).doOnSuccess {
+                if (it) goToUserActivity()
             }
         }
     }
@@ -87,30 +91,43 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-        try {
-            val account = completedTask.getResult(ApiException::class.java)
-            if (viewModel?.getUserById(applicationContext, account?.id!!) != null)
-                goToUserActivity()
-            else {
-                account?.let {
-                    viewModel?.createUser(User(
-                            account.id!!,
-                            account.displayName,
-                            account.email,
-                            account.photoUrl.toString(),
-                            null,
-                            null,
-                            null,
-                            true
+        val account = completedTask.getResult(ApiException::class.java)
+        viewModel?.getUserById(account?.id!!)
+                ?.subscribe(object : SingleObserver<User> {
+                    override fun onSuccess(t: User) {
+                        goToUserActivity()
+                    }
 
-                    ))
-                    goToAfterRegister()
-                }
-            }
-        } catch (e: ApiException) {
-            Log.w(TAG, "signInResult:failed code=" + e.statusCode)
+                    override fun onSubscribe(d: Disposable) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onError(e: Throwable) {
+                        Log.v(TAG, e.message!!)
+                        createUser(account.id!!)
+                    }
+
+                })
+    }
+
+    private fun createUser(user:String = "errorAccount") {
+        Log.v(TAG, "In createUser")
+        viewModel?.createUser(User(
+                user,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                true
+
+        ))?.subscribe({
+            goToAfterRegister()
+        },{
+            Log.e(TAG,it.message)
             showLoginError()
-        }
+        })
     }
 
     private fun checkPermission() {
@@ -149,9 +166,14 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        try {
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
+        }
+        } catch (e: ApiException){
+            Log.v(TAG,e.message!!)
+            createUser()
         }
     }
 
