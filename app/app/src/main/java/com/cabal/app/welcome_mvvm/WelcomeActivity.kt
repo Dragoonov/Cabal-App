@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.cabal.app.AfterRegisterActivity
 import com.cabal.app.R
+import com.cabal.app.database.entities.Hobby
 import com.cabal.app.database.entities.User
 import com.cabal.app.navigation_bar.UserActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -30,8 +31,11 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.Task
 import io.reactivex.Completable
 import io.reactivex.CompletableObserver
+import io.reactivex.Scheduler
 import io.reactivex.SingleObserver
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
@@ -39,6 +43,7 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
     var signInButton: SignInButton? = null
     var mGoogleSignInClient: GoogleSignInClient? = null
     var viewModel: WelcomeViewModel? = null
+    private val compositeDisposable = CompositeDisposable()
 
     companion object {
         private const val TAG = "WelcomeActivity"
@@ -73,9 +78,16 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(this)
         account?.let {
-            viewModel!!.checkIfUserLoggedIn(account.id!!).doOnSuccess {
-                if (it) goToUserActivity()
-            }
+            viewModel!!.checkIfUserLoggedIn(account.id!!)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe({
+                        if (it) {
+                            goToUserActivity()
+                            Log.v(TAG,"Success!")
+                        }
+                    }, {
+                        Log.e(TAG, it.localizedMessage!!)
+                    })
         }
     }
 
@@ -92,42 +104,36 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         val account = completedTask.getResult(ApiException::class.java)
-        viewModel?.getUserById(account?.id!!)
-                ?.subscribe(object : SingleObserver<User> {
-                    override fun onSuccess(t: User) {
-                        goToUserActivity()
-                    }
-
-                    override fun onSubscribe(d: Disposable) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    }
-
-                    override fun onError(e: Throwable) {
-                        Log.v(TAG, e.message!!)
-                        createUser(account.id!!)
-                    }
-
-                })
+        compositeDisposable.add(viewModel?.getUserById(account?.id!!)
+                ?.subscribeOn(Schedulers.io())
+                ?.subscribe({
+                    goToUserActivity()
+                }, {
+                    Log.e(TAG, it.localizedMessage!! + ", ACCOUNT ID: " + account.id)
+                    createUser(account.id!!)
+                })!!)
     }
 
-    private fun createUser(user:String = "errorAccount") {
+    private fun createUser(user: String = "errorAccount") {
         Log.v(TAG, "In createUser")
-        viewModel?.createUser(User(
+        compositeDisposable.add(viewModel?.createUser(User(
                 user,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
+                "",
+                "",
+                "",
+                0,
+                DoubleArray(2),
+                ArrayList(),
                 true
 
-        ))?.subscribe({
-            goToAfterRegister()
-        },{
-            Log.e(TAG,it.message)
-            showLoginError()
-        })
+        ))
+                ?.subscribeOn(Schedulers.io())
+                ?.subscribe({
+                    goToAfterRegister()
+                }, {
+                    Log.e(TAG, it.message!!)
+                   // showLoginError()
+                })!!)
     }
 
     private fun checkPermission() {
@@ -167,12 +173,12 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
-        if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
-        }
-        } catch (e: ApiException){
-            Log.v(TAG,e.message!!)
+            if (requestCode == RC_SIGN_IN) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+                handleSignInResult(task)
+            }
+        } catch (e: ApiException) {
+            Log.v(TAG, e.message!!)
             createUser()
         }
     }
@@ -180,18 +186,22 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
     fun showLoginError() = Toast.makeText(applicationContext, R.string.login_failed, Toast.LENGTH_SHORT).show()
 
 
-    fun goToAfterRegister() {
+    private fun goToAfterRegister() {
         startActivity(Intent(this, AfterRegisterActivity::class.java))
         finish()
     }
 
-    fun goToUserActivity() {
+    private fun goToUserActivity() {
         startActivity(Intent(this, UserActivity::class.java))
         finish()
     }
 
-    fun showCoordinatesExplanation(show: Boolean) {
+    private fun showCoordinatesExplanation(show: Boolean) {
         explanation!!.visibility = if (show) View.VISIBLE else View.INVISIBLE
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.clear()
+    }
 }
