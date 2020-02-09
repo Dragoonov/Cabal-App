@@ -1,4 +1,4 @@
-package com.cabal.app.Utils
+package com.cabal.app.utils
 
 import androidx.recyclerview.widget.RecyclerView
 import android.content.Context

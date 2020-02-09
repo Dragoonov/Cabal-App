@@ -1,4 +1,4 @@
-package com.cabal.app.Utils
+package com.cabal.app.utils
 
 import android.content.ContentResolver
 import android.content.Context

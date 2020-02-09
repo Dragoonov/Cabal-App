@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.cabal.app.Utils.Converters
+import com.cabal.app.utils.Converters
 import com.cabal.app.database.daos.HobbyDao
 import com.cabal.app.database.daos.UserDao
 import com.cabal.app.database.entities.Hobby

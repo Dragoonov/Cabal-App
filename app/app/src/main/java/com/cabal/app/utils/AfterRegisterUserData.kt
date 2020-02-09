@@ -1,4 +1,4 @@
-package com.cabal.app.Utils
+package com.cabal.app.utils
 
 data class AfterRegisterUserData(val avatar: String, val nickname: String, val interestIds: IntArray, val searchRadius: Int) {
     override fun equals(other: Any?): Boolean {

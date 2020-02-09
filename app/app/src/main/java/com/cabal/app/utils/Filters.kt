@@ -1,4 +1,4 @@
-package com.cabal.app.Utils
+package com.cabal.app.utils
 
 import com.cabal.app.models.EventModel
 
@@ -10,9 +10,9 @@ object Filters {
     fun performFiltering(list: List<EventModel>): List<EventModel> {
         val resultList = ArrayList<EventModel>(list)
         val modelsToRemove = ArrayList<EventModel>()
-        if (AUTHOR_FILTER) list.forEach{ if (it.creator != User.loggedUser?.nick) modelsToRemove.add(it) }
-        if (GUEST_FILTER) list.forEach{ if (it.creator == User.loggedUser?.nick) modelsToRemove.add(it) }
-        if (FINISHED_FILTER) list.forEach{ if (it.isFinished) modelsToRemove.add(it) }
+        //if (AUTHOR_FILTER) list.forEach{ if (it.creator != UserManager.loggedUser?.nick) modelsToRemove.add(it) }
+        //if (GUEST_FILTER) list.forEach{ if (it.creator == UserManager.loggedUser?.nick) modelsToRemove.add(it) }
+        //if (FINISHED_FILTER) list.forEach{ if (it.isFinished) modelsToRemove.add(it) }
         resultList.removeAll(modelsToRemove)
         return resultList
     }

@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cabal.app.AddEventFragment;
 import com.cabal.app.MyEventsAdapter;
 import com.cabal.app.R;
-import com.cabal.app.Utils.Filters;
-import com.cabal.app.Utils.JsonLoader;
+import com.cabal.app.utils.Filters;
+import com.cabal.app.utils.JsonLoader;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;

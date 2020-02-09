@@ -1,4 +1,4 @@
-package com.cabal.app.Utils
+package com.cabal.app.utils
 
 object SwipeType {
     const val DEFAULT = 1

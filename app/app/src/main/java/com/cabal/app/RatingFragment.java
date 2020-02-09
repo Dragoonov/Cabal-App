@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cabal.app.Utils.JsonLoader;
+import com.cabal.app.utils.JsonLoader;
 
 import java.util.Objects;
 

@@ -13,11 +13,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import com.cabal.app.AfterRegisterActivity
+import com.cabal.app.MyApplication
 import com.cabal.app.R
-import com.cabal.app.database.entities.Hobby
+import com.cabal.app.after_register_mvvm.AfterRegisterActivity
+import com.cabal.app.utils.UserManager
 import com.cabal.app.database.entities.User
 import com.cabal.app.navigation_bar.UserActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -29,20 +28,17 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.Task
-import io.reactivex.Completable
-import io.reactivex.CompletableObserver
-import io.reactivex.Scheduler
-import io.reactivex.SingleObserver
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     var explanation: TextView? = null
     var signInButton: SignInButton? = null
     var mGoogleSignInClient: GoogleSignInClient? = null
-    var viewModel: WelcomeViewModel? = null
+    @Inject lateinit var viewModel: WelcomeViewModel
+    @Inject lateinit var userManager: UserManager
     private val compositeDisposable = CompositeDisposable()
 
     companion object {
@@ -52,9 +48,9 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
-        viewModel = WelcomeViewModel(application)
         explanation = findViewById(R.id.explanation)
         showCoordinatesExplanation(false)
         signInButton = findViewById(R.id.sign_in_button)
@@ -69,7 +65,7 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
         findViewById<Button>(R.id.shortcut)?.setOnClickListener {
-            viewModel?.onLoginFinished()
+            viewModel.onLoginFinished()
             goToAfterRegister()
         }
     }
@@ -78,10 +74,11 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(this)
         account?.let {
-            viewModel!!.checkIfUserLoggedIn(account.id!!)
+            viewModel.checkIfUserLoggedIn(account.id!!)
                     .subscribeOn(Schedulers.io())
-                    .subscribe({
-                        if (it) {
+                    .subscribe({ it1 ->
+                        if (it1) {
+                            compositeDisposable.add(viewModel.getUserById(account.id!!).subscribe({userManager.login(it)},{}))
                             goToUserActivity()
                             Log.v(TAG,"Success!")
                         }
@@ -91,7 +88,7 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    fun signIn() {
+    private fun signIn() {
         val signInIntent = mGoogleSignInClient?.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
@@ -104,36 +101,38 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         val account = completedTask.getResult(ApiException::class.java)
-        compositeDisposable.add(viewModel?.getUserById(account?.id!!)
-                ?.subscribeOn(Schedulers.io())
-                ?.subscribe({
+        compositeDisposable.add(viewModel.getUserById(account?.id!!)
+                .subscribeOn(Schedulers.io())
+                .subscribe({
                     goToUserActivity()
                 }, {
                     Log.e(TAG, it.localizedMessage!! + ", ACCOUNT ID: " + account.id)
-                    createUser(account.id!!)
-                })!!)
+                    createUser(account.id!!, account.email!!)
+                }))
     }
 
-    private fun createUser(user: String = "errorAccount") {
+    private fun createUser(userId: String = "errorAccountId", userMail: String = "errorAccountMail") {
         Log.v(TAG, "In createUser")
-        compositeDisposable.add(viewModel?.createUser(User(
-                user,
+        val user = User(
+                userId,
                 "",
-                "",
+                userMail,
                 "",
                 0,
                 DoubleArray(2),
                 ArrayList(),
                 true
 
-        ))
-                ?.subscribeOn(Schedulers.io())
-                ?.subscribe({
+        )
+        userManager.login(user)
+        compositeDisposable.add(viewModel.createUser(user)
+                .subscribeOn(Schedulers.io())
+                .subscribe({
                     goToAfterRegister()
                 }, {
                     Log.e(TAG, it.message!!)
                    // showLoginError()
-                })!!)
+                }))
     }
 
     private fun checkPermission() {
@@ -166,7 +165,7 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
         get() {
             fusedLocationProviderClient!!.lastLocation
                     .addOnSuccessListener(this) { location: Location ->
-                        viewModel?.saveCoordinates(Pair(location.latitude, location.longitude))
+                        viewModel.saveCoordinates(Pair(location.latitude, location.longitude))
                     }.addOnFailureListener(this) { e: Exception -> Log.d(TAG, "onCreate: fail" + e.message) }
         }
 

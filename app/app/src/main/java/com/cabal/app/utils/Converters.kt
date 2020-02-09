@@ -1,4 +1,4 @@
-package com.cabal.app.Utils
+package com.cabal.app.utils
 
 import androidx.room.TypeConverter
 import com.cabal.app.database.entities.Hobby

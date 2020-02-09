@@ -3,18 +3,18 @@ package com.cabal.app.welcome_mvvm
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.cabal.app.database.entities.User
+import com.cabal.app.database.repository.AppRepository
+import javax.inject.Inject
 
-class WelcomeViewModel(app: Application): AndroidViewModel(app) {
-
-    private val model = WelcomeModel(app)
+class WelcomeViewModel @Inject constructor(private val model: AppRepository, private val app: Application): AndroidViewModel(app) {
 
     fun onLoginFinished() {
       // model.saveUser()
     }
 
-    fun checkIfUserLoggedIn(id: String) = model.checkIfUserLoggedIn(getApplication(), id)
+    fun checkIfUserLoggedIn(id: String) = model.checkIfUserLoggedIn(id)
 
-    fun getUserById(id: String) = model.getUserById(getApplication(), id)
+    fun getUserById(id: String) = model.getUserById(id)
 
     fun createUser(user: User) = model.createUser(user)
 

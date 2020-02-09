@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.cabal.app.R;
-import com.cabal.app.Utils.User;
+import com.cabal.app.utils.UserManager;
 import com.cabal.app.models.HobbyModel;
 import com.cabal.app.models.HobbyTypeModel;
 
@@ -46,9 +46,9 @@ public class Hobbies {
     }
 
     public static void tickLikedHobbies() {
-        for (HobbyModel model : User.INSTANCE.getLoggedUser().getHobbies()) {
-            switchesState.put(model, true);
-        }
+//        for (HobbyModel model : UserManager.INSTANCE.getLoggedUser().getHobbies()) {
+//            switchesState.put(model, true);
+//        }
     }
 
     public static List<HobbyTypeModel> loadHobbies(Context context, List<HobbyTypeModel> hobbyTypeModels, LinearLayout linearView) {

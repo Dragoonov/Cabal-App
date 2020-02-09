@@ -15,8 +15,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.cabal.app.Utils.Filters;
-import com.cabal.app.Utils.User;
+import com.cabal.app.utils.Filters;
+import com.cabal.app.utils.UserManager;
 import com.cabal.app.models.EventModel;
 
 import java.util.List;
@@ -110,7 +110,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
             myEventName.setText(model.getName());
             myEventDate.setText(model.getDate());
             myEventLocation.setText(model.getLocation());
-            adminStar.setVisibility(User.INSTANCE.getLoggedUser().getNick().equals(model.getCreator()) ? View.VISIBLE : View.GONE);
+            //adminStar.setVisibility(UserManager.INSTANCE.getLoggedUser().getNick().equals(model.getCreator()) ? View.VISIBLE : View.GONE);
             Glide.with(myEventName.getContext()).load(model.getImage()).into(myEventPicture);
         }
     }
