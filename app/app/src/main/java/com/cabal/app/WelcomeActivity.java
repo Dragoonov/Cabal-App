@@ -77,6 +77,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         requestBody.addProperty("username", username);
         requestBody.addProperty("password", password);
         startActivity(new Intent(this, AfterRegisterActivity.class));
+        finish();
     }
 
 

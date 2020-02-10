@@ -77,6 +77,7 @@ public class AfterRegisterActivity extends AppCompatActivity {
         String requestBodyString = new Gson().toJson(data);
         JsonObject requestBody = new JsonParser().parse(requestBodyString).getAsJsonObject();
         startActivity(new Intent(this, UserActivity.class));
+        finish();
     }
 
     private void loadDefaultImage(){
