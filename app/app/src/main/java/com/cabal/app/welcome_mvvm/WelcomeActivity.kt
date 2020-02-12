@@ -13,6 +13,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.cabal.app.MyApplication
 import com.cabal.app.R
 import com.cabal.app.after_register_mvvm.AfterRegisterActivity
@@ -37,9 +39,10 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
     var explanation: TextView? = null
     var signInButton: SignInButton? = null
     var mGoogleSignInClient: GoogleSignInClient? = null
-    @Inject lateinit var viewModel: WelcomeViewModel
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject lateinit var userManager: UserManager
     private val compositeDisposable = CompositeDisposable()
+    private lateinit var viewModel: WelcomeViewModel
 
     companion object {
         private const val TAG = "WelcomeActivity"
@@ -51,6 +54,7 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
         (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
+        viewModel = ViewModelProviders.of(this,viewModelFactory).get(WelcomeViewModel::class.java)
         explanation = findViewById(R.id.explanation)
         showCoordinatesExplanation(false)
         signInButton = findViewById(R.id.sign_in_button)

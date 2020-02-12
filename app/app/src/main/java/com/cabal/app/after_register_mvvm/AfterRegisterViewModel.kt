@@ -12,7 +12,7 @@ import com.cabal.app.utils.ImageManager
 import javax.inject.Inject
 
 class AfterRegisterViewModel @Inject constructor(app: Application,
-                             private val repository: Repository) : AndroidViewModel(app) {
+                                                     private val repository: Repository) : AndroidViewModel(app) {
 
     init {
         Log.v("AfterRegisterViewModel","INICJALIZACJA MODELU")
