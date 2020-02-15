@@ -12,9 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.cabal.app.R;
+import com.cabal.app.dialogs.FilterEventsDialogFragment;
 import com.cabal.app.utils.JsonLoader;
 import com.cabal.app.utils.SwipeType;
-import com.cabal.app.dialogs.FilterEventsDialogFragment;
 import com.cabal.app.models.EventModel;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
@@ -70,6 +70,7 @@ public class SearchFragment extends Fragment implements EventCard.SwipeListener,
         } else {
             events = savedInstanceState.getParcelableArrayList("events");
             filteredEvents = savedInstanceState.getParcelableArrayList("filteredEvents");
+
         }
         swipeCounter = new HashMap<>();
         acceptedEvents = new ArrayList<>();
@@ -80,7 +81,7 @@ public class SearchFragment extends Fragment implements EventCard.SwipeListener,
     public void receiveSwipedOutCard(EventCard card) {
         String name = card.getCardEventName();
         if (resolveFilterCreation(name)) {
-            FilterEventsDialogFragment.newInstance(name, this).show(Objects.requireNonNull(getFragmentManager()), "AlertDialog");
+            FilterEventsDialogFragment.Companion.newInstance(name, this).show(Objects.requireNonNull(getFragmentManager()), "AlertDialog");
         }
         events.remove(card.getEventModel());
         filteredEvents.remove(card.getEventModel());

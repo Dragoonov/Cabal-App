@@ -1,5 +1,6 @@
 package com.cabal.app.models;
 
+import com.cabal.app.database.entities.Hobby;
 import com.google.gson.annotations.SerializedName;
 
 public class HobbyTypeModel {
@@ -15,7 +16,7 @@ public class HobbyTypeModel {
     private String photoUrl;
 
     @SerializedName("hobbies")
-    private HobbyModel[] hobbies;
+    private Hobby[] hobbies;
 
     @SerializedName("description")
     private String description;
@@ -54,11 +55,11 @@ public class HobbyTypeModel {
         this.photoUrl = photoUrl;
     }
 
-    public HobbyModel[] getHobbies() {
+    public Hobby[] getHobbies() {
         return hobbies;
     }
 
-    public void setHobbies(HobbyModel[] hobbies) {
+    public void setHobbies(Hobby[] hobbies) {
         this.hobbies = hobbies;
     }
 

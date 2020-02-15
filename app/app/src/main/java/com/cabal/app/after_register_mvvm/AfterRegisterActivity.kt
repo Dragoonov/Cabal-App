@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide
 import com.cabal.app.MyApplication
 import com.cabal.app.R
 import com.cabal.app.database.entities.User
-import com.cabal.app.di.ViewModelFactory
 import com.cabal.app.hobbies_edit_list.Hobbies
 import com.cabal.app.navigation_bar.UserActivity
 import com.cabal.app.utils.ImageManager
