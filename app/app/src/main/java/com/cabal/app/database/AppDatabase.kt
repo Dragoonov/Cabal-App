@@ -8,10 +8,11 @@ import androidx.room.TypeConverters
 import com.cabal.app.utils.Converters
 import com.cabal.app.database.daos.HobbyDao
 import com.cabal.app.database.daos.UserDao
+import com.cabal.app.database.entities.Event
 import com.cabal.app.database.entities.Hobby
 import com.cabal.app.database.entities.User
 
-@Database(entities = [User::class, Hobby::class], version = 1)
+@Database(entities = [User::class, Hobby::class, Event::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao

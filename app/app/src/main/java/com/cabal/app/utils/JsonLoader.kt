@@ -2,9 +2,8 @@ package com.cabal.app.utils
 
 import android.content.Context
 import android.util.Log
-import com.cabal.app.models.EventModel
-import com.cabal.app.models.HobbyTypeModel
-import com.cabal.app.models.UserModel
+import com.cabal.app.database.entities.Event
+import com.cabal.app.database.entities.User
 import com.google.gson.GsonBuilder
 import org.json.JSONArray
 import java.io.InputStream
@@ -16,40 +15,41 @@ object JsonLoader {
     private const val HOBBIES_JSON_FILENAME = "hobbies.json"
     private const val USERS_JSON_FILENAME = "users.json"
 
-    fun loadEvents(context: Context?):  List<EventModel>?  {
+    fun loadEvents(context: Context?):  List<Event>?  {
             val builder = GsonBuilder()
             val gson = builder.create()
             val array = JSONArray(loadJSONFromAsset(context!!, EVENTS_JSON_FILENAME))
-            val eventModelList = ArrayList<EventModel>()
-            for ( i in 0 until array.length()) {
-                val eventModel = gson.fromJson(array.getString(i), EventModel::class.java)
-                eventModelList.add(eventModel)
-            }
+            val eventModelList = ArrayList<Event>()
+//            for ( i in 0 until array.length()) {
+//                val eventModel = Event(1,null,array.getString(i),null,)
+//                val eventModel = gson.fromJson(array.getString(i), Event::class.java)
+//                eventModelList.add(eventModel)
+//            }
             return eventModelList
     }
 
 
-    fun loadHobbies (context: Context,hobbyTypeModels: List<HobbyTypeModel>): List<HobbyTypeModel> {
-        val builder = GsonBuilder()
-        val gson = builder.create()
-        return hobbyTypeModels
-        //TODO Finish this one?...
-    }
+//    fun loadHobbies (context: Context,hobbyTypeModels: List<HobbyTypeModel>): List<HobbyTypeModel> {
+//        val builder = GsonBuilder()
+//        val gson = builder.create()
+//        return hobbyTypeModels
+//        //TODO Finish this one?...
+//    }
+//
+//    private fun loadHobbyTypeChildren(id: Int, model: HobbyTypeModel) {
+//        val builder = GsonBuilder()
+//        val gson = builder.create()
+//        //TODO Finish this one?...
+//    }
 
-    private fun loadHobbyTypeChildren(id: Int, model: HobbyTypeModel) {
-        val builder = GsonBuilder()
-        val gson = builder.create()
-        //TODO Finish this one?...
-    }
 
-
-    fun loadUsers(context: Context?): List<UserModel>  {
+    fun loadUsers(context: Context?): List<User>  {
         val builder = GsonBuilder()
         val gson = builder.create()
         val array = JSONArray(loadJSONFromAsset(context!!, USERS_JSON_FILENAME))
-        val userModels = ArrayList<UserModel>()
+        val userModels = ArrayList<User>()
         for ( i in 0 until array.length()) {
-            val userModel = gson.fromJson(array.getString(i), UserModel::class.java)
+            val userModel = gson.fromJson(array.getString(i), User::class.java)
             userModels.add(userModel)
         }
         return userModels

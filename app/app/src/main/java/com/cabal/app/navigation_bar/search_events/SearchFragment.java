@@ -12,10 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.cabal.app.R;
+import com.cabal.app.database.entities.Event;
 import com.cabal.app.dialogs.FilterEventsDialogFragment;
 import com.cabal.app.utils.JsonLoader;
 import com.cabal.app.utils.SwipeType;
-import com.cabal.app.models.EventModel;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 
@@ -31,10 +31,10 @@ public class SearchFragment extends Fragment implements EventCard.SwipeListener,
 
     private Map<String, Integer> swipeCounter;
     private SwipePlaceHolderView mSwipeView;
-    private List<EventModel> events;
-    private List<EventModel> filteredEvents;
-    private List<EventModel> acceptedEvents;
-    private List<EventModel> rejectedEvents;
+    private List<Event> events;
+    private List<Event> filteredEvents;
+    private List<Event> acceptedEvents;
+    private List<Event> rejectedEvents;
 
     @Nullable
     @Override
@@ -67,11 +67,13 @@ public class SearchFragment extends Fragment implements EventCard.SwipeListener,
         if (savedInstanceState == null) {
             events = Objects.requireNonNull(JsonLoader.INSTANCE.loadEvents(getContext()));
             filteredEvents = new ArrayList<>(events);
-        } else {
-            events = savedInstanceState.getParcelableArrayList("events");
-            filteredEvents = savedInstanceState.getParcelableArrayList("filteredEvents");
-
         }
+        //TODO to na ViewModel
+            // else {
+//            events = savedInstanceState.getParcelableArrayList("events");
+//            filteredEvents = savedInstanceState.getParcelableArrayList("filteredEvents");
+//
+//        }
         swipeCounter = new HashMap<>();
         acceptedEvents = new ArrayList<>();
         rejectedEvents = new ArrayList<>();
@@ -133,14 +135,5 @@ public class SearchFragment extends Fragment implements EventCard.SwipeListener,
 
     private void saveFilteredEvents() {
         //TODO: Send filtered (rejected/accepted) events to backend
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        ArrayList<Parcelable> saveList = new ArrayList<>(events);
-        ArrayList<Parcelable> saveFilteredList = new ArrayList<>(filteredEvents);
-        outState.putParcelableArrayList("events", saveList);
-        outState.putParcelableArrayList("filteredEvents", saveFilteredList);
-        super.onSaveInstanceState(outState);
     }
 }

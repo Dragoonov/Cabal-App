@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.cabal.app.models.EventModel
+import com.cabal.app.database.entities.Event
 
 /**
  * A simple [Fragment] subclass.
@@ -22,7 +22,7 @@ class EventDetailsFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(model: EventModel?) = EventDetailsFragment()
+        fun newInstance(model: Event?) = EventDetailsFragment()
     }
 
 

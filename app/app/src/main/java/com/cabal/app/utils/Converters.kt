@@ -2,8 +2,10 @@ package com.cabal.app.utils
 
 import androidx.room.TypeConverter
 import com.cabal.app.database.entities.Hobby
+import com.cabal.app.database.entities.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.util.*
 
 object Converters {
     @TypeConverter
@@ -27,4 +29,26 @@ object Converters {
     @TypeConverter
     @JvmStatic
     fun fromHobbyList(list: List<Hobby>) = Gson().toJson(list)
+
+    @TypeConverter
+    @JvmStatic
+    fun fromUserList(list: List<User>) = Gson().toJson(list)
+
+    @TypeConverter
+    @JvmStatic
+    fun fromStrintToUserList(value: String): List<User> {
+        val type = object : TypeToken<List<User>>() {}.type
+        return Gson().fromJson<List<User>>(value, type)
+    }
+
+    @TypeConverter
+    @JvmStatic
+    fun fromDate(date: Date) = Gson().toJson(date)
+
+    @TypeConverter
+    @JvmStatic
+    fun fromStringToDate(value: String): Date {
+        val type = object : TypeToken<Date>() {}.type
+        return Gson().fromJson<Date>(value, type)
+    }
 }

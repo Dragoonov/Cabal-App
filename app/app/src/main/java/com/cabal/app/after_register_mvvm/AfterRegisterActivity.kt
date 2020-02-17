@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide
 import com.cabal.app.MyApplication
 import com.cabal.app.R
 import com.cabal.app.database.entities.User
-import com.cabal.app.hobbies_edit_list.Hobbies
 import com.cabal.app.navigation_bar.UserActivity
 import com.cabal.app.utils.ImageManager
 import com.cabal.app.utils.UserManager
@@ -43,7 +42,6 @@ class AfterRegisterActivity : AppCompatActivity() {
         (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_after_register)
-        if (savedInstanceState == null) Hobbies.initializeHobbies(this)
         nickname = findViewById(R.id.nicknameAdd)
         afterRegisterAccept = findViewById(R.id.afterRegisterAccept)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AfterRegisterViewModel::class.java)
