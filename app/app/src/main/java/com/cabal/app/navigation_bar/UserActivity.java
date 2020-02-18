@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.cabal.app.ProfileFragment;
 import com.cabal.app.R;
-import com.cabal.app.navigation_bar.search_events.SearchFragment;
+import com.cabal.app.search_mvvm.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Objects;

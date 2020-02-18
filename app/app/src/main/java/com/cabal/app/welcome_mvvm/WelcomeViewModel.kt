@@ -4,9 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.cabal.app.database.entities.User
 import com.cabal.app.database.repository.AppRepository
+import com.cabal.app.database.repository.Repository
 import javax.inject.Inject
 
-class WelcomeViewModel @Inject constructor(private val model: AppRepository, private val app: Application): AndroidViewModel(app) {
+class WelcomeViewModel @Inject constructor(private val model: Repository, private val app: Application): AndroidViewModel(app) {
 
     fun onLoginFinished() {
       // model.saveUser()
@@ -20,7 +21,7 @@ class WelcomeViewModel @Inject constructor(private val model: AppRepository, pri
 
     fun saveCoordinates(pair: Pair<Double, Double>) {
         // CHECKING LOGIC???
-        model.saveCoordinates(pair)
+        //model.saveCoordinates(pair)
     }
 
 }

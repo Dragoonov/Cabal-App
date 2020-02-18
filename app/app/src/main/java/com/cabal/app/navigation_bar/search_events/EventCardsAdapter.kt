@@ -6,10 +6,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cabal.app.R
 import com.cabal.app.database.entities.User
+import java.util.stream.Collectors
 
 class EventCardsAdapter(dataset: List<User>) : RecyclerView.Adapter<EventCardsAdapter.MyViewHolder>() {
 
-    private val data: Array<String> = dataset.stream().map { it.nick }.toArray() as Array<String>
+    private val data: List<String?> = dataset.stream().map { it.nick }.collect(Collectors.toList())
+
 
     class MyViewHolder(val view: TextView) : RecyclerView.ViewHolder(view)
 

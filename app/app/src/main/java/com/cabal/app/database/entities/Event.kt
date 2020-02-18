@@ -10,7 +10,7 @@ data class Event(
         @PrimaryKey val id: Int,
         @ColumnInfo(name = "image") val image: String?,
         @ColumnInfo(name = "name") val name: String?,
-        @ColumnInfo(name = "creator") val creator: String?,
+        @ColumnInfo(name = "creator") val creator: User?,
         @ColumnInfo(name = "date") val date: Date?,
         @ColumnInfo(name = "members") val members: List<User>?,
         @ColumnInfo(name = "location") val location: String?,

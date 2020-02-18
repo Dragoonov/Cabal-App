@@ -5,6 +5,7 @@ import android.content.Context
 import com.cabal.app.after_register_mvvm.AfterRegisterActivity
 import com.cabal.app.welcome_mvvm.WelcomeActivity
 import com.cabal.app.database.repository.AppRepository
+import com.cabal.app.search_mvvm.SearchFragment
 import com.cabal.app.welcome_mvvm.WelcomeViewModel
 import dagger.BindsInstance
 import dagger.Component
@@ -22,6 +23,7 @@ interface AppComponent {
 
     fun inject(activity: WelcomeActivity)
     fun inject(activity: AfterRegisterActivity)
+    fun inject(fragment: SearchFragment)
     fun welcomeModel(): AppRepository
     fun welcomeViewModel(): WelcomeViewModel
 }

@@ -71,7 +71,7 @@ class MyEventsAdapter(events: List<Event>) : RecyclerView.Adapter<MyEventsAdapte
             myEventName.text = event.name
             myEventDate.text = event.date.toString()
             myEventLocation.text = event.location
-            adminStar.visibility = if (UserManager().loggedUser?.nick == event.creator) View.VISIBLE else View.GONE
+            adminStar.visibility = if (UserManager().loggedUser?.nick == event.creator?.nick) View.VISIBLE else View.GONE
             Glide.with(myEventName.context).load(event.image).into(myEventPicture)
         }
 

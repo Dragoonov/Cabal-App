@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.cabal.app.database.daos.EventDao
 import com.cabal.app.utils.Converters
 import com.cabal.app.database.daos.HobbyDao
 import com.cabal.app.database.daos.UserDao
@@ -17,6 +18,7 @@ import com.cabal.app.database.entities.User
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun hobbyDao(): HobbyDao
+    abstract fun eventDao(): EventDao
 
     companion object {
 

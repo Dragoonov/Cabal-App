@@ -60,7 +60,7 @@ class EventCard(private val context: Context, private val event: Event, swipeVie
         })
         Glide.with(context).load(event.image).into(cardEventImage)
         cardEventName.text = event.name
-        cardEventCreator.text = event.creator
+        cardEventCreator.text = event.creator?.nick
         cardEventDate.text = event.date.toString()
         cardEventLocation.text = event.location
         cardEventDescription.text = event.description

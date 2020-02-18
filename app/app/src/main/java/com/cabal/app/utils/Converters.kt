@@ -32,6 +32,16 @@ object Converters {
 
     @TypeConverter
     @JvmStatic
+    fun fromUser(user: User) = Gson().toJson(user)
+
+    @TypeConverter
+    @JvmStatic
+    fun fromStringToUser(value: String): User {
+        val type = object : TypeToken<User>() {}.type
+        return Gson().fromJson<User>(value, type)
+    }
+    @TypeConverter
+    @JvmStatic
     fun fromUserList(list: List<User>) = Gson().toJson(list)
 
     @TypeConverter
@@ -40,6 +50,7 @@ object Converters {
         val type = object : TypeToken<List<User>>() {}.type
         return Gson().fromJson<List<User>>(value, type)
     }
+
 
     @TypeConverter
     @JvmStatic

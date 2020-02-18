@@ -3,6 +3,7 @@ package com.cabal.app.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.cabal.app.after_register_mvvm.AfterRegisterViewModel
+import com.cabal.app.search_mvvm.SearchViewModel
 import com.cabal.app.welcome_mvvm.WelcomeViewModel
 import dagger.Binds
 import dagger.Module
@@ -23,4 +24,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(WelcomeViewModel::class)
     internal abstract fun postWelcomeViewModel(viewModel: WelcomeViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel::class)
+    internal abstract fun postSearchViewModel(viewModel: SearchViewModel): ViewModel
 }
