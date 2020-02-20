@@ -27,7 +27,7 @@ object StaticDataGenerator {
             User("1",
                     "Maciek",
                     "maciek_nazwisko@o2.pl",
-                    "",
+                    null,
                     random.nextInt(20),
                     DoubleArray(2)
                             .also {
@@ -40,7 +40,7 @@ object StaticDataGenerator {
             User("2",
                     "Kuba",
                     "kuba_nazwisko@o2.pl",
-                    "",
+                    null,
                     random.nextInt(20),
                     DoubleArray(2)
                             .also {
@@ -53,7 +53,7 @@ object StaticDataGenerator {
             User("3",
                     "Olena",
                     "olena_nazwisko@o2.pl",
-                    "",
+                    null,
                     random.nextInt(20),
                     DoubleArray(2)
                             .also {
@@ -66,7 +66,7 @@ object StaticDataGenerator {
             User("4",
                     "Adrian",
                     "adrian_nazwisko@o2.pl",
-                    "",
+                    null,
                     random.nextInt(20),
                     DoubleArray(2)
                             .also {
@@ -79,7 +79,7 @@ object StaticDataGenerator {
             User("5",
                     "Malwina",
                     "malwina_nazwisko@o2.pl",
-                    "",
+                    null,
                     random.nextInt(),
                     DoubleArray(2)
                             .also {
@@ -92,7 +92,7 @@ object StaticDataGenerator {
             User("6",
                     "Ola",
                     "ola_nazwisko@o2.pl",
-                    "",
+                    null,
                     random.nextInt(),
                     DoubleArray(2)
                             .also {
@@ -105,7 +105,7 @@ object StaticDataGenerator {
             User("7",
                     "Paweł",
                     "paweł_nazwisko@o2.pl",
-                    "",
+                    null,
                     random.nextInt(),
                     DoubleArray(2)
                             .also {
@@ -118,7 +118,7 @@ object StaticDataGenerator {
             User("8",
                     "Paulina",
                     "paulina_nazwisko@o2.pl",
-                    "",
+                    null,
                     random.nextInt(),
                     DoubleArray(2)
                             .also {
@@ -131,7 +131,7 @@ object StaticDataGenerator {
             User("9",
                     "Ewelina",
                     "ewelina_nazwisko@o2.pl",
-                    "",
+                    null,
                     random.nextInt(),
                     DoubleArray(2)
                             .also {
@@ -144,7 +144,7 @@ object StaticDataGenerator {
             User("10",
                     "Iza",
                     "iza_nazwisko@o2.pl",
-                    "",
+                    null,
                     random.nextInt(),
                     DoubleArray(2)
                             .also {
@@ -158,110 +158,120 @@ object StaticDataGenerator {
 
     private val allEvents = listOf(
             Event(1,
-                    "",
+                    null,
                     "Granie w gałę",
                     generateUsers(1)[0],
                     Date(),
                     generateUsers(3),
                     "Bar za rogiem",
                     "Granie w barze",
-                    false
+                    false,
+                    null
                     ),
             Event(2,
-                    "",
+                    null,
                     "Siatkówka",
                     generateUsers(1)[0],
                     Date(),
                     generateUsers(3),
                     "Plaża na helu",
                     "Siatka na słońcu",
-                    false
+                    false,
+                    null
             ),
             Event(3,
-                    "",
+                    null,
                     "Partyjka w szachy",
                     generateUsers(1)[0],
                     Date(),
                     generateUsers(3),
                     "Klub szachowy Wiking",
                     "Partyjka z mastermindem",
-                    false
+                    false,
+                    null
             ),
             Event(4,
-                    "",
+                    null,
                     "Wspólny film",
                     generateUsers(1)[0],
                     Date(),
                     generateUsers(3),
                     "Kino Helios",
                     "365 dni, ten syf",
-                    false
+                    false,
+                    null
             ),
             Event(5,
-                    "",
+                    null,
                     "Inny wspólny film",
                     generateUsers(1)[0],
                     Date(),
                     generateUsers(3),
                     "Multikino",
                     "Zjawa, piękny film",
-                    false
+                    false,
+                    null
             ),
             Event(6,
-                    "",
+                    null,
                     "Sniadanie na trawie",
                     generateUsers(1)[0],
                     Date(),
                     generateUsers(1),
                     "Trawa",
                     "Pyszne jedzonko we dwoje",
-                    false
+                    false,
+                    null
             ),
             Event(7,
-                    "",
+                    null,
                     "Już mnie nudzi to wpisywanie",
                     generateUsers(1)[0],
                     Date(),
                     generateUsers(3),
                     "Gdziekolwiek",
                     "Cokolwiek",
-                    false
+                    false,
+                    null
             ),
             Event(8,
-                    "",
+                    null,
                     "EKG mózgu",
                     generateUsers(1)[0],
                     Date(),
                     generateUsers(3),
                     "Szpital im. Jana Barana",
                     "Zmierzymy puls fal mózgowych",
-                    false
+                    false,
+                    null
             ),
             Event(9,
-                    "",
+                    null,
                     "Pisanie aplikacji",
                     generateUsers(1)[0],
                     Date(),
                     generateUsers(3),
                     "Piwnica w Gondorze",
                     "Fascynujące",
-                    false
+                    false,
+                    null
             ),
             Event(10,
-                    "",
+                    null,
                     "Kontrowersyjne wydarzenie",
                     generateUsers(1)[0],
                     Date(),
                     generateUsers(3),
                     "Pola ryżowe",
                     "Przyjmujemy tylko czarnych",
-                    false
+                    false,
+                    null
             )
     )
 
     fun generateEvents(amount: Int): List<Event> = ArrayList<Event>().also {
         for (x in 1..amount) {
-            it.add(allEvents[random.nextInt(allEvents.size)])
+            it.add(allEvents[0])
         }
     }
 

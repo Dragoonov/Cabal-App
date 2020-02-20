@@ -15,5 +15,6 @@ data class Event(
         @ColumnInfo(name = "members") val members: List<User>?,
         @ColumnInfo(name = "location") val location: String?,
         @ColumnInfo(name = "description") val description: String?,
-        @ColumnInfo(name = "finished") val finished: Boolean?
+        @ColumnInfo(name = "finished") val finished: Boolean?,
+        @ColumnInfo(name = "accepted") var accepted: Boolean?
 )

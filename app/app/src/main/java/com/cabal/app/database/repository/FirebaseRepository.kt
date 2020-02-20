@@ -1,5 +1,6 @@
 package com.cabal.app.database.repository
 
+import com.cabal.app.database.entities.Event
 import com.cabal.app.database.entities.User
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -21,6 +22,14 @@ class FirebaseRepository @Inject constructor(): Repository  {
     }
 
     override fun checkIfUserLoggedIn(id: String): Single<Boolean> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun insertEvents(events: List<Event>): Completable {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getEventsByAccepted(accepted: Boolean): Single<List<Event>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

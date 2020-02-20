@@ -55,6 +55,9 @@ class SearchFragment : Fragment(), EventCard.SwipeListener, FilterEventsDialogFr
             it1.forEach {mSwipeView.addView(EventCard(context!!,it,mSwipeView,this))}
             Log.d("SWIPE", mSwipeView.childCount.toString())
         })
+        viewModel.dialogNotifier.observe(this, Observer {
+            FilterEventsDialogFragment.newInstance(it, this).show(fragmentManager!!,"AlertDialog");
+        })
 
     }
 
@@ -77,7 +80,7 @@ class SearchFragment : Fragment(), EventCard.SwipeListener, FilterEventsDialogFr
     }
 
     override fun onDialogNegativeClick(dialogFragment: FilterEventsDialogFragment) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
 }

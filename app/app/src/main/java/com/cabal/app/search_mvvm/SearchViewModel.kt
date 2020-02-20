@@ -14,9 +14,9 @@ class SearchViewModel @Inject constructor(app: Application,private val repositor
 
     private lateinit var events: MutableList<Event>
     var filteredEvents: MutableLiveData<MutableList<Event>> = MutableLiveData()
-    private var acceptedEvents: MutableList<Event> = ArrayList<Event>().toMutableList()
-    private var rejectedEvents: MutableList<Event> = ArrayList<Event>().toMutableList()
+    private var swipedEvents: MutableList<Event> = ArrayList<Event>().toMutableList()
     private var swipeCounter: MutableMap<String, Int> = HashMap()
+    var dialogNotifier: MutableLiveData<String> = MutableLiveData()
 
     init {
         loadEvents()
@@ -28,7 +28,7 @@ class SearchViewModel @Inject constructor(app: Application,private val repositor
             showFilterDialog(name)
         events.remove(card.getEventModel())
         filteredEvents.value?.remove(card.getEventModel())
-        rejectedEvents.add(card.getEventModel())
+        swipedEvents.add(card.getEventModel().also { it.accepted = false })
 
         if (filteredEvents.value!!.isEmpty())
             loadEvents()
@@ -42,7 +42,7 @@ class SearchViewModel @Inject constructor(app: Application,private val repositor
         }
         events.remove(model)
         filteredEvents.value?.remove(model)
-        acceptedEvents.add(model)
+        swipedEvents.add(model.also { it.accepted = true })
 
         if (filteredEvents.value!!.isEmpty())
             loadEvents()
@@ -50,7 +50,7 @@ class SearchViewModel @Inject constructor(app: Application,private val repositor
 
     private fun resolveFilterCreation(name: String): Boolean {
         if (swipeCounter.containsKey(name)) {
-            swipeCounter[name]?.plus(1)
+            swipeCounter[name] = swipeCounter[name]!!.inc()
         } else {
             swipeCounter[name] = 1
         }
@@ -59,7 +59,7 @@ class SearchViewModel @Inject constructor(app: Application,private val repositor
 
 
     fun showFilterDialog(name: String?) {
-
+        dialogNotifier.value = name
     }
 
     fun filterEvents(name: String) {
@@ -75,7 +75,7 @@ class SearchViewModel @Inject constructor(app: Application,private val repositor
     }
 
     fun saveEvents() {
-       // repository
+       repository.insertEvents(swipedEvents)
     }
 
 

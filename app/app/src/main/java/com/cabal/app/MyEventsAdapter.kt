@@ -8,8 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cabal.app.database.entities.Event
+import com.cabal.app.di.DaggerAppComponent
 import com.cabal.app.utils.Filters
 import com.cabal.app.utils.UserManager
+import javax.inject.Inject
 
 class MyEventsAdapter(events: List<Event>) : RecyclerView.Adapter<MyEventsAdapter.ViewHolder>(), Filterable {
 
