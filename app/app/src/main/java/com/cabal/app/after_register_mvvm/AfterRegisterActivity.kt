@@ -47,9 +47,9 @@ class AfterRegisterActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AfterRegisterViewModel::class.java)
         afterRegisterAccept?.setOnClickListener {
             viewModel.updateUser(User(
-                    userManager.loggedUser!!.id,
+                    userManager.loggedUser?.id ?: "0",
                     nickname.toString(),
-                    userManager.loggedUser!!.email,
+                    userManager.loggedUser?.email,
                     viewModel.avatarString?.value,
                     INITIAL_RADIUS,
                     DoubleArray(2),

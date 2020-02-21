@@ -17,4 +17,6 @@ interface Repository {
     fun insertEvents(events: List<Event>): Completable
 
     fun getEventsByAccepted(accepted: Boolean): Single<List<Event>>
+
+    fun getEvents(): Single<List<Event>>
 }

@@ -8,6 +8,7 @@ import com.cabal.app.database.daos.HobbyDao
 import com.cabal.app.database.daos.UserDao
 import com.cabal.app.database.entities.Event
 import com.cabal.app.database.entities.User
+import com.cabal.app.utils.StaticDataGenerator
 import dagger.Provides
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -41,4 +42,6 @@ class LocalRepository @Inject constructor(context: Context): Repository {
     override fun insertEvents(events: List<Event>): Completable = eventDao.insertEvents(events)
 
     override fun getEventsByAccepted(accepted: Boolean): Single<List<Event>> = eventDao.getEventsByAccepted(accepted)
+
+    override fun getEvents(): Single<List<Event>> = StaticDataGenerator.generateEvents(5)
 }

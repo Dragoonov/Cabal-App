@@ -26,6 +26,8 @@ class AppRepository @Inject constructor(
 
     override fun getEventsByAccepted(accepted: Boolean): Single<List<Event>> = currentRepository.getEventsByAccepted(accepted)
 
+    override fun getEvents(): Single<List<Event>> = currentRepository.getEvents()
+
     fun saveCoordinates(pair: Pair<Double, Double>) {
        // User.loggedUser?.coordinates = doubleArrayOf(pair.first, pair.second)
     }

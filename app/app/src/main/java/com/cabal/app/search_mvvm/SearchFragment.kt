@@ -17,12 +17,15 @@ import com.cabal.app.utils.SwipeType
 import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class SearchFragment : Fragment(), EventCard.SwipeListener, FilterEventsDialogFragment.AlertDialogListener {
 
     private lateinit var mSwipeView: SwipePlaceHolderView
     private val CARDS_COUNT = 5
+    private val compositeDisposable = CompositeDisposable()
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -37,10 +40,10 @@ class SearchFragment : Fragment(), EventCard.SwipeListener, FilterEventsDialogFr
         (activity?.application as MyApplication).appComponent.inject(this)
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this,viewModelFactory)[SearchViewModel::class.java]
+        viewModel = ViewModelProviders.of(this, viewModelFactory)[SearchViewModel::class.java]
         mSwipeView = view.findViewById(R.id.swipeView)
 
-        mSwipeView.getBuilder<SwipePlaceHolderView,SwipeViewBuilder<SwipePlaceHolderView>>()
+        mSwipeView.getBuilder<SwipePlaceHolderView, SwipeViewBuilder<SwipePlaceHolderView>>()
                 .setDisplayViewCount(CARDS_COUNT)
                 .setSwipeType(SwipeType.DEFAULT)
                 .setSwipeDecor(SwipeDecor()
@@ -49,25 +52,29 @@ class SearchFragment : Fragment(), EventCard.SwipeListener, FilterEventsDialogFr
                         .setSwipeInMsgLayoutId(R.layout.tinder_swipe_accept)
                         .setSwipeOutMsgLayoutId(R.layout.tinder_swipe_reject))
 
-       // viewModel.filteredEvents.value?.forEach{mSwipeView.addView(EventCard(context!!,it,mSwipeView,this))}
+        // viewModel.filteredEvents.value?.forEach{mSwipeView.addView(EventCard(context!!,it,mSwipeView,this))}
         viewModel.filteredEvents.observe(this, Observer { it1 ->
             mSwipeView.removeAllViews()
-            it1.forEach {mSwipeView.addView(EventCard(context!!,it,mSwipeView,this))}
+            it1.forEach { mSwipeView.addView(EventCard(context!!, it, mSwipeView, this)) }
             Log.d("SWIPE", mSwipeView.childCount.toString())
         })
         viewModel.dialogNotifier.observe(this, Observer {
-            FilterEventsDialogFragment.newInstance(it, this).show(fragmentManager!!,"AlertDialog");
+            FilterEventsDialogFragment.newInstance(it, this).show(fragmentManager!!, "AlertDialog")
         })
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onStop() {
-        super.onStop()
         viewModel.saveEvents()
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    Log.d("SearchFragment", "Success!")
+                }, {
+                    Log.e("SearchFragment", it.localizedMessage!!)
+                }).also {
+                    compositeDisposable.add(it)
+                }
+        super.onStop()
     }
 
     override fun receiveSwipedOutCard(card: EventCard) = viewModel.receiveSwipedOutCard(card)
@@ -81,6 +88,11 @@ class SearchFragment : Fragment(), EventCard.SwipeListener, FilterEventsDialogFr
 
     override fun onDialogNegativeClick(dialogFragment: FilterEventsDialogFragment) {
 
+    }
+
+    override fun onDestroy() {
+        compositeDisposable.clear()
+        super.onDestroy()
     }
 
 }

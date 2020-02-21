@@ -32,4 +32,8 @@ class FirebaseRepository @Inject constructor(): Repository  {
     override fun getEventsByAccepted(accepted: Boolean): Single<List<Event>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun getEvents(): Single<List<Event>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }

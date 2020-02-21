@@ -1,12 +1,14 @@
 package com.cabal.app.search_mvvm
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.cabal.app.database.entities.Event
 import com.cabal.app.database.repository.Repository
 import com.cabal.app.navigation_bar.search_events.EventCard
-import com.cabal.app.utils.StaticDataGenerator
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import java.util.stream.Collectors
 import javax.inject.Inject
 
@@ -17,9 +19,15 @@ class SearchViewModel @Inject constructor(app: Application,private val repositor
     private var swipedEvents: MutableList<Event> = ArrayList<Event>().toMutableList()
     private var swipeCounter: MutableMap<String, Int> = HashMap()
     var dialogNotifier: MutableLiveData<String> = MutableLiveData()
+    private val compositeDisposable = CompositeDisposable()
 
     init {
         loadEvents()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
     }
 
     fun receiveSwipedOutCard(card: EventCard) {
@@ -70,13 +78,20 @@ class SearchViewModel @Inject constructor(app: Application,private val repositor
 
 
     private fun loadEvents() {
-        events = StaticDataGenerator.generateEvents(5).toMutableList()
-        filteredEvents.value = events.toMutableList()
+        repository.getEvents()
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    events = it.toMutableList()
+                    filteredEvents.postValue(events.toMutableList())
+                    Log.d("Czy ma aktywnych observerow: ", filteredEvents.hasActiveObservers().toString())
+                }, {
+                    Log.d("SearchViewModel", it.localizedMessage!!)
+                }
+        ).also {
+                    compositeDisposable.add(it)
+                }
     }
 
-    fun saveEvents() {
-       repository.insertEvents(swipedEvents)
-    }
-
+    fun saveEvents() = repository.insertEvents(swipedEvents)
 
 }

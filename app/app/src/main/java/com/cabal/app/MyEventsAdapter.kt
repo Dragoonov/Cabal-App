@@ -1,5 +1,6 @@
 package com.cabal.app
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,15 +9,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cabal.app.database.entities.Event
+import com.cabal.app.database.entities.User
 import com.cabal.app.di.DaggerAppComponent
 import com.cabal.app.utils.Filters
 import com.cabal.app.utils.UserManager
+import java.security.PrivateKey
 import javax.inject.Inject
 
-class MyEventsAdapter(events: List<Event>) : RecyclerView.Adapter<MyEventsAdapter.ViewHolder>(), Filterable {
+class MyEventsAdapter(events: List<Event>, application: MyApplication) : RecyclerView.Adapter<MyEventsAdapter.ViewHolder>(), Filterable {
+
 
     var originalEvents: List<Event> = events
     var filteredEvents: List<Event> = events
+
+    @Inject
+    lateinit var filters: Filters
+
+    init {
+        application.appComponent.inject(this)
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.my_events_item, parent, false))
@@ -28,7 +40,7 @@ class MyEventsAdapter(events: List<Event>) : RecyclerView.Adapter<MyEventsAdapte
     override fun getFilter(): Filter = object : Filter() {
 
         override fun performFiltering(constraint: CharSequence?): FilterResults = FilterResults().also {
-                val filteredList = Filters.performFiltering(originalEvents)
+                val filteredList = filters.performFiltering(originalEvents)
                 it.count = filteredList.size
                 it.values = filteredList
         }

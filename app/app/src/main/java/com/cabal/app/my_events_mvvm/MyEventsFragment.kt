@@ -1,6 +1,7 @@
 package com.cabal.app.my_events_mvvm
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,10 +28,12 @@ class MyEventsFragment : Fragment() {
 
     private lateinit var viewModel: MyEventsViewModel
 
-    private val adapter: MyEventsAdapter = MyEventsAdapter(ArrayList())
+    private lateinit var adapter: MyEventsAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        (activity?.application as MyApplication).appComponent.inject(this)
+        val application = (activity?.application as MyApplication)
+        application.appComponent.inject(this)
+        adapter = MyEventsAdapter(ArrayList(), application)
         viewModel = ViewModelProviders.of(this, factory)[MyEventsViewModel::class.java]
         viewModel.events.observe(this, Observer {
             adapter.filteredEvents = it
@@ -40,7 +43,7 @@ class MyEventsFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_my_events, container, false)
         view.findViewById<FloatingActionButton>(R.id.btnAddEvent).setOnClickListener {
-            activity!!.supportFragmentManager
+                        activity!!.supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.fragment_container, AddEventFragment())
                     .addToBackStack(null)
@@ -48,15 +51,15 @@ class MyEventsFragment : Fragment() {
         }
 
         view.findViewById<CheckBox>(R.id.authorSwitch).setOnCheckedChangeListener { _, checked ->
-            Filters.AUTHOR_FILTER = checked
+            adapter.filters.AUTHOR_FILTER = checked
             adapter.filter.filter("")
         }
-        view.findViewById<CheckBox>(R.id.authorSwitch).setOnCheckedChangeListener { _, checked ->
-            Filters.GUEST_FILTER = checked
+        view.findViewById<CheckBox>(R.id.guestSwitch).setOnCheckedChangeListener { _, checked ->
+            adapter.filters.GUEST_FILTER = checked
             adapter.filter.filter("")
         }
-        view.findViewById<CheckBox>(R.id.authorSwitch).setOnCheckedChangeListener { _, checked ->
-            Filters.FINISHED_FILTER = checked
+        view.findViewById<CheckBox>(R.id.finishedSwitch).setOnCheckedChangeListener { _, checked ->
+            adapter.filters.FINISHED_FILTER = checked
             adapter.filter.filter("")
         }
         view!!.findViewById<RecyclerView>(R.id.recycleMyEvents).also {

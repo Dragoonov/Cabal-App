@@ -3,6 +3,7 @@ package com.cabal.app.utils
 import com.cabal.app.database.entities.Event
 import com.cabal.app.database.entities.Hobby
 import com.cabal.app.database.entities.User
+import io.reactivex.Single
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -269,11 +270,11 @@ object StaticDataGenerator {
             )
     )
 
-    fun generateEvents(amount: Int): List<Event> = ArrayList<Event>().also {
+    fun generateEvents(amount: Int): Single<List<Event>> = Single.just(ArrayList<Event>().also {
         for (x in 1..amount) {
-            it.add(allEvents[0])
+            it.add(allEvents[random.nextInt(allEvents.size)])
         }
-    }
+    })
 
     fun generateUsers(amount: Int): List<User> = ArrayList<User>().also {
         for (x in 1..amount) {
