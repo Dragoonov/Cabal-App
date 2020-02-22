@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.cabal.app.after_register_mvvm.AfterRegisterViewModel
 import com.cabal.app.my_events_mvvm.MyEventsViewModel
+import com.cabal.app.rating_mvvm.RatingViewModel
 import com.cabal.app.search_mvvm.SearchViewModel
 import com.cabal.app.welcome_mvvm.WelcomeViewModel
 import dagger.Binds
@@ -35,4 +36,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MyEventsViewModel::class)
     internal abstract fun postMyEventsViewModel(viewModel: MyEventsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RatingViewModel::class)
+    internal abstract fun postRatingViewModel(viewModel: RatingViewModel): ViewModel
 }

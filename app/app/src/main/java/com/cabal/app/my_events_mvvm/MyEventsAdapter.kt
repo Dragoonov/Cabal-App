@@ -1,6 +1,5 @@
-package com.cabal.app
+package com.cabal.app.my_events_mvvm
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,12 +7,13 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.cabal.app.EventDetailsFragment
+import com.cabal.app.MyApplication
+import com.cabal.app.R
+import com.cabal.app.rating_mvvm.RatingFragment
 import com.cabal.app.database.entities.Event
-import com.cabal.app.database.entities.User
-import com.cabal.app.di.DaggerAppComponent
 import com.cabal.app.utils.Filters
 import com.cabal.app.utils.UserManager
-import java.security.PrivateKey
 import javax.inject.Inject
 
 class MyEventsAdapter(events: List<Event>, application: MyApplication) : RecyclerView.Adapter<MyEventsAdapter.ViewHolder>(), Filterable {
@@ -74,7 +74,7 @@ class MyEventsAdapter(events: List<Event>, application: MyApplication) : Recycle
             myEventRateButton.setOnClickListener {
                 (it.context as AppCompatActivity).supportFragmentManager
                         .beginTransaction()
-                        .replace(R.id.fragment_container, RatingFragment())
+                        .replace(R.id.fragment_container, RatingFragment.newInstance(filteredEvents[adapterPosition].members!!))
                         .addToBackStack(null)
                         .commit()
             }

@@ -1,7 +1,6 @@
 package com.cabal.app.my_events_mvvm
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cabal.app.AddEventFragment
 import com.cabal.app.MyApplication
-import com.cabal.app.MyEventsAdapter
 import com.cabal.app.R
-import com.cabal.app.utils.Filters
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import javax.inject.Inject
 

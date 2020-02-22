@@ -13,5 +13,6 @@ data class User(
         @ColumnInfo(name = "radius") val radius: Int?,
         @ColumnInfo(name = "coordinates") val coordinates: DoubleArray?,
         @ColumnInfo(name = "hobbies") val hobbies: List<Hobby>?,
+        @ColumnInfo(name = "likes") var likes: Int?,
         @ColumnInfo(name = "loggedIn") val loggedIn: Boolean?
 )

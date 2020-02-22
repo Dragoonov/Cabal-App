@@ -54,6 +54,7 @@ class AfterRegisterActivity : AppCompatActivity() {
                     INITIAL_RADIUS,
                     DoubleArray(2),
                     ArrayList(),
+                    0,
                     true
             ))
                     .subscribeOn(Schedulers.io())

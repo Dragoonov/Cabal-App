@@ -19,4 +19,6 @@ interface Repository {
     fun getEventsByAccepted(accepted: Boolean): Single<List<Event>>
 
     fun getEvents(): Single<List<Event>>
+
+    fun updateUsers(users: List<User>): Completable
 }

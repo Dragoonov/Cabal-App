@@ -15,7 +15,7 @@ import com.cabal.app.database.entities.Event
 import com.cabal.app.database.entities.Hobby
 import com.cabal.app.database.entities.User
 
-@Database(entities = [User::class, Hobby::class, Event::class], version = 2)
+@Database(entities = [User::class, Hobby::class, Event::class], version = 3)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
@@ -38,6 +38,12 @@ abstract class AppDatabase : RoomDatabase() {
                                 object : Migration(1,2) {
                                     override fun migrate(database: SupportSQLiteDatabase) {
                                         database.execSQL("alter table event add column accepted integer")
+                                    }
+
+                                },
+                                object : Migration(2,3) {
+                                    override fun migrate(database: SupportSQLiteDatabase) {
+                                        database.execSQL("alter table user add column likes integer")
                                     }
 
                                 }

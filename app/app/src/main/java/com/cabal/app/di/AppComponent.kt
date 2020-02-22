@@ -2,11 +2,12 @@ package com.cabal.app.di
 
 import android.app.Application
 import android.content.Context
-import com.cabal.app.MyEventsAdapter
+import com.cabal.app.my_events_mvvm.MyEventsAdapter
 import com.cabal.app.my_events_mvvm.MyEventsFragment
 import com.cabal.app.after_register_mvvm.AfterRegisterActivity
 import com.cabal.app.welcome_mvvm.WelcomeActivity
 import com.cabal.app.database.repository.AppRepository
+import com.cabal.app.rating_mvvm.RatingFragment
 import com.cabal.app.search_mvvm.SearchFragment
 import com.cabal.app.welcome_mvvm.WelcomeViewModel
 import dagger.BindsInstance
@@ -28,6 +29,7 @@ interface AppComponent {
     fun inject(fragment: SearchFragment)
     fun inject(fragment: MyEventsFragment)
     fun inject(adapter: MyEventsAdapter)
+    fun inject(ratingFragment: RatingFragment)
     fun welcomeModel(): AppRepository
     fun welcomeViewModel(): WelcomeViewModel
 }

@@ -28,6 +28,8 @@ class AppRepository @Inject constructor(
 
     override fun getEvents(): Single<List<Event>> = currentRepository.getEvents()
 
+    override fun updateUsers(users: List<User>): Completable = currentRepository.updateUsers(users)
+
     fun saveCoordinates(pair: Pair<Double, Double>) {
        // User.loggedUser?.coordinates = doubleArrayOf(pair.first, pair.second)
     }

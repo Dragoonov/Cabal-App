@@ -36,4 +36,9 @@ class FirebaseRepository @Inject constructor(): Repository  {
     override fun getEvents(): Single<List<Event>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun updateUsers(users: List<User>): Completable {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 }

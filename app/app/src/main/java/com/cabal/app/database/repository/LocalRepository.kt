@@ -29,9 +29,9 @@ class LocalRepository @Inject constructor(context: Context): Repository {
         eventDao = db.eventDao()
     }
 
-    override fun updateUser(user: User): Completable {
-        return userDao.updateUser(user)
-    }
+    override fun updateUser(user: User): Completable = userDao.updateUser(user)
+
+    override fun updateUsers(users: List<User>): Completable = userDao.updateUsers(users)
 
     override fun createUser(user: User): Completable = userDao.insertUser(user)
 

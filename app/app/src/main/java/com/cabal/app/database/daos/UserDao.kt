@@ -18,6 +18,9 @@ interface UserDao {
     @Update
     fun updateUser(user: User): Completable
 
+    @Update
+    fun updateUsers(user: List<User>): Completable
+
     @Insert
     fun insertUser(user: User): Completable
 

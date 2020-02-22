@@ -125,6 +125,7 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
                 0,
                 DoubleArray(2),
                 ArrayList(),
+                0,
                 true
 
         )

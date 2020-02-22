@@ -36,6 +36,7 @@ object StaticDataGenerator {
                                 it[1] = random.nextDouble()*100
                             },
                     generateHobbies(3),
+                    0,
                     false
             ),
             User("2",
@@ -49,6 +50,7 @@ object StaticDataGenerator {
                                 it[1] = random.nextDouble()*100
                             },
                     generateHobbies(3),
+                    0,
                     false
             ),
             User("3",
@@ -62,6 +64,7 @@ object StaticDataGenerator {
                                 it[1] = random.nextDouble()*100
                             },
                     generateHobbies(3),
+                    0,
                     false
             ),
             User("4",
@@ -75,6 +78,7 @@ object StaticDataGenerator {
                                 it[1] = random.nextDouble()*100
                             },
                     generateHobbies(3),
+                    0,
                     false
             ),
             User("5",
@@ -88,6 +92,7 @@ object StaticDataGenerator {
                                 it[1] = random.nextDouble()*100
                             },
                     generateHobbies(3),
+                    0,
                     false
             ),
             User("6",
@@ -101,6 +106,7 @@ object StaticDataGenerator {
                                 it[1] = random.nextDouble()*100
                             },
                     generateHobbies(3),
+                    0,
                     false
             ),
             User("7",
@@ -114,6 +120,7 @@ object StaticDataGenerator {
                                 it[1] = random.nextDouble()*100
                             },
                     generateHobbies(3),
+                    0,
                     false
             ),
             User("8",
@@ -127,6 +134,7 @@ object StaticDataGenerator {
                                 it[1] = random.nextDouble()*100
                             },
                     generateHobbies(3),
+                    0,
                     false
             ),
             User("9",
@@ -140,6 +148,7 @@ object StaticDataGenerator {
                                 it[1] = random.nextDouble()*100
                             },
                     generateHobbies(3),
+                    0,
                     false
             ),
             User("10",
@@ -153,6 +162,7 @@ object StaticDataGenerator {
                                 it[1] = random.nextDouble()*100
                             },
                     generateHobbies(3),
+                    0,
                     false
             )
     )
